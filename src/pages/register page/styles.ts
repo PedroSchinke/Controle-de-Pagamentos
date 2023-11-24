@@ -13,11 +13,10 @@ export const RegisterPageContainer = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  padding: 10px;
-  padding-bottom: 30px;
-  background-color: ${(props) => props.theme.base_card};
-  border: solid 1px ${(props) => props.theme.base_text};
+  padding: 40px 10px;
+  background-color: ${(props) => props.theme.background};
   border-radius: 8px;
+  box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
   h1 {
     font-family: 'Roboto', sans-serif;
@@ -57,9 +56,9 @@ export const RegisterForm = styled.form`
   }
 `
 
-export const ConfirmRegisterButton = styled.button`
+export const BaseButton = styled.button`
   width: 40%;
-  height: 2.5rem;
+  height: 2.8rem;
   border: none;
   border-radius: 8px;
   background-color: ${(props) => props.theme.blue_dark};
@@ -67,3 +66,5 @@ export const ConfirmRegisterButton = styled.button`
   font-size: 1.2rem;
   color: ${(props) => props.theme.blue_light};
 `
+
+export const ConfirmRegisterButton = styled(BaseButton)``

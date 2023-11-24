@@ -11,6 +11,8 @@ export function RegisterPage() {
       <RegisterPageContainer>
         <h1>Cadastrar recebimento</h1>
         <RegisterForm>
+          <label>Nome do doador</label>
+          <input />
           <label>Data</label>
           <input type="date" />
           <label>Valor</label>
