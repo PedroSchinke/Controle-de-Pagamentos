@@ -19,6 +19,7 @@ export const Logo = styled.div`
   height: 70px;
   font-family: 'Roboto', sans-serif;
   font-size: 2.5rem;
+  color: ${(props) => props.theme.blue_light};
 `
 
 export const Line = styled.div`
@@ -28,12 +29,12 @@ export const Line = styled.div`
 `
 
 export const Navigation = styled.nav`
-  width: 60%;
+  display: flex;
 
   ul {
     display: flex;
-    justify-content: flex-end;
-    gap: 15px;
+    justify-content: center;
+    gap: 20px;
 
     li {
       color: ${(props) => props.theme.blue_light};
