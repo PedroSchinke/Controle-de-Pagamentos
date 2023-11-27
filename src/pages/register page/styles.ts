@@ -31,6 +31,9 @@ export const RegisterForm = styled.form`
   gap: 10px;
 
   label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
     color: ${(props) => props.theme.base_text};

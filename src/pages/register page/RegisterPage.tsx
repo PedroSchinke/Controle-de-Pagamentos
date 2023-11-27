@@ -10,19 +10,35 @@ export function RegisterPage() {
     <RegisterPageLayout>
       <RegisterPageContainer>
         <h1>Cadastrar recebimento</h1>
-        <RegisterForm>
-          <label>Nome do doador</label>
-          <input />
-          <label>Data</label>
-          <input type="date" />
-          <label>Valor</label>
-          <input type="number" />
-          <label>Tipo do recebimento</label>
-          <input />
-          <label>Descrição</label>
-          <textarea />
+        <RegisterForm id="register_form">
+          <label>
+            Nome do doador
+            <input />
+          </label>
+
+          <label>
+            Data
+            <input type="date" />
+          </label>
+
+          <label>
+            Valor
+            <input type="number" />
+          </label>
+
+          <label>
+            Tipo do recebimento
+            <input />
+          </label>
+
+          <label>
+            Descrição
+            <textarea />
+          </label>
         </RegisterForm>
-        <ConfirmRegisterButton>Confirmar</ConfirmRegisterButton>
+        <ConfirmRegisterButton type="submit" form="register_form">
+          Confirmar
+        </ConfirmRegisterButton>
       </RegisterPageContainer>
     </RegisterPageLayout>
   )
