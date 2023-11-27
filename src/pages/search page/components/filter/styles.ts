@@ -10,8 +10,8 @@ export const FilterContainer = styled.div`
   font-size: 1.3rem;
   color: ${(props) => props.theme.base_subtitle};
 
-  .filter {
-    width: 62%;
+  .main_label {
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,17 +27,26 @@ export const FilterContainer = styled.div`
   }
 
   label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 1.1rem;
     color: ${(props) => props.theme.base_text};
   }
 
   input {
+    width: 85%;
     padding: 3px;
     border: none;
     background-color: ${(props) => props.theme.base_input};
     font-family: 'Roboto', sans-serif;
     font-size: 1.15rem;
     color: ${(props) => props.theme.base_label};
+  }
+
+  .name_input {
+    width: 100%;
   }
 `
 
