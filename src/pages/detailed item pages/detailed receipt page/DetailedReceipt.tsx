@@ -1,26 +1,26 @@
 import { CaretLeft, Pencil, Trash } from 'phosphor-react'
 import {
-  DeleteItemButton,
-  DetailedItemContainer,
-  DetailedItemInfos,
-  DetailedItemLayout,
-  ItemOptionButtons,
-  UpdateItemButton,
+  DeleteReceiptButton,
+  DetailedReceiptContainer,
+  DetailedReceiptInfos,
+  DetailedReceiptLayout,
+  ReceiptOptionButtons,
+  UpdateReceiptButton,
 } from './styles'
 import { NavLink } from 'react-router-dom'
 
-export function DetailedItemPage() {
+export function DetailedReceipt() {
   return (
-    <DetailedItemLayout>
-      <DetailedItemContainer>
-        <NavLink to="/consultar">
+    <DetailedReceiptLayout>
+      <DetailedReceiptContainer>
+        <NavLink to="/consultar/recebimento">
           <button className="back_button">
             <CaretLeft />
             Voltar
           </button>
         </NavLink>
         <h1>Detalhes do recebimento</h1>
-        <DetailedItemInfos>
+        <DetailedReceiptInfos>
           <div>
             <span>Nome do doador</span>
             <h2>Fulano da Silva</h2>
@@ -49,18 +49,18 @@ export function DetailedItemPage() {
             <span>Descrição</span>
             <h3>Sem descrição</h3>
           </div>
-        </DetailedItemInfos>
-        <ItemOptionButtons>
-          <UpdateItemButton>
+        </DetailedReceiptInfos>
+        <ReceiptOptionButtons>
+          <UpdateReceiptButton>
             <Pencil />
             editar
-          </UpdateItemButton>
-          <DeleteItemButton>
+          </UpdateReceiptButton>
+          <DeleteReceiptButton>
             <Trash />
             excluir
-          </DeleteItemButton>
-        </ItemOptionButtons>
-      </DetailedItemContainer>
-    </DetailedItemLayout>
+          </DeleteReceiptButton>
+        </ReceiptOptionButtons>
+      </DetailedReceiptContainer>
+    </DetailedReceiptLayout>
   )
 }

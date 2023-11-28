@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-export const DetailedItemLayout = styled.div`
+export const DetailedClientLayout = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
-export const DetailedItemContainer = styled.div`
+export const DetailedClientContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,13 +49,13 @@ export const DetailedItemContainer = styled.div`
   }
 `
 
-export const DetailedItemInfos = styled.div`
+export const DetailedClientInfos = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
 `
 
-export const ItemOptionButtons = styled.div`
+export const ClientOptionButtons = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -77,10 +77,10 @@ const BaseOptionButtons = styled.button`
   }
 `
 
-export const UpdateItemButton = styled(BaseOptionButtons)`
+export const UpdateClientButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.blue_dark};
 `
 
-export const DeleteItemButton = styled(BaseOptionButtons)`
+export const DeleteClientButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.red};
 `
