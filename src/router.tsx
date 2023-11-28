@@ -1,9 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 import { DefaultLayout } from './layouts/defaultLayout'
-import { RegisterPage } from './pages/register page/RegisterPage'
-import { SearchPage } from './pages/search page/SearchPage'
+import { RegisterPage } from './pages/register pages/RegisterPage'
 import { Dashboard } from './pages/dashboard/Dashboard'
-import { DetailedItemPage } from './pages/detailed item page/DetailedItemPage'
+import { DetailedReceipt } from './pages/detailed item pages/detailed receipt page/DetailedReceipt'
+import { RegisterReceipt } from './pages/register pages/pages/register receipt page/RegisterReceipt'
+import { RegisterClient } from './pages/register pages/pages/register client page/RegisterClient'
+import { SearchReceipt } from './pages/search pages/pages/search receipt page/SearchReceipt'
+import { SearchPage } from './pages/search pages/SearchPage'
+import { SearchClient } from './pages/search pages/pages/search client page/SearchClient'
+import { DetailedClient } from './pages/detailed item pages/detailed client page/DetailedClient'
 
 export function Router() {
   return (
@@ -11,8 +16,19 @@ export function Router() {
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cadastrar" element={<RegisterPage />} />
+        <Route path="/cadastrar/recebimento" element={<RegisterReceipt />} />
+        <Route path="/cadastrar/cliente" element={<RegisterClient />} />
         <Route path="/consultar" element={<SearchPage />} />
-        <Route path="/detalhes" element={<DetailedItemPage />} />
+        <Route path="/consultar/recebimento" element={<SearchReceipt />} />
+        <Route
+          path="/consultar/recebimento/detalhes"
+          element={<DetailedReceipt />}
+        />
+        <Route path="/consultar/cliente" element={<SearchClient />} />
+        <Route
+          path="/consultar/cliente/detalhes"
+          element={<DetailedClient />}
+        />
       </Route>
     </Routes>
   )
