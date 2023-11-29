@@ -19,10 +19,18 @@ export const ClientSearchResultInfos = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
+  color: ${(props) => props.theme.base_text};
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    h2 {
+      color: ${(props) => props.theme.blue_dark};
+    }
+  }
 
   .client_and_email {
     display: flex;
     flex-direction: column;
-    color: ${(props) => props.theme.base_text};
   }
 `

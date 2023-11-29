@@ -19,16 +19,29 @@ export const ReceiptSearchResultInfos = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
+  cursor: pointer;
+  color: ${(props) => props.theme.base_text};
+
+  &:hover {
+    h2 {
+      color: ${(props) => props.theme.blue_dark};
+    }
+  }
 
   .donator_and_date {
     display: flex;
     flex-direction: column;
-    color: ${(props) => props.theme.base_text};
   }
 
-  .donation_value {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: ${(props) => props.theme.blue_dark};
+  .donation_value_and_arrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .donation_value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: ${(props) => props.theme.blue_dark};
+    }
   }
 `

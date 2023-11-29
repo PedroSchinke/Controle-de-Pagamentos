@@ -68,6 +68,13 @@ export const BaseButton = styled.button`
   font-family: 'Roboto', sans-serif;
   font-size: 1.2rem;
   color: ${(props) => props.theme.blue_light};
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${(props) => props.theme.blue_light};
+    color: ${(props) => props.theme.blue_dark};
+  }
 `
 
 export const ConfirmRegisterButton = styled(BaseButton)``
