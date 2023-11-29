@@ -26,7 +26,7 @@ export function Router() {
         />
         <Route path="/consultar/cliente" element={<SearchClient />} />
         <Route
-          path="/consultar/cliente/detalhes"
+          path="/consultar/cliente/detalhes/:id"
           element={<DetailedClient />}
         />
       </Route>

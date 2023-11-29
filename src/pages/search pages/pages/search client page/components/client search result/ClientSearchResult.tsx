@@ -1,19 +1,34 @@
+import { CaretRight } from 'phosphor-react'
 import {
   DivisionCardLine,
   ClientSearchResultContainer,
   ClientSearchResultInfos,
 } from './styles'
+import { NavLink } from 'react-router-dom'
 
-export function ClientSearchResult() {
+interface ClientSearchResultProps {
+  id: number
+  nome: string
+  email: string
+}
+
+export function ClientSearchResult({
+  id,
+  nome,
+  email,
+}: ClientSearchResultProps) {
   return (
-    <ClientSearchResultContainer>
-      <DivisionCardLine />
-      <ClientSearchResultInfos>
-        <div className="client_and_email">
-          <h2>Fulano de Sousa</h2>
-          <span>fulano@email.com</span>
-        </div>
-      </ClientSearchResultInfos>
-    </ClientSearchResultContainer>
+    <NavLink to={`/consultar/cliente/detalhes/${id}`}>
+      <ClientSearchResultContainer>
+        <DivisionCardLine />
+        <ClientSearchResultInfos>
+          <div className="client_and_email">
+            <h2>{nome}</h2>
+            <span>{email}</span>
+          </div>
+          <CaretRight size={30} />
+        </ClientSearchResultInfos>
+      </ClientSearchResultContainer>
+    </NavLink>
   )
 }

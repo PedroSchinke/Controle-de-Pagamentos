@@ -1,13 +1,12 @@
-import { useForm } from 'react-hook-form'
-import { FilterButton, FilterContainer, FilterForm } from './styles'
 import * as z from 'zod'
-import axios, { AxiosResponse } from 'axios'
+import { useForm } from 'react-hook-form'
+import { useContext } from 'react'
+import { api } from '../../../../../../services/api'
+import { FilterButton, FilterContainer, FilterForm } from './styles'
+import { ClientsContext } from '../../../../../../context/clientsContext'
 
 const filterSchema = z.object({
-  from_date: z.string(),
-  to_date: z.string(),
   name: z.string(),
-  email: z.string(),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>
@@ -15,18 +14,21 @@ type filterDataProps = z.infer<typeof filterSchema>
 export function ClientFilter() {
   const { register, handleSubmit } = useForm<filterDataProps>()
 
-  const onSubmit = async (data: filterDataProps) => {
+  const { clients, setClients } = useContext(ClientsContext)
+
+  const handleFilter = async (data: filterDataProps) => {
     try {
       filterSchema.parse(data)
 
-      const queryString = new URLSearchParams(
-        data as filterDataProps,
-      ).toString()
+      console.log(data.name)
 
-      console.log(data)
+      const response = await api.get(`/clientes/nome/${data.name}`)
 
-      const response: AxiosResponse = await axios.get(`endpoint?${queryString}`)
-      console.log('Response:', response)
+      setClients(response.data)
+
+      console.log(response)
+
+      console.log(clients)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -34,7 +36,7 @@ export function ClientFilter() {
 
   return (
     <FilterContainer>
-      <FilterForm id="filter_form" onSubmit={handleSubmit(onSubmit)}>
+      <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
         <label className="main_label">
           Nome
           <input
@@ -43,32 +45,6 @@ export function ClientFilter() {
             className="name_input"
             {...register('name')}
           />
-        </label>
-
-        <label className="main_label">
-          Email
-          <input
-            type="text"
-            id="email"
-            className="name_input"
-            {...register('email')}
-          />
-        </label>
-
-        <label className="main_label">
-          Data de cadastro
-          <div className="label_and_input_of_filter">
-            <label>
-              De
-              <input type="date" id="from_date" {...register('from_date')} />
-            </label>
-          </div>
-          <div className="label_and_input_of_filter">
-            <label>
-              Até
-              <input type="date" id="to_date" {...register('to_date')} />
-            </label>
-          </div>
         </label>
         <FilterButton type="submit" form="filter_form">
           Filtrar
