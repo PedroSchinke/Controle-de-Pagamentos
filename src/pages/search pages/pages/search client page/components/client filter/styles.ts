@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseButton } from '../../../../../register pages/pages/register receipt page/styles'
+import { BaseButton } from '../../../../../register pages/pages/register client page/styles'
 
 export const FilterContainer = styled.div`
   width: 90%;
@@ -55,6 +55,13 @@ export const FilterForm = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+`
+
+export const FilterErrorMessage = styled.p`
+  margin-top: 10px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: ${(props) => props.theme.red};
 `
 
 export const FilterButton = styled(BaseButton)`

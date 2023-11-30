@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseButton } from '../../../../../register pages/pages/register receipt page/styles'
+import { BaseButton } from '../../../../../register pages/pages/register client page/styles'
 
 export const FilterContainer = styled.div`
   width: 90%;

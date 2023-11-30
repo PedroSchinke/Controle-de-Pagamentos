@@ -13,6 +13,7 @@ export const SearchReceiptPageContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   padding: 40px 10px;
   background-color: ${(props) => props.theme.background};
@@ -20,6 +21,7 @@ export const SearchReceiptPageContainer = styled.section`
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
   h1 {
+    text-align: center;
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     color: ${(props) => props.theme.base_subtitle};
