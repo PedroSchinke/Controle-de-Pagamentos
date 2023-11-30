@@ -60,7 +60,7 @@ export function ReceiptFilter() {
           </div>
         </label>
         <FilterButton type="submit" form="filter_form">
-          Filtrar
+          Buscar
         </FilterButton>
       </FilterForm>
     </FilterContainer>

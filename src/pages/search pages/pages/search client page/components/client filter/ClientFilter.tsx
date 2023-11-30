@@ -1,34 +1,48 @@
 import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useContext } from 'react'
 import { api } from '../../../../../../services/api'
-import { FilterButton, FilterContainer, FilterForm } from './styles'
+import {
+  FilterButton,
+  FilterContainer,
+  FilterErrorMessage,
+  FilterForm,
+} from './styles'
 import { ClientsContext } from '../../../../../../context/clientsContext'
 
 const filterSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, 'É preciso preencher este campo'),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>
 
 export function ClientFilter() {
-  const { register, handleSubmit } = useForm<filterDataProps>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<filterDataProps>({
+    mode: 'all',
+    criteriaMode: 'all',
+    resolver: zodResolver(filterSchema),
+  })
 
-  const { clients, setClients } = useContext(ClientsContext)
+  const { setClients } = useContext(ClientsContext)
 
   const handleFilter = async (data: filterDataProps) => {
     try {
       filterSchema.parse(data)
 
-      console.log(data.name)
-
       const response = await api.get(`/clientes/nome/${data.name}`)
 
-      setClients(response.data)
+      console.log(response.data)
 
-      console.log(response)
-
-      console.log(clients)
+      if (response.data.length !== 0) {
+        setClients(response.data)
+      } else {
+        setClients([])
+      }
     } catch (error) {
       console.error('Error:', error)
     }
@@ -45,9 +59,12 @@ export function ClientFilter() {
             className="name_input"
             {...register('name')}
           />
+          {errors.name && (
+            <FilterErrorMessage>{errors.name.message}</FilterErrorMessage>
+          )}
         </label>
         <FilterButton type="submit" form="filter_form">
-          Filtrar
+          Buscar
         </FilterButton>
       </FilterForm>
     </FilterContainer>

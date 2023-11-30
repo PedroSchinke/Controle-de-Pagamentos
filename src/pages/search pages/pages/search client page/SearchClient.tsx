@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { ClientFilter } from './components/client filter/ClientFilter'
 import { ClientSearchResult } from './components/client search result/ClientSearchResult'
 import {
@@ -7,18 +7,22 @@ import {
   SearchClientPageLayout,
 } from './styles'
 import { ClientsContext } from '../../../../context/clientsContext'
+import { api } from '../../../../services/api'
 
 export function SearchClient() {
-  const { clients } = useContext(ClientsContext)
+  const { clients, setClients } = useContext(ClientsContext)
 
-  // useEffect(() => {
-  //   loadClients()
-  // })
+  useEffect(() => {
+    async function loadClients() {
+      const response = await api.get('/clientes')
+      setClients(response.data)
+    }
+    if (!clients) {
+      loadClients()
+    }
+  }, [clients, setClients])
 
-  // async function loadClients() {
-  //   const response = await api.get('/clientes')
-  //   setClients(response.data)
-  // }
+  const showResults = clients.length !== 0
 
   return (
     <SearchClientPageLayout>
@@ -26,19 +30,21 @@ export function SearchClient() {
         <h1>Consultar cliente</h1>
         <ClientFilter />
       </SearchClientPageContainer>
-      <ResultsContainer>
-        <h1>Resultados</h1>
-        {clients.map((client) => {
-          return (
-            <ClientSearchResult
-              key={client.id}
-              id={client.id}
-              nome={client.nome}
-              email={client.email}
-            />
-          )
-        })}
-      </ResultsContainer>
+      {showResults && (
+        <ResultsContainer>
+          <h1>Resultados</h1>
+          {clients.map((client) => {
+            return (
+              <ClientSearchResult
+                key={client.id}
+                id={client.id}
+                nome={client.nome}
+                email={client.email}
+              />
+            )
+          })}
+        </ResultsContainer>
+      )}
     </SearchClientPageLayout>
   )
 }
