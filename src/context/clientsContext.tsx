@@ -9,9 +9,19 @@ export interface ClientProps {
   dataAtualizacao?: string
 }
 
+export interface ReceiptProps {
+  id: number
+  valor: number
+  tipoPagamento: string
+  dataPagamento: string
+  cliente: ClientProps
+}
+
 interface ClientsContextType {
   clients: ClientProps[]
   setClients: (value: ClientProps[]) => void
+  receipts: ReceiptProps[]
+  setReceipts: (value: ReceiptProps[]) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -23,11 +33,15 @@ interface ContextProviderProps {
 export function ContextProvider({ children }: ContextProviderProps) {
   const [clients, setClients] = useState<ClientProps[]>([])
 
+  const [receipts, setReceipts] = useState<ReceiptProps[]>([])
+
   return (
     <ClientsContext.Provider
       value={{
         clients,
         setClients,
+        receipts,
+        setReceipts,
       }}
     >
       {children}
