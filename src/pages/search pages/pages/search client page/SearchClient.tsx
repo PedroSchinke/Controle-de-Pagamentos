@@ -27,7 +27,7 @@ export function SearchClient() {
   return (
     <SearchClientPageLayout>
       <SearchClientPageContainer>
-        <h1>Consultar cliente</h1>
+        <h1>Buscar Cliente</h1>
         <ClientFilter />
       </SearchClientPageContainer>
       {showResults && (

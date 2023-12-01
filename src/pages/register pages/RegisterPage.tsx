@@ -8,7 +8,7 @@ export function RegisterPage() {
       <NavLink to="/cadastrar/recebimento">
         <RegisterPageOption>
           <h1>
-            Cadastrar Recebimento
+            Cadastrar Pagamento
             <Receipt size={44} weight="fill" className="icon" />
           </h1>
           <CaretRight size={30} />

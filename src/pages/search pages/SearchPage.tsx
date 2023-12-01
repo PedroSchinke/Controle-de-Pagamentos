@@ -8,7 +8,7 @@ export function SearchPage() {
       <NavLink to="/consultar/recebimento">
         <SearchPageOption>
           <h1>
-            Consultar Recebimento
+            Buscar Pagamento
             <Receipt size={44} weight="fill" className="icon" />
           </h1>
           <CaretRight size={30} />
@@ -17,7 +17,7 @@ export function SearchPage() {
       <NavLink to="/consultar/cliente">
         <SearchPageOption>
           <h1>
-            Consultar Cliente
+            Buscar Cliente
             <User size={44} weight="fill" className="icon" />
           </h1>
           <CaretRight size={30} />

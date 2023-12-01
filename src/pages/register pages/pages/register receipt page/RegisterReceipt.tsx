@@ -37,7 +37,7 @@ export function RegisterReceipt() {
           </label>
         </RegisterForm>
         <ConfirmRegisterButton type="submit" form="register_form">
-          Confirmar
+          Cadastrar
         </ConfirmRegisterButton>
       </RegisterPageContainer>
     </RegisterPageLayout>
