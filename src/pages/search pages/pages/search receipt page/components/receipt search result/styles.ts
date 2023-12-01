@@ -18,6 +18,7 @@ export const ReceiptSearchResultInfos = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   padding: 20px 10px;
   cursor: pointer;
   color: ${(props) => props.theme.base_text};
@@ -31,12 +32,13 @@ export const ReceiptSearchResultInfos = styled.div`
   .donator_and_date {
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
 
   .donation_value_and_arrow {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 
     .donation_value {
       font-size: 1.5rem;
