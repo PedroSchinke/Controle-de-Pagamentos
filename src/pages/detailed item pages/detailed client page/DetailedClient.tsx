@@ -32,9 +32,13 @@ export function DetailedClient() {
       try {
         const response = await api.get(`/clientes/${id}`)
 
-        setClient(response.data)
+        if (response.status === 200) {
+          setClient(response.data)
+        }
       } catch (error) {
-        throw new Error('Erro ao carregar cliente')
+        console.error('Error:', error)
+
+        setMessage('Erro ao conectar com servidor. Tente mais tarde.')
       }
     }
 
@@ -74,7 +78,9 @@ export function DetailedClient() {
         setMessage('Não foi possível deletar cliente')
       }
     } catch (error) {
-      console.error('Não foi possível deletar cliente:', error)
+      console.error(error)
+
+      setMessage('Não foi possível deletar o cliente.')
     }
   }
 
@@ -114,10 +120,12 @@ export function DetailedClient() {
             </div>
           </DetailedClientInfos>
           <ClientOptionButtons>
-            <UpdateClientButton>
-              <Pencil />
-              editar
-            </UpdateClientButton>
+            <NavLink to={`/editar/cliente/${id}`}>
+              <UpdateClientButton>
+                <Pencil />
+                editar
+              </UpdateClientButton>
+            </NavLink>
             <DeleteClientButton onClick={handleDeleteClient}>
               <Trash />
               excluir

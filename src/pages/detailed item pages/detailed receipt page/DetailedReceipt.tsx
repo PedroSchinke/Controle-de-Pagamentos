@@ -4,63 +4,145 @@ import {
   DetailedReceiptContainer,
   DetailedReceiptInfos,
   DetailedReceiptLayout,
+  Message,
+  Overlay,
+  OverlayBackButton,
+  OverlayContent,
   ReceiptOptionButtons,
   UpdateReceiptButton,
 } from './styles'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { api } from '../../../services/api'
+import { ClientsContext, ReceiptProps } from '../../../context/clientsContext'
+import { Loading } from '../../../components/loading/Loading'
+import { formatValue } from '../../../services/format-value-service'
+import { format, parseISO } from 'date-fns'
 
 export function DetailedReceipt() {
+  const { id } = useParams()
+
+  const [receipt, setReceipt] = useState<ReceiptProps | null>(null)
+
+  const { receipts, setReceipts } = useContext(ClientsContext)
+
+  const [message, setMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await api.get(`/pagamentos/${id}`)
+
+        if (response.status === 200) {
+          setReceipt(response.data)
+        }
+      } catch (error) {
+        console.error('Error:', error)
+
+        setMessage('Erro ao conectar com servidor. Tente mais tarde.')
+      }
+    }
+
+    getData()
+  }, [id])
+
+  if (!receipt) {
+    return <Loading />
+  }
+
+  const originalValue = receipt.valor
+  const valueInR$ = formatValue(originalValue)
+
+  const originalDateString = receipt.dataPagamento
+  const originalDate = parseISO(originalDateString)
+  const formattedDate = format(originalDate, "dd/MM/yyyy 'às' HH'h'mm")
+
+  const handleDeleteReceipt = async () => {
+    try {
+      const response = await api.delete(`/pagamentos/${id}`)
+
+      if (response.status === 200) {
+        console.log('Recebimento deletado com sucesso!')
+
+        const stringId = id
+        const numberId = parseInt(stringId!, 10)
+
+        const receiptsWithoutDeletedOne = receipts.filter((receipt) => {
+          return receipt.id !== numberId
+        })
+
+        setReceipts(receiptsWithoutDeletedOne)
+
+        setMessage('Recebimento deletado com sucesso!')
+      } else {
+        console.error('Erro ao deletar recebimento. Status:', response.status)
+
+        setMessage('Não foi possível deletar recebimento')
+      }
+    } catch (error) {
+      console.error(error)
+
+      setMessage('Não foi possível deletar o recebimento.')
+    }
+  }
+
+  const showOverlay = message !== null
+
   return (
-    <DetailedReceiptLayout>
-      <DetailedReceiptContainer>
-        <NavLink to="/consultar/recebimento">
-          <button className="back_button">
-            <CaretLeft />
-            Voltar
-          </button>
-        </NavLink>
-        <h1>Detalhes do recebimento</h1>
-        <DetailedReceiptInfos>
-          <div>
-            <span>Nome do doador</span>
-            <h2>Fulano da Silva</h2>
-          </div>
-          <div>
-            <span>Data</span>
-            <h2>25/11/2023</h2>
-          </div>
-          <div>
-            <span>Valor</span>
-            <h2>R$30,00</h2>
-          </div>
-          <div>
-            <span>Tipo de recebimento</span>
-            <h2>Pix</h2>
-          </div>
-          <div>
-            <span>Cadastrado em</span>
-            <h2>25/11/2023 14:50</h2>
-          </div>
-          <div>
-            <span>Editado em</span>
-            <h2>25/11/2023 15:50</h2>
-          </div>
-          <div>
-            <span>Descrição</span>
-            <h3>Sem descrição</h3>
-          </div>
-        </DetailedReceiptInfos>
-        <ReceiptOptionButtons>
-          <UpdateReceiptButton>
-            <Pencil />
-            editar
-          </UpdateReceiptButton>
-          <DeleteReceiptButton>
-            <Trash />
-            excluir
-          </DeleteReceiptButton>
-        </ReceiptOptionButtons>
-      </DetailedReceiptContainer>
-    </DetailedReceiptLayout>
+    <>
+      <DetailedReceiptLayout>
+        <DetailedReceiptContainer>
+          <NavLink to="/consultar/recebimento">
+            <button className="back_button">
+              <CaretLeft />
+              Voltar
+            </button>
+          </NavLink>
+          <h1>Detalhes do recebimento</h1>
+          <DetailedReceiptInfos>
+            <div>
+              <span>Nome do pagante</span>
+              <h2>{receipt.cliente.nome}</h2>
+            </div>
+            <div>
+              <span>Valor</span>
+              <h2>{valueInR$}</h2>
+            </div>
+            <div>
+              <span>Meio de recebimento</span>
+              <h2>{receipt.tipoPagamento}</h2>
+            </div>
+            <div>
+              <span>Data e horário</span>
+              <h2>{formattedDate}</h2>
+            </div>
+            <div>
+              <span>Descrição</span>
+              <h3>Sem descrição</h3>
+            </div>
+          </DetailedReceiptInfos>
+          <ReceiptOptionButtons>
+            <UpdateReceiptButton>
+              <Pencil />
+              editar
+            </UpdateReceiptButton>
+            <DeleteReceiptButton onClick={handleDeleteReceipt}>
+              <Trash />
+              excluir
+            </DeleteReceiptButton>
+          </ReceiptOptionButtons>
+        </DetailedReceiptContainer>
+      </DetailedReceiptLayout>
+      {showOverlay && (
+        <Overlay>
+          <OverlayContent>
+            <Message>{message}</Message>
+            <NavLink to="/consultar/recebimento">
+              <OverlayBackButton>Voltar</OverlayBackButton>
+            </NavLink>
+          </OverlayContent>
+        </Overlay>
+      )}
+    </>
   )
 }

@@ -4,21 +4,46 @@ import {
   ReceiptSearchResultContainer,
   ReceiptSearchResultInfos,
 } from './styles'
+import { format, parseISO } from 'date-fns'
+import { NavLink } from 'react-router-dom'
 
-export function ReceiptSearchResult() {
+interface ReceiptSearchResultProps {
+  id: number
+  nome: string
+  valor: number
+  dataPagamento: string
+}
+
+export function ReceiptSearchResult({
+  id,
+  nome,
+  valor,
+  dataPagamento,
+}: ReceiptSearchResultProps) {
+  const valueInR$ = valor.toLocaleString('pt-br', {
+    style: 'currency',
+    currency: 'BRL',
+  })
+
+  const originalDateString = dataPagamento
+  const originalDate = parseISO(originalDateString)
+  const formattedDate = format(originalDate, 'dd/MM/yy')
+
   return (
-    <ReceiptSearchResultContainer>
-      <DivisionCardLine />
-      <ReceiptSearchResultInfos>
-        <div className="donator_and_date">
-          <h2>Fulano de Sousa</h2>
-          <span>25/11/2023</span>
-        </div>
-        <div className="donation_value_and_arrow">
-          <span className="donation_value">R$30,00</span>
-          <CaretRight size={30} />
-        </div>
-      </ReceiptSearchResultInfos>
-    </ReceiptSearchResultContainer>
+    <NavLink to={`/consultar/recebimento/detalhes/${id}`}>
+      <ReceiptSearchResultContainer>
+        <DivisionCardLine />
+        <ReceiptSearchResultInfos>
+          <div className="donator_and_date">
+            <h2>{nome}</h2>
+            <span>{formattedDate}</span>
+          </div>
+          <div className="donation_value_and_arrow">
+            <span className="donation_value">{valueInR$}</span>
+            <CaretRight size={30} />
+          </div>
+        </ReceiptSearchResultInfos>
+      </ReceiptSearchResultContainer>
+    </NavLink>
   )
 }

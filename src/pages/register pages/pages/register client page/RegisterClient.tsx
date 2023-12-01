@@ -15,6 +15,7 @@ import {
 import { api } from '../../../../services/api'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 const RegisterClientSchema = z.object({
   nome: z.string().min(1, 'É preciso preencher o nome do cliente'),
@@ -52,10 +53,36 @@ export function RegisterClient() {
         setMessage('Erro ao cadastrar cliente')
       }
 
-      console.log(response)
+      console.log(response.status)
     } catch (error) {
       console.error(error)
+
+      if (isAxiosError(error)) {
+        const axiosError = error as AxiosError
+
+        if (axiosError.response) {
+          const responseData = axiosError.response.data as { detail?: string }
+
+          if (responseData.detail) {
+            setMessage(`Erro ao cadastrar cliente: ${responseData.detail}`)
+          } else {
+            setMessage('Erro ao cadastrar cliente. Detalhes indisponíveis.')
+          }
+        } else if (axiosError.request) {
+          setMessage(
+            'Erro de comunicação com o servidor. Tente novamente mais tarde.',
+          )
+        } else {
+          setMessage('Ocorreu um erro inesperado. Tente novamente mais tarde.')
+        }
+      } else {
+        setMessage('Ocorreu um erro inesperado. Tente novamente mais tarde.')
+      }
     }
+  }
+
+  const isAxiosError = (error: any): error is AxiosError => {
+    return error.isAxiosError !== undefined
   }
 
   const showOverlay = message !== null
@@ -98,7 +125,7 @@ export function RegisterClient() {
             </label>
           </RegisterForm>
           <ConfirmRegisterButton type="submit" form="register_form">
-            Confirmar
+            Cadastrar
           </ConfirmRegisterButton>
         </RegisterPageContainer>
       </RegisterPageLayout>
