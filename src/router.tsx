@@ -9,7 +9,7 @@ import { SearchReceipt } from './pages/search pages/pages/search receipt page/Se
 import { SearchPage } from './pages/search pages/SearchPage'
 import { SearchClient } from './pages/search pages/pages/search client page/SearchClient'
 import { DetailedClient } from './pages/detailed item pages/detailed client page/DetailedClient'
-import { EditClient } from './pages/edit client/editClient'
+import { EditClient } from './pages/edit client/EditClient'
 
 export function Router() {
   return (

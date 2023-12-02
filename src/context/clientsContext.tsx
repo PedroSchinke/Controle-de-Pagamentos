@@ -22,6 +22,8 @@ interface ClientsContextType {
   setClients: (value: ClientProps[]) => void
   receipts: ReceiptProps[]
   setReceipts: (value: ReceiptProps[]) => void
+  showNoResultsMessage: boolean
+  setShowNoResultsMessage: (value: boolean) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -35,6 +37,9 @@ export function ContextProvider({ children }: ContextProviderProps) {
 
   const [receipts, setReceipts] = useState<ReceiptProps[]>([])
 
+  const [showNoResultsMessage, setShowNoResultsMessage] =
+    useState<boolean>(false)
+
   return (
     <ClientsContext.Provider
       value={{
@@ -42,6 +47,8 @@ export function ContextProvider({ children }: ContextProviderProps) {
         setClients,
         receipts,
         setReceipts,
+        showNoResultsMessage,
+        setShowNoResultsMessage,
       }}
     >
       {children}

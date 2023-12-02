@@ -2,27 +2,25 @@ import { useContext, useEffect } from 'react'
 import { ClientFilter } from './components/client filter/ClientFilter'
 import { ClientSearchResult } from './components/client search result/ClientSearchResult'
 import {
+  NoResultsMesssage,
   ResultsContainer,
   SearchClientPageContainer,
   SearchClientPageLayout,
 } from './styles'
 import { ClientsContext } from '../../../../context/clientsContext'
-import { api } from '../../../../services/api'
 
 export function SearchClient() {
-  const { clients, setClients } = useContext(ClientsContext)
-
-  useEffect(() => {
-    async function loadClients() {
-      const response = await api.get('/clientes')
-      setClients(response.data)
-    }
-    if (!clients) {
-      loadClients()
-    }
-  }, [clients, setClients])
+  const { clients, setClients, showNoResultsMessage, setShowNoResultsMessage } =
+    useContext(ClientsContext)
 
   const showResults = clients.length !== 0
+
+  useEffect(() => {
+    return () => {
+      setShowNoResultsMessage(false)
+      setClients([])
+    }
+  }, [setClients, setShowNoResultsMessage])
 
   return (
     <SearchClientPageLayout>
@@ -30,9 +28,17 @@ export function SearchClient() {
         <h1>Buscar Cliente</h1>
         <ClientFilter />
       </SearchClientPageContainer>
+      {showNoResultsMessage ? (
+        <NoResultsMesssage>
+          Sua busca não retornou nenhum resultado
+        </NoResultsMesssage>
+      ) : null}
       {showResults && (
         <ResultsContainer>
-          <h1>Resultados</h1>
+          <h2 className="total_results">
+            Total de resultados: {clients.length}
+          </h2>
+          <div></div>
           {clients.map((client) => {
             return (
               <ClientSearchResult

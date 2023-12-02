@@ -37,6 +37,8 @@ export function ClientFilter() {
 
   const { setClients } = useContext(ClientsContext)
 
+  const { setShowNoResultsMessage } = useContext(ClientsContext)
+
   const handleFilter = async (data: filterDataProps) => {
     try {
       filterSchema.parse(data)
@@ -47,8 +49,10 @@ export function ClientFilter() {
 
       if (response.data.length !== 0) {
         setClients(response.data)
+        setShowNoResultsMessage(false)
       } else {
         setClients([])
+        setShowNoResultsMessage(true)
       }
     } catch (error) {
       console.error('Error:', error)

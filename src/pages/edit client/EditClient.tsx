@@ -71,6 +71,20 @@ export function EditClient() {
   }, [id, setValue])
 
   const handleEditClient = async (data: editDataProps) => {
+    const response = await api.get(`/clientes/${id}`)
+    const currentData = response.data
+
+    if (
+      currentData.nome === data.nome &&
+      currentData.email === data.email &&
+      currentData.celular === data.celular
+    ) {
+      setMessage(
+        'É preciso alterar ao menos um dos campos para realizar a edição',
+      )
+      return
+    }
+
     try {
       EditClientSchema.parse(data)
 
@@ -174,7 +188,14 @@ export function EditClient() {
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/consultar/cliente">
+            <NavLink
+              to={
+                message === 'Cliente editado com sucesso!'
+                  ? `/consultar/cliente/detalhes/${id}`
+                  : `/editar/cliente/${id}`
+              }
+              onClick={() => setMessage(null)}
+            >
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
           </OverlayContent>
