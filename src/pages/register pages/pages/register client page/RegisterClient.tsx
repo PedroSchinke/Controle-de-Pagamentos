@@ -16,6 +16,7 @@ import { api } from '../../../../services/api'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AxiosError } from 'axios'
+import InputMask from 'react-input-mask'
 
 const RegisterClientSchema = z.object({
   nome: z.string().min(1, 'É preciso preencher o nome do cliente'),
@@ -23,7 +24,7 @@ const RegisterClientSchema = z.object({
     .string()
     .min(1, 'É preciso preencher o email do cliente')
     .email('Formato de email inválido'),
-  celular: z.number().min(9, 'É preciso digitar um número de celular válido'),
+  celular: z.string().min(15, 'É preciso digitar um número de celular válido'),
 })
 
 type registerDataProps = z.infer<typeof RegisterClientSchema>
@@ -32,6 +33,7 @@ export function RegisterClient() {
   const {
     register,
     handleSubmit,
+    // setValue,
     formState: { errors },
   } = useForm<registerDataProps>({
     mode: 'all',
@@ -114,10 +116,12 @@ export function RegisterClient() {
 
             <label>
               Telefone
-              <input
-                type="tel"
+              <InputMask
+                mask="(99) 99999-9999"
+                maskChar="_"
+                type="text"
                 id="celular"
-                {...register('celular', { valueAsNumber: true })}
+                {...register('celular')}
               />
               {errors.celular && (
                 <RegisterFormError>{errors.celular.message}</RegisterFormError>
