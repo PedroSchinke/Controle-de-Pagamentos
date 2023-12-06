@@ -12,13 +12,12 @@ import {
   OverlayContent,
 } from './styles'
 import { api } from '../../services/api'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, ChangeEvent } from 'react'
 import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { NavLink, useParams } from 'react-router-dom'
 import { CaretLeft } from 'phosphor-react'
 import { ClientsContext } from '../../context/clientsContext'
-import InputMask from 'react-input-mask'
 
 const EditClientSchema = z.object({
   nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente'),
@@ -56,16 +55,15 @@ export function EditClient() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await api.get(`/clientes/${id}`)
+      try {
+        const response = await api.get(`/clientes/${id}`)
 
-      if (response.status === 200) {
-        setValue('nome', response.data.nome)
-        setValue('email', response.data.email)
-
-        const numberWithoutMask = response.data.celular.replace(/\D/g, '')
-
-        setValue('celular', numberWithoutMask)
-      }
+        if (response.status === 200) {
+          setValue('nome', response.data.nome)
+          setValue('email', response.data.email)
+          setValue('celular', response.data.celular)
+        }
+      } catch (error) {}
     }
 
     getData()
@@ -129,6 +127,21 @@ export function EditClient() {
     return error.isAxiosError !== undefined
   }
 
+  const formatNumber = (event: ChangeEvent<HTMLInputElement>) => {
+    let phoneNumber = event.target.value.replace(/\D/g, '')
+    if (phoneNumber.length > 2) {
+      phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(
+        2,
+      )}`
+    }
+    if (phoneNumber.length > 10) {
+      phoneNumber = `${phoneNumber.substring(0, 10)}-${phoneNumber.substring(
+        10,
+      )}`
+    }
+    setValue('celular', phoneNumber)
+  }
+
   const showOverlay = message !== null
 
   return (
@@ -168,11 +181,10 @@ export function EditClient() {
 
             <label>
               Telefone
-              <InputMask
-                mask="(99) 99999-9999"
-                type="text"
+              <input
                 id="celular"
-                {...register('celular')}
+                type="text"
+                {...register('celular', { onChange: formatNumber })}
               />
               {errors.celular && (
                 <EditClientFormError>
