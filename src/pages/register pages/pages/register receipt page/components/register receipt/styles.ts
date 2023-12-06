@@ -1,14 +1,14 @@
 import styled from 'styled-components'
-import { BaseButton } from '../register pages/pages/register client page/styles'
+import { BaseButton } from '../../../register client page/styles'
 
-export const EditClientLayout = styled.div`
+export const RegisterReceiptLayout = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
-export const EditClientContainer = styled.section`
+export const RegisterReceiptContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,15 +49,30 @@ export const EditClientContainer = styled.section`
   }
 `
 
-export const EditClientForm = styled.form`
-  width: 70%;
+export const RegisterReceiptForm = styled.form`
+  max-width: 70%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
 
+  .nome_label {
+    input {
+      cursor: not-allowed;
+    }
+
+    .alter_client_button_container {
+      margin: 0 0 10px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      a {
+        max-width: 60%;
+      }
+    }
+  }
+
   label {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -66,7 +81,40 @@ export const EditClientForm = styled.form`
     color: ${(props) => props.theme.base_text};
   }
 
+  .valor_label {
+    display: flex;
+    flex-direction: column;
+
+    .prefix_and_input {
+      width: 100%;
+      display: flex;
+
+      .prefix {
+        width: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: right;
+        padding-left: 8px;
+        font-size: 1.3rem;
+        background-color: ${(props) => props.theme.base_input};
+        color: ${(props) => props.theme.base_label};
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+        z-index: 900;
+      }
+
+      .valor_input {
+        max-width: 85%;
+        padding: 8px 8px 8px 3px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+  }
+
   input {
+    width: 100%;
     padding: 8px;
     border: none;
     border-radius: 8px;
@@ -76,24 +124,41 @@ export const EditClientForm = styled.form`
     color: ${(props) => props.theme.base_label};
   }
 
-  textarea {
-    resize: none;
-    padding: 3px;
+  select {
+    padding: 8px;
     border: none;
+    border-radius: 8px;
     background-color: ${(props) => props.theme.base_input};
     font-family: 'Roboto', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: ${(props) => props.theme.base_label};
+
+    option {
+      font-size: 1.1rem;
+    }
   }
 `
-export const EditClientFormError = styled.p`
-  max-width: 100%;
+
+export const AlterClientButton = styled.button`
   font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  border: none;
+  background-color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.blue_dark};
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+export const InputErrorMessage = styled.p`
   font-size: 1.1rem;
+  font-family: 'Roboto', sans-serif;
   color: ${(props) => props.theme.red};
 `
 
-export const ConfirmEditButton = styled(BaseButton)``
+export const ConfirmRegisterReceiptButton = styled(BaseButton)``
 
 export const Overlay = styled.div`
   position: fixed;

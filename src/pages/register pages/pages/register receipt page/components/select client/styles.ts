@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SearchReceiptPageLayout = styled.div`
+export const SelectClientLayout = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -10,12 +10,11 @@ export const SearchReceiptPageLayout = styled.div`
   color: ${(props) => props.theme.base_text};
 `
 
-export const SearchReceiptPageContainer = styled.section`
+export const SelectClientContent = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 20px;
   padding: 40px 10px;
   background-color: ${(props) => props.theme.background};
@@ -23,10 +22,7 @@ export const SearchReceiptPageContainer = styled.section`
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
   h1 {
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
   }
 `
 
@@ -41,15 +37,19 @@ export const ResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding: 40px 10px 20px 10px;
+  padding: 20px 10px 0px 10px;
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
+  .total_results {
+    font-size: 1.3rem;
+    margin: 0px 0px 18px 20px;
+    color: ${(props) => props.theme.base_label};
+  }
+
   h1 {
-    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
     margin: 0px 0px 20px 20px;
   }
 `

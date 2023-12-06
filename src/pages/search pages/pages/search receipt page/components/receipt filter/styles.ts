@@ -11,12 +11,16 @@ export const FilterContainer = styled.div`
   color: ${(props) => props.theme.base_subtitle};
 
   .main_label {
-    width: 70%;
+    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     gap: 4px;
+
+    #nome {
+      width: 100%;
+    }
 
     .label_and_input_of_filter {
       width: 100%;
@@ -37,16 +41,13 @@ export const FilterContainer = styled.div`
 
   input {
     width: 85%;
-    padding: 3px;
+    padding: 8px;
     border: none;
+    border-radius: 8px;
     background-color: ${(props) => props.theme.base_input};
     font-family: 'Roboto', sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: ${(props) => props.theme.base_label};
-  }
-
-  .name_input {
-    width: 100%;
   }
 `
 
