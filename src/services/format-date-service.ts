@@ -8,6 +8,6 @@ export const formatDate = (
   const filteredDates = originalDates.filter(Boolean)
 
   return filteredDates.map((originalDate) => {
-    return format(parseISO(originalDate!), "dd/MM/yyyy 'às' HH'h'mm")
+    return format(parseISO(originalDate!), 'dd/MM/yyyy')
   })
 }
