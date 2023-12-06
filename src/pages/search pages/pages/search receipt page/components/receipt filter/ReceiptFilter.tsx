@@ -4,12 +4,7 @@ import * as z from 'zod'
 import { api } from '../../../../../../services/api'
 import { useContext } from 'react'
 import { ClientsContext } from '../../../../../../context/clientsContext'
-
-const filterSchema = z.object({
-  from_date: z.string(),
-  to_date: z.string(),
-  name: z.string(),
-})
+import { SelectClientOverlay } from '../select client overlay/SelectClientOverlay'
 
 const formDataSchema = z.object({
   nome: z.string(),
@@ -23,33 +18,22 @@ interface FormDataProps {
   dataFim: string
 }
 
-type filterDataProps = z.infer<typeof filterSchema>
+// type filterDataProps = z.infer<typeof filterSchema>
 
 export function ReceiptFilter() {
   const { register, handleSubmit } = useForm<FormDataProps>()
 
   const { setReceipts, setShowNoResultsMessage } = useContext(ClientsContext)
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     // filterSchema.parse(data)
-
-  //     const response = await api.get('/pagamentos')
-
-  //     if (response.status === 200) {
-  //       setReceipts(response.data)
-  //     }
-  //   }
-
-  //   getData()
-  // }, [setReceipts])
+  const { isClientSelectOverlayActive, setIsClientSelectOverlayActive } =
+    useContext(ClientsContext)
 
   const handleFilter = async (data: FormDataProps) => {
     try {
       formDataSchema.parse(data)
 
       console.log(data)
-
+      // /pagamentos/cliente?dataIni=2023-10-10&dataFim=2023-12-31
       const response = await api.get(
         `/pagamentos/cliente?clienteId=1&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
       )
@@ -67,32 +51,40 @@ export function ReceiptFilter() {
   }
 
   return (
-    <FilterContainer>
-      <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
-        <label className="main_label">
-          Nome
-          <input type="text" id="nome" {...register('nome')} />
-        </label>
+    <>
+      <FilterContainer>
+        <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
+          <label className="main_label">
+            Nome
+            <input
+              type="text"
+              id="nome"
+              onClick={() => setIsClientSelectOverlayActive(true)}
+              {...register('nome')}
+            />
+          </label>
 
-        <label className="main_label">
-          Data
-          <div className="label_and_input_of_filter">
-            <label>
-              De
-              <input type="date" id="dataIni" {...register('dataIni')} />
-            </label>
-          </div>
-          <div className="label_and_input_of_filter">
-            <label>
-              Até
-              <input type="date" id="dataFim" {...register('dataFim')} />
-            </label>
-          </div>
-        </label>
-        <FilterButton type="submit" form="filter_form">
-          Buscar
-        </FilterButton>
-      </FilterForm>
-    </FilterContainer>
+          <label className="main_label">
+            Data
+            <div className="label_and_input_of_filter">
+              <label>
+                De
+                <input type="date" id="dataIni" {...register('dataIni')} />
+              </label>
+            </div>
+            <div className="label_and_input_of_filter">
+              <label>
+                Até
+                <input type="date" id="dataFim" {...register('dataFim')} />
+              </label>
+            </div>
+          </label>
+          <FilterButton type="submit" form="filter_form">
+            Buscar
+          </FilterButton>
+        </FilterForm>
+      </FilterContainer>
+      {isClientSelectOverlayActive && <SelectClientOverlay />}
+    </>
   )
 }

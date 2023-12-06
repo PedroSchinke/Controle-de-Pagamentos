@@ -20,6 +20,10 @@ export interface ReceiptProps {
 interface ClientsContextType {
   clients: ClientProps[]
   setClients: (value: ClientProps[]) => void
+  clientsForReceiptSearch: ClientProps[]
+  setClientsForReceiptSearch: (value: ClientProps[]) => void
+  isClientSelectOverlayActive: boolean
+  setIsClientSelectOverlayActive: (value: boolean) => void
   receipts: ReceiptProps[]
   setReceipts: (value: ReceiptProps[]) => void
   showNoResultsMessage: boolean
@@ -35,6 +39,13 @@ interface ContextProviderProps {
 export function ContextProvider({ children }: ContextProviderProps) {
   const [clients, setClients] = useState<ClientProps[]>([])
 
+  const [clientsForReceiptSearch, setClientsForReceiptSearch] = useState<
+    ClientProps[]
+  >([])
+
+  const [isClientSelectOverlayActive, setIsClientSelectOverlayActive] =
+    useState<boolean>(false)
+
   const [receipts, setReceipts] = useState<ReceiptProps[]>([])
 
   const [showNoResultsMessage, setShowNoResultsMessage] =
@@ -45,6 +56,10 @@ export function ContextProvider({ children }: ContextProviderProps) {
       value={{
         clients,
         setClients,
+        clientsForReceiptSearch,
+        setClientsForReceiptSearch,
+        isClientSelectOverlayActive,
+        setIsClientSelectOverlayActive,
         receipts,
         setReceipts,
         showNoResultsMessage,
