@@ -3,13 +3,14 @@ import { DefaultLayout } from './layouts/defaultLayout'
 import { RegisterPage } from './pages/register pages/RegisterPage'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { DetailedReceipt } from './pages/detailed item pages/detailed receipt page/DetailedReceipt'
-import { RegisterReceipt } from './pages/register pages/pages/register receipt page/RegisterReceipt'
+import { RegisterReceipt } from './pages/register pages/pages/register receipt page/components/register receipt/RegisterReceipt'
 import { RegisterClient } from './pages/register pages/pages/register client page/RegisterClient'
 import { SearchReceipt } from './pages/search pages/pages/search receipt page/SearchReceipt'
 import { SearchPage } from './pages/search pages/SearchPage'
 import { SearchClient } from './pages/search pages/pages/search client page/SearchClient'
 import { DetailedClient } from './pages/detailed item pages/detailed client page/DetailedClient'
 import { EditClient } from './pages/edit client/EditClient'
+import { SelectClient } from './pages/register pages/pages/register receipt page/components/select client/SelectClient'
 
 export function Router() {
   return (
@@ -17,7 +18,14 @@ export function Router() {
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cadastrar" element={<RegisterPage />} />
-        <Route path="/cadastrar/recebimento" element={<RegisterReceipt />} />
+        <Route
+          path="/cadastrar/recebimento/selecionar-pagante"
+          element={<SelectClient />}
+        />
+        <Route
+          path="/cadastrar/recebimento/selecionar-pagante/:id"
+          element={<RegisterReceipt />}
+        />
         <Route path="/cadastrar/cliente" element={<RegisterClient />} />
         <Route path="/consultar" element={<SearchPage />} />
         <Route path="/consultar/recebimento" element={<SearchReceipt />} />
