@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 export function RegisterPage() {
   return (
     <RegisterPageLayout>
-      <NavLink to="/cadastrar/recebimento">
+      <NavLink to="/cadastrar/recebimento/selecionar-pagante">
         <RegisterPageOption>
           <h1>
             Cadastrar Pagamento
