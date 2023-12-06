@@ -18,41 +18,44 @@ import { NavLink } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import InputMask from 'react-input-mask'
 
-const RegisterClientSchema = z.object({
-  nome: z.string().min(1, 'É preciso preencher o nome do cliente'),
+const registerClientSchema = z.object({
+  nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
   email: z
     .string()
-    .min(1, 'É preciso preencher o email do cliente')
-    .email('Formato de email inválido'),
-  celular: z.string().min(15, 'É preciso digitar um número de celular válido'),
+    .trim()
+    .min(1, 'É preciso preencher o email do cliente.')
+    .email('Formato de email inválido.'),
+  celular: z
+    .string()
+    .trim()
+    .min(15, 'É preciso digitar um número de celular válido.'),
 })
 
-type registerDataProps = z.infer<typeof RegisterClientSchema>
+type registerDataProps = z.infer<typeof registerClientSchema>
 
 export function RegisterClient() {
   const {
     register,
     handleSubmit,
-    // setValue,
     formState: { errors },
   } = useForm<registerDataProps>({
     mode: 'all',
     criteriaMode: 'all',
-    resolver: zodResolver(RegisterClientSchema),
+    resolver: zodResolver(registerClientSchema),
   })
 
   const [message, setMessage] = useState<string | null>(null)
 
   const handleRegisterClient = async (data: registerDataProps) => {
     try {
-      RegisterClientSchema.parse(data)
+      registerClientSchema.parse(data)
 
       const response = await api.post('/clientes', data)
 
       if (response.status === 201) {
         setMessage('Cliente cadastrado com sucesso!')
       } else {
-        setMessage('Erro ao cadastrar cliente')
+        setMessage('Erro ao cadastrar cliente. Tente novamente mais tarde.')
       }
 
       console.log(response.status)
@@ -95,7 +98,7 @@ export function RegisterClient() {
         <RegisterPageContainer>
           <h1>Cadastrar Cliente</h1>
           <RegisterForm
-            id="register_form"
+            id="register_client_form"
             onSubmit={handleSubmit(handleRegisterClient)}
           >
             <label>
@@ -128,7 +131,7 @@ export function RegisterClient() {
               )}
             </label>
           </RegisterForm>
-          <ConfirmRegisterButton type="submit" form="register_form">
+          <ConfirmRegisterButton type="submit" form="register_client_form">
             Cadastrar
           </ConfirmRegisterButton>
         </RegisterPageContainer>

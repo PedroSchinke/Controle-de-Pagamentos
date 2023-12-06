@@ -17,7 +17,7 @@ import { ClientsContext } from '../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
 
 const filterSchema = z.object({
-  name: z.string().min(1, 'É preciso preencher este campo'),
+  name: z.string().trim().min(1, 'É preciso preencher este campo'),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>
@@ -55,7 +55,7 @@ export function ClientFilter() {
         setShowNoResultsMessage(true)
       }
     } catch (error) {
-      console.error('Error:', error)
+      console.log(error)
 
       setErrorMessage('Erro ao conectar com servidor. Tente mais tarde.')
     }
@@ -72,8 +72,7 @@ export function ClientFilter() {
             <input
               type="text"
               id="name"
-              className="name_input"
-              {...register('name')}
+              {...register('name', { required: true })}
             />
             {errors.name && (
               <FilterErrorMessage>{errors.name.message}</FilterErrorMessage>

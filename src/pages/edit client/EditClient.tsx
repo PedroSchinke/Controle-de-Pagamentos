@@ -18,14 +18,20 @@ import { useForm } from 'react-hook-form'
 import { NavLink, useParams } from 'react-router-dom'
 import { CaretLeft } from 'phosphor-react'
 import { ClientsContext } from '../../context/clientsContext'
+import InputMask from 'react-input-mask'
 
 const EditClientSchema = z.object({
-  nome: z.string().min(1, 'É preciso preencher o nome do cliente'),
+  nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente'),
   email: z
     .string()
+    .trim()
     .min(1, 'É preciso preencher o email do cliente')
     .email('Formato de email inválido'),
-  celular: z.number().min(9, 'É preciso digitar um número de celular válido'),
+  celular: z
+    .string({
+      invalid_type_error: 'É preciso digitar um número de celular válido',
+    })
+    .min(9, 'É preciso digitar um número de celular válido'),
 })
 
 type editDataProps = z.infer<typeof EditClientSchema>
@@ -52,19 +58,14 @@ export function EditClient() {
     const getData = async () => {
       const response = await api.get(`/clientes/${id}`)
 
-      let nomeValue = ''
-      let emailValue = ''
-      let celularValue = null
-
       if (response.status === 200) {
-        nomeValue = response.data.nome
-        emailValue = response.data.email
-        celularValue = response.data.celular
-      }
+        setValue('nome', response.data.nome)
+        setValue('email', response.data.email)
 
-      setValue('nome', nomeValue)
-      setValue('email', emailValue)
-      setValue('celular', celularValue)
+        const numberWithoutMask = response.data.celular.replace(/\D/g, '')
+
+        setValue('celular', numberWithoutMask)
+      }
     }
 
     getData()
@@ -167,10 +168,11 @@ export function EditClient() {
 
             <label>
               Telefone
-              <input
-                type="tel"
+              <InputMask
+                mask="(99) 99999-9999"
+                type="text"
                 id="celular"
-                {...register('celular', { valueAsNumber: true })}
+                {...register('celular')}
               />
               {errors.celular && (
                 <EditClientFormError>
