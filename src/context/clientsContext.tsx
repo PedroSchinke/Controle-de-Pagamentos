@@ -24,10 +24,16 @@ interface ClientsContextType {
   setClientsForReceiptSearch: (value: ClientProps[]) => void
   isClientSelectOverlayActive: boolean
   setIsClientSelectOverlayActive: (value: boolean) => void
+  clientName: string | null
+  setClientName: (value: string | null) => void
+  clientNameForRegister: string | null
+  setClientNameForRegister: (value: string | null) => void
   receipts: ReceiptProps[]
   setReceipts: (value: ReceiptProps[]) => void
   showNoResultsMessage: boolean
   setShowNoResultsMessage: (value: boolean) => void
+  showNoResultsMessageInOverlay: boolean
+  setShowNoResultsMessageInOverlay: (value: boolean) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -46,9 +52,18 @@ export function ContextProvider({ children }: ContextProviderProps) {
   const [isClientSelectOverlayActive, setIsClientSelectOverlayActive] =
     useState<boolean>(false)
 
+  const [clientName, setClientName] = useState<string | null>(null)
+
+  const [clientNameForRegister, setClientNameForRegister] = useState<
+    string | null
+  >(null)
+
   const [receipts, setReceipts] = useState<ReceiptProps[]>([])
 
   const [showNoResultsMessage, setShowNoResultsMessage] =
+    useState<boolean>(false)
+
+  const [showNoResultsMessageInOverlay, setShowNoResultsMessageInOverlay] =
     useState<boolean>(false)
 
   return (
@@ -60,10 +75,16 @@ export function ContextProvider({ children }: ContextProviderProps) {
         setClientsForReceiptSearch,
         isClientSelectOverlayActive,
         setIsClientSelectOverlayActive,
+        clientName,
+        setClientName,
+        clientNameForRegister,
+        setClientNameForRegister,
         receipts,
         setReceipts,
         showNoResultsMessage,
         setShowNoResultsMessage,
+        showNoResultsMessageInOverlay,
+        setShowNoResultsMessageInOverlay,
       }}
     >
       {children}

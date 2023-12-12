@@ -3,23 +3,23 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { NavLink, useParams } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
-import { api } from '../../../../../../services/api'
 import {
   AlterClientButton,
-  ConfirmRegisterReceiptButton,
+  ConfirmEditReceiptButton,
   InputErrorMessage,
   Message,
   Overlay,
   OverlayBackButton,
   OverlayContent,
-  RegisterReceiptContainer,
-  RegisterReceiptForm,
-  RegisterReceiptLayout,
+  EditReceiptContainer,
+  EditReceiptForm,
+  EditReceiptLayout,
 } from './styles'
 import { NumericFormat } from 'react-number-format'
 import { CaretLeft } from 'phosphor-react'
+import { api } from '../../services/api'
 
-const registerReceiptSchema = z.object({
+const editReceiptSchema = z.object({
   cliente: z.object({
     id: z.number(),
   }),
@@ -47,7 +47,7 @@ const formDataSchema = z.object({
       invalid_type_error: 'É preciso inserir um valor.',
       required_error: 'É preciso inserir um valor.',
     })
-    .min(3, 'É preciso inserir um valor.'),
+    .min(1, 'É preciso inserir um valor.'),
 })
 
 interface FormDataProps {
@@ -62,7 +62,7 @@ interface PaymentOptionsProps {
   descricao: string
 }
 
-export function RegisterReceipt() {
+export function EditReceipt() {
   const { id } = useParams()
 
   const {
@@ -84,11 +84,14 @@ export function RegisterReceipt() {
   const [message, setMessage] = useState<string | null>(null)
 
   useEffect(() => {
-    const getClientName = async () => {
-      const response = await api.get(`/clientes/${id}`)
+    const getReceiptData = async () => {
+      const response = await api.get(`/pagamentos/${id}`)
 
       if (response.status === 200) {
-        setValue('cliente', response.data.nome)
+        setValue('cliente', response.data.cliente.nome)
+        setValue('dataPagamento', response.data.dataPagamento)
+        setValue('valor', response.data.valor)
+        setValue('meioPagamento', response.data.tipoPagamento)
       }
     }
 
@@ -100,18 +103,20 @@ export function RegisterReceipt() {
       }
     }
 
-    getClientName()
+    getReceiptData()
     getPaymentOptions()
   }, [id, setValue])
 
-  const handleRegisterReceipt = async (data: FormDataProps) => {
+  const handleEditReceipt = async (data: FormDataProps) => {
     try {
-      const numberWithDot = data.valor.replace(',', '.')
-      const numberValue = parseInt(numberWithDot, 10)
-
       formDataSchema.safeParse(data)
 
-      const clientNumberId = parseInt(id!, 10)
+      const numberWithDot = data.valor.replace(',', '.')
+      const numberValue = parseFloat(numberWithDot)
+
+      const getClientId = await api.get(`/clientes/nome/${data.cliente}`)
+
+      const clientNumberId = parseInt(getClientId.data[0].id!, 10)
       const paymentOptionNumberId = parseInt(data.meioPagamento, 10)
 
       const dataToSend = {
@@ -125,17 +130,30 @@ export function RegisterReceipt() {
         },
       }
 
-      registerReceiptSchema.safeParse(dataToSend)
+      editReceiptSchema.safeParse(dataToSend)
 
-      const response = await api.post('/pagamentos', dataToSend)
+      const getDataToCompare = await api.get(`/pagamentos/${id}`)
+      const currentData = getDataToCompare.data
 
-      if (response.status === 201) {
-        console.log(response)
-        setMessage('Pagamento registrado com sucesso!')
+      if (
+        currentData.cliente.id === clientNumberId &&
+        currentData.dataPagamento === data.dataPagamento &&
+        currentData.valor === numberValue
+      ) {
+        setMessage(
+          'É preciso alterar ao menos um dos campos para realizar a edição',
+        )
+        return
+      }
+
+      const response = await api.put(`/pagamentos/${id}`, dataToSend)
+
+      if (response.status === 200) {
+        setMessage('Pagamento editado com sucesso!')
       }
     } catch (error) {
-      console.log(error)
-      setMessage('Erro ao cadastrar pagamento. Tente mais tarde.')
+      console.error(error)
+      setMessage('Erro ao editar pagamento. Tente mais tarde.')
     }
   }
 
@@ -143,20 +161,20 @@ export function RegisterReceipt() {
 
   return (
     <>
-      <RegisterReceiptLayout>
-        <RegisterReceiptContainer>
+      <EditReceiptLayout>
+        <EditReceiptContainer>
           <div className="back_button_container">
-            <NavLink to={'/cadastrar'}>
+            <NavLink to={`/consultar/recebimento/detalhes/${id}`}>
               <button className="back_button">
                 <CaretLeft />
                 Voltar
               </button>
             </NavLink>
           </div>
-          <h1>Cadastrar Pagamento</h1>
-          <RegisterReceiptForm
-            id="register_receipt_form"
-            onSubmit={handleSubmit(handleRegisterReceipt)}
+          <h1>Editar Pagamento</h1>
+          <EditReceiptForm
+            id="edit_receipt_form"
+            onSubmit={handleSubmit(handleEditReceipt)}
           >
             <label className="nome_label">
               Nome do pagante
@@ -167,7 +185,7 @@ export function RegisterReceipt() {
                 disabled
               />
               <div className="alter_client_button_container">
-                <NavLink to="/cadastrar/recebimento/selecionar-pagante">
+                <NavLink to="/registrar/recebimento/selecionar-pagante">
                   <AlterClientButton>alterar pagante</AlterClientButton>
                 </NavLink>
               </div>
@@ -228,21 +246,26 @@ export function RegisterReceipt() {
                 {errors.meioPagamento.message}
               </InputErrorMessage>
             )}
-          </RegisterReceiptForm>
-          <ConfirmRegisterReceiptButton
-            type="submit"
-            form="register_receipt_form"
-          >
-            Cadastrar
-          </ConfirmRegisterReceiptButton>
-        </RegisterReceiptContainer>
-      </RegisterReceiptLayout>
+          </EditReceiptForm>
+          <ConfirmEditReceiptButton type="submit" form="edit_receipt_form">
+            Editar
+          </ConfirmEditReceiptButton>
+        </EditReceiptContainer>
+      </EditReceiptLayout>
       {showOverlay && (
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/cadastrar">
-              <OverlayBackButton>Voltar</OverlayBackButton>
+            <NavLink
+              to={
+                message === 'Pagamento editado com sucesso!'
+                  ? `/consultar/recebimento/detalhes/${id}`
+                  : `/editar/pagamento/${id}`
+              }
+            >
+              <OverlayBackButton onClick={() => setMessage(null)}>
+                Voltar
+              </OverlayBackButton>
             </NavLink>
           </OverlayContent>
         </Overlay>

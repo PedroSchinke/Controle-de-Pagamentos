@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseButton } from '../../../../../register pages/pages/register client page/styles'
+import { BaseButton } from '../../../../../register client page/styles'
 
 export const FilterContainer = styled.div`
   width: 90%;
@@ -12,7 +12,7 @@ export const FilterContainer = styled.div`
   color: ${(props) => props.theme.base_subtitle};
 
   .main_label {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@ export const FilterContainer = styled.div`
     color: ${(props) => props.theme.base_text};
   }
 
-  .name_input {
+  #name {
     width: 100%;
     padding: 8px;
     border: none;
@@ -30,6 +30,11 @@ export const FilterContainer = styled.div`
     font-family: 'Roboto', sans-serif;
     font-size: 1.3rem;
     color: ${(props) => props.theme.base_label};
+
+    &::placeholder {
+      font-size: 1.1rem;
+      font-style: italic;
+    }
   }
 `
 

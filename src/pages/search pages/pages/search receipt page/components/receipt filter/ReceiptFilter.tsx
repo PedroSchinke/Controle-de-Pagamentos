@@ -1,16 +1,37 @@
 import { useForm } from 'react-hook-form'
-import { FilterButton, FilterContainer, FilterForm } from './styles'
+import {
+  DateLabel,
+  FilterButton,
+  FilterContainer,
+  FilterForm,
+  Message,
+  NameLabel,
+  Overlay,
+  OverlayBackButton,
+  OverlayContent,
+} from './styles'
 import * as z from 'zod'
+import { ZodError } from 'zod'
 import { api } from '../../../../../../services/api'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ClientsContext } from '../../../../../../context/clientsContext'
-import { SelectClientOverlay } from '../select client overlay/SelectClientOverlay'
+import { XCircle } from 'phosphor-react'
 
-const formDataSchema = z.object({
-  nome: z.string(),
-  dataIni: z.string(),
-  dataFim: z.string(),
-})
+const formDataSchema = z
+  .object({
+    nome: z.string(),
+    dataIni: z.string(),
+    dataFim: z.string(),
+  })
+  .refine(
+    (data) => {
+      return data.dataIni <= data.dataFim
+    },
+    {
+      message: 'A data inicial não pode ser maior que a data final',
+      path: ['confirm'],
+    },
+  )
 
 interface FormDataProps {
   nome: string
@@ -18,73 +39,154 @@ interface FormDataProps {
   dataFim: string
 }
 
-// type filterDataProps = z.infer<typeof filterSchema>
-
 export function ReceiptFilter() {
-  const { register, handleSubmit } = useForm<FormDataProps>()
+  const { register, handleSubmit, setValue } = useForm<FormDataProps>()
 
   const { setReceipts, setShowNoResultsMessage } = useContext(ClientsContext)
 
-  const { isClientSelectOverlayActive, setIsClientSelectOverlayActive } =
-    useContext(ClientsContext)
+  const [message, setMessage] = useState<string | null>(null)
+
+  const {
+    isClientSelectOverlayActive,
+    setIsClientSelectOverlayActive,
+    clientName,
+    setClientName,
+  } = useContext(ClientsContext)
+
+  useEffect(() => {
+    const getSelectedClientName = () => {
+      if (clientName) {
+        setValue('nome', clientName)
+      }
+    }
+
+    getSelectedClientName()
+  }, [clientName, setValue])
+
+  const handleRemoveClient = () => {
+    setClientName('')
+    setValue('nome', '')
+  }
 
   const handleFilter = async (data: FormDataProps) => {
     try {
       formDataSchema.parse(data)
 
-      console.log(data)
-      // /pagamentos/cliente?dataIni=2023-10-10&dataFim=2023-12-31
-      const response = await api.get(
-        `/pagamentos/cliente?clienteId=1&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
-      )
-
-      if (response.data.length !== 0) {
-        setReceipts(response.data)
-        setShowNoResultsMessage(false)
-      } else {
-        setReceipts([])
-        setShowNoResultsMessage(true)
+      if (!data.nome && !data.dataFim && !data.dataIni) {
+        setMessage('É preciso adicionar ao menos um filtro.')
       }
     } catch (error) {
-      console.error('Error:', error)
+      if (error instanceof ZodError) {
+        console.log(error)
+        setMessage('A data inicial não pode ser maior que a data final.')
+        throw new Error()
+      }
+    }
+
+    try {
+      if (clientName) {
+        const responseGetId = await api.get(`/clientes/nome/${clientName}`)
+
+        try {
+          const response = await api.get(
+            `/pagamentos/cliente?clienteId=${responseGetId.data[0].id}&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
+          )
+
+          if (response.data.length !== 0) {
+            setReceipts(response.data)
+            setShowNoResultsMessage(false)
+          } else {
+            setReceipts([])
+            setShowNoResultsMessage(true)
+          }
+        } catch (error) {
+          console.error(error)
+          setMessage(
+            'Erro ao conectar com o servidor. Tente novamente mais tarde.',
+          )
+        }
+      } else {
+        try {
+          const response = await api.get(
+            `/pagamentos/cliente?&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
+          )
+
+          console.log(response)
+
+          if (response.data.length !== 0) {
+            setReceipts(response.data)
+            setShowNoResultsMessage(false)
+          } else {
+            setReceipts([])
+            setShowNoResultsMessage(true)
+          }
+        } catch (error) {
+          console.error(error)
+          setMessage(
+            'Erro ao conectar com o servidor. Tente novamente mais tarde.',
+          )
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      setMessage('Erro ao conectar com o servidor. Tente novamente mais tarde.')
     }
   }
+
+  const showMessageOverlay = message !== null
 
   return (
     <>
       <FilterContainer>
         <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
-          <label className="main_label">
-            Nome
-            <input
-              type="text"
-              id="nome"
-              onClick={() => setIsClientSelectOverlayActive(true)}
-              {...register('nome')}
-            />
-          </label>
-
-          <label className="main_label">
-            Data
+          <NameLabel>
+            <label className="main_label name_label">
+              <input
+                type="text"
+                id="nome"
+                placeholder="Escolha o cliente..."
+                onClick={() => setIsClientSelectOverlayActive(true)}
+                {...register('nome')}
+                disabled={!!isClientSelectOverlayActive}
+              />
+            </label>
+            {clientName && (
+              <div id="Xbutton" title="Remover cliente">
+                <p onClick={handleRemoveClient}>
+                  <XCircle size={20} />
+                </p>
+              </div>
+            )}
+          </NameLabel>
+          <DateLabel>
             <div className="label_and_input_of_filter">
               <label>
-                De
+                De:
                 <input type="date" id="dataIni" {...register('dataIni')} />
               </label>
             </div>
             <div className="label_and_input_of_filter">
               <label>
-                Até
+                Até:
                 <input type="date" id="dataFim" {...register('dataFim')} />
               </label>
             </div>
-          </label>
+          </DateLabel>
           <FilterButton type="submit" form="filter_form">
             Buscar
           </FilterButton>
         </FilterForm>
       </FilterContainer>
-      {isClientSelectOverlayActive && <SelectClientOverlay />}
+      {showMessageOverlay && (
+        <Overlay>
+          <OverlayContent>
+            <Message>{message}</Message>
+            <OverlayBackButton onClick={() => setMessage(null)}>
+              Voltar
+            </OverlayBackButton>
+          </OverlayContent>
+        </Overlay>
+      )}
     </>
   )
 }

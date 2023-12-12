@@ -1,14 +1,14 @@
 import styled from 'styled-components'
-import { BaseButton } from '../../../register client page/styles'
+import { BaseButton } from '../register pages/pages/register client page/styles'
 
-export const RegisterReceiptLayout = styled.div`
+export const EditReceiptLayout = styled.div`
   padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
-export const RegisterReceiptContainer = styled.section`
+export const EditReceiptContainer = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const RegisterReceiptContainer = styled.section`
   }
 `
 
-export const RegisterReceiptForm = styled.form`
+export const EditReceiptForm = styled.form`
   max-width: 70%;
   display: flex;
   flex-direction: column;
@@ -158,7 +158,7 @@ export const InputErrorMessage = styled.p`
   color: ${(props) => props.theme.red};
 `
 
-export const ConfirmRegisterReceiptButton = styled(BaseButton)``
+export const ConfirmEditReceiptButton = styled(BaseButton)``
 
 export const Overlay = styled.div`
   position: fixed;

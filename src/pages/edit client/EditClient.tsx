@@ -30,7 +30,7 @@ const EditClientSchema = z.object({
     .string({
       invalid_type_error: 'É preciso digitar um número de celular válido',
     })
-    .min(9, 'É preciso digitar um número de celular válido'),
+    .min(14, 'Insira um formato de telefone válido.'),
 })
 
 type editDataProps = z.infer<typeof EditClientSchema>

@@ -15,9 +15,9 @@ export function Header() {
                 <HouseLine /> Início
               </li>
             </NavLink>
-            <NavLink to="/cadastrar">
+            <NavLink to="/registrar">
               <li>
-                <PlusCircle /> Cadastrar
+                <PlusCircle /> Registrar
               </li>
             </NavLink>
             <NavLink to="/consultar">

@@ -19,7 +19,19 @@ export const FilterContainer = styled.div`
     gap: 4px;
 
     #name {
-      width: 100%;
+      width: 120%;
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      background-color: ${(props) => props.theme.base_input};
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.3rem;
+      color: ${(props) => props.theme.base_label};
+
+      &::placeholder {
+        font-size: 1.1rem;
+        font-style: italic;
+      }
     }
 
     .label_and_input_of_filter {
@@ -37,17 +49,6 @@ export const FilterContainer = styled.div`
     align-items: center;
     font-size: 1.1rem;
     color: ${(props) => props.theme.base_text};
-  }
-
-  input {
-    width: 85%;
-    padding: 8px;
-    border: none;
-    border-radius: 8px;
-    background-color: ${(props) => props.theme.base_input};
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.3rem;
-    color: ${(props) => props.theme.base_label};
   }
 `
 

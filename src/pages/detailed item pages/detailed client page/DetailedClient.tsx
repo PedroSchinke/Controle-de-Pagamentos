@@ -60,8 +60,6 @@ export function DetailedClient() {
       const response = await api.delete(`/clientes/${id}`)
 
       if (response.status === 200) {
-        console.log('Cliente deletado com sucesso!')
-
         const stringId = id
         const numberId = parseInt(stringId!, 10)
 

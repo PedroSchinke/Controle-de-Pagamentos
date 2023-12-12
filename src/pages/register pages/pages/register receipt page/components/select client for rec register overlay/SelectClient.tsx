@@ -1,29 +1,24 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import {
-  NoResultsMesssage,
+  NoResultsMessage,
   Overlay,
   OverlayContent,
   ResultsContainer,
 } from './styles'
 import { ClientsContext } from '../../../../../../context/clientsContext'
-import { SelectClientFilterForReceiptSearch } from './components/select client filter for receipt search/SelectClientFilterRecSearch'
-import { ClientSelectionSearchResult } from './components/client selection search result/ClientSelectionSearchResult'
+import { SelectClientFilter } from './components/select client filter/SelectClientFilter'
+import { ClientSelectionForRegisterResult } from './components/client for register search result/SelectionResult'
 
-export function SelectClientOverlay() {
+export function SelectClientForRegister() {
   const {
-    clientsForReceiptSearch,
+    clients,
     setIsClientSelectOverlayActive,
     showNoResultsMessageInOverlay,
-    setClientsForReceiptSearch,
   } = useContext(ClientsContext)
 
-  useEffect(() => {
-    setClientsForReceiptSearch([])
-  }, [setClientsForReceiptSearch])
+  const showResults = clients.length !== 0
 
-  const showResults = clientsForReceiptSearch.length !== 0
-
-  const clientsForReceiptSearchCount = clientsForReceiptSearch.length
+  const clientsForReceiptSearchCount = clients.length
 
   return (
     <Overlay>
@@ -34,19 +29,19 @@ export function SelectClientOverlay() {
         >
           <p>FECHAR</p>
         </div>
-        <SelectClientFilterForReceiptSearch />
+        <SelectClientFilter />
         {showNoResultsMessageInOverlay ? (
-          <NoResultsMesssage>
+          <NoResultsMessage>
             Sua busca não retornou nenhum resultado
-          </NoResultsMesssage>
+          </NoResultsMessage>
         ) : null}
         {showResults && (
           <ResultsContainer>
             <div className="results_count">
               <p>Total de resultados: {clientsForReceiptSearchCount}</p>
             </div>
-            {clientsForReceiptSearch.map((client) => (
-              <ClientSelectionSearchResult
+            {clients.map((client) => (
+              <ClientSelectionForRegisterResult
                 key={client.id}
                 nome={client.nome}
                 email={client.email}

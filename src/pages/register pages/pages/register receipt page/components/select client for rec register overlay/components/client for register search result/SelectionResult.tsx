@@ -13,20 +13,20 @@ interface ClientSearchResultProps {
   email: string
 }
 
-export function ClientSelectionSearchResult({
+export function ClientSelectionForRegisterResult({
   nome,
   email,
 }: ClientSearchResultProps) {
-  const { setIsClientSelectOverlayActive, setClientName } =
+  const { setIsClientSelectOverlayActive, setClientNameForRegister } =
     useContext(ClientsContext)
 
   const setNameValue = () => {
-    setClientName(nome)
+    setClientNameForRegister(nome)
     setIsClientSelectOverlayActive(false)
   }
 
   return (
-    <NavLink to={`/consultar/recebimento`}>
+    <NavLink to={`/registrar/recebimento`}>
       <ClientSearchResultContainer>
         <DivisionCardLine />
         <ClientSearchResultInfos onClick={setNameValue}>

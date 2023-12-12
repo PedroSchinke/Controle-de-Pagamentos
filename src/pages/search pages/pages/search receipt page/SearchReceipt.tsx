@@ -8,6 +8,9 @@ import {
 } from './styles'
 import { ClientsContext } from '../../../../context/clientsContext'
 import { useContext, useEffect } from 'react'
+import { SelectClientOverlay } from './components/select client overlay/SelectClientOverlay'
+import { NavLink } from 'react-router-dom'
+import { CaretLeft } from 'phosphor-react'
 
 export function SearchReceipt() {
   const {
@@ -15,6 +18,8 @@ export function SearchReceipt() {
     setReceipts,
     showNoResultsMessage,
     setShowNoResultsMessage,
+    isClientSelectOverlayActive,
+    setIsClientSelectOverlayActive,
   } = useContext(ClientsContext)
 
   const showResults = receipts.length !== 0
@@ -23,15 +28,23 @@ export function SearchReceipt() {
     return () => {
       setShowNoResultsMessage(false)
       setReceipts([])
+      setIsClientSelectOverlayActive(false)
     }
-  }, [setReceipts, setShowNoResultsMessage])
+  }, [setReceipts, setShowNoResultsMessage, setIsClientSelectOverlayActive])
 
   return (
     <SearchReceiptPageLayout>
       <SearchReceiptPageContainer>
+        <NavLink to="/consultar">
+          <button id="back_button">
+            <CaretLeft />
+            Voltar
+          </button>
+        </NavLink>
         <h1>Buscar Pagamento</h1>
         <ReceiptFilter />
       </SearchReceiptPageContainer>
+      {isClientSelectOverlayActive && <SelectClientOverlay />}
       {showNoResultsMessage ? (
         <NoResultsMesssage>
           Sua busca não retornou nenhum resultado

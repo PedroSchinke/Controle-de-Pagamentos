@@ -23,6 +23,8 @@ export const OverlayContent = styled.div`
   border-radius: 8px;
   transform: translate(-50%, -50%);
   padding: 20px 20px 20px 20px;
+  font-family: 'Roboto', sans-serif;
+  color: ${(props) => props.theme.base_text};
   background-color: ${(props) => props.theme.background};
   z-index: 1000;
 
@@ -47,7 +49,7 @@ export const OverlayContent = styled.div`
   }
 `
 
-export const NoResultsMesssage = styled.p`
+export const NoResultsMessage = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
@@ -69,7 +71,6 @@ export const ResultsContainer = styled.div`
     width: 100%;
     display: flex;
     margin: 0px 0px 10px 10px;
-    font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
     font-weight: bold;
     color: ${(props) => props.theme.base_label};

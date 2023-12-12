@@ -2,7 +2,7 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useContext, useEffect, useState } from 'react'
-import { api } from '../../../../../../services/api'
+import { api } from '../../../../../../../../services/api'
 import {
   FilterButton,
   FilterContainer,
@@ -13,7 +13,7 @@ import {
   OverlayBackButton,
   OverlayContent,
 } from './styles'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import { ClientsContext } from '../../../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
 
 const filterSchema = z.object({
@@ -37,14 +37,14 @@ export function SelectClientFilter() {
 
   const { setClients } = useContext(ClientsContext)
 
-  const { setShowNoResultsMessage } = useContext(ClientsContext)
+  const { setShowNoResultsMessageInOverlay } = useContext(ClientsContext)
 
   useEffect(() => {
     return () => {
-      setShowNoResultsMessage(false)
+      setShowNoResultsMessageInOverlay(false)
       setClients([])
     }
-  }, [setClients, setShowNoResultsMessage])
+  }, [setClients, setShowNoResultsMessageInOverlay])
 
   const handleFilter = async (data: filterDataProps) => {
     try {
@@ -52,14 +52,12 @@ export function SelectClientFilter() {
 
       const response = await api.get(`/clientes/nome/${data.name}`)
 
-      console.log(response.data)
-
       if (response.data.length !== 0) {
         setClients(response.data)
-        setShowNoResultsMessage(false)
+        setShowNoResultsMessageInOverlay(false)
       } else {
         setClients([])
-        setShowNoResultsMessage(true)
+        setShowNoResultsMessageInOverlay(true)
       }
     } catch (error) {
       console.error(error)
@@ -75,11 +73,10 @@ export function SelectClientFilter() {
       <FilterContainer>
         <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
           <label className="main_label">
-            Nome
             <input
               type="text"
               id="name"
-              className="name_input"
+              placeholder="Digite o nome do cliente..."
               {...register('name')}
             />
             {errors.name && (
@@ -95,7 +92,7 @@ export function SelectClientFilter() {
         <Overlay>
           <OverlayContent>
             <Message>{errorMessage}</Message>
-            <NavLink to="/cadastrar">
+            <NavLink to="/registrar">
               <OverlayBackButton onClick={() => setErrorMessage(null)}>
                 Voltar
               </OverlayBackButton>

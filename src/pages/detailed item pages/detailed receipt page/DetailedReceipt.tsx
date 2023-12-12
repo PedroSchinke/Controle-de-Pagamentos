@@ -55,7 +55,7 @@ export function DetailedReceipt() {
 
   const originalDateString = receipt.dataPagamento
   const originalDate = parseISO(originalDateString)
-  const formattedDate = format(originalDate, "dd/MM/yyyy 'às' HH'h'mm")
+  const formattedDate = format(originalDate, 'dd/MM/yyyy')
 
   const handleDeleteReceipt = async () => {
     try {
@@ -116,16 +116,14 @@ export function DetailedReceipt() {
               <span>Data e horário</span>
               <h2>{formattedDate}</h2>
             </div>
-            <div>
-              <span>Descrição</span>
-              <h3>Sem descrição</h3>
-            </div>
           </DetailedReceiptInfos>
           <ReceiptOptionButtons>
-            <UpdateReceiptButton>
-              <Pencil />
-              editar
-            </UpdateReceiptButton>
+            <NavLink to={`/editar/pagamento/${id}`}>
+              <UpdateReceiptButton>
+                <Pencil />
+                editar
+              </UpdateReceiptButton>
+            </NavLink>
             <DeleteReceiptButton onClick={handleDeleteReceipt}>
               <Trash />
               excluir

@@ -1,7 +1,7 @@
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {
   FilterButton,
   FilterContainer,
@@ -25,6 +25,9 @@ type filterDataProps = z.infer<typeof filterSchema>
 export function SelectClientFilterForReceiptSearch() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const { setClientsForReceiptSearch, setShowNoResultsMessageInOverlay } =
+    useContext(ClientsContext)
+
   const {
     register,
     handleSubmit,
@@ -35,9 +38,11 @@ export function SelectClientFilterForReceiptSearch() {
     resolver: zodResolver(filterSchema),
   })
 
-  const { setClientsForReceiptSearch } = useContext(ClientsContext)
-
-  const { setShowNoResultsMessage } = useContext(ClientsContext)
+  useEffect(() => {
+    return () => {
+      setClientsForReceiptSearch([])
+    }
+  }, [setClientsForReceiptSearch])
 
   const handleFilter = async (data: filterDataProps) => {
     try {
@@ -45,17 +50,15 @@ export function SelectClientFilterForReceiptSearch() {
 
       const response = await api.get(`/clientes/nome/${data.name}`)
 
-      console.log(response.data)
-
       if (response.data.length !== 0) {
         setClientsForReceiptSearch(response.data)
-        setShowNoResultsMessage(false)
+        setShowNoResultsMessageInOverlay(false)
       } else {
         setClientsForReceiptSearch([])
-        setShowNoResultsMessage(true)
+        setShowNoResultsMessageInOverlay(true)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
 
       setErrorMessage('Erro ao conectar com servidor. Tente mais tarde.')
     }
@@ -71,10 +74,10 @@ export function SelectClientFilterForReceiptSearch() {
           onSubmit={handleSubmit(handleFilter)}
         >
           <label className="main_label">
-            Nome
             <input
               type="text"
               id="name"
+              placeholder="digite o nome do cliente..."
               {...register('name', { required: true })}
             />
             {errors.name && (

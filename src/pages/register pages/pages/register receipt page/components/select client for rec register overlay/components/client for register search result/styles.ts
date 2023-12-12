@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
-export const ClientSelectResultContainer = styled.div`
+export const ClientSearchResultContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,12 +14,15 @@ export const DivisionCardLine = styled.div`
   background-color: ${(props) => props.theme.base_hover};
 `
 
-export const ClientSelectResultInfos = styled.div`
-  width: 95%;
+export const ClientSearchResultInfos = styled.button`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10px;
+  padding: 20px 10px 10px 10px;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.base_text};
   cursor: pointer;
   transition: 0.2s;
@@ -32,5 +36,6 @@ export const ClientSelectResultInfos = styled.div`
   .client_and_email {
     display: flex;
     flex-direction: column;
+    text-align: left;
   }
 `

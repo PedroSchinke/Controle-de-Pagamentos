@@ -28,7 +28,7 @@ const registerClientSchema = z.object({
   celular: z
     .string()
     .trim()
-    .min(15, 'É preciso digitar um número de celular válido.'),
+    .min(14, 'É preciso digitar um número de telefone válido.'),
 })
 
 type registerDataProps = z.infer<typeof registerClientSchema>
@@ -55,10 +55,8 @@ export function RegisterClient() {
       if (response.status === 201) {
         setMessage('Cliente cadastrado com sucesso!')
       } else {
-        setMessage('Erro ao cadastrar cliente. Tente novamente mais tarde.')
+        setMessage('Erro ao registrar cliente. Tente novamente mais tarde.')
       }
-
-      console.log(response.status)
     } catch (error) {
       console.error(error)
 
@@ -69,9 +67,9 @@ export function RegisterClient() {
           const responseData = axiosError.response.data as { detail?: string }
 
           if (responseData.detail) {
-            setMessage(`Erro ao cadastrar cliente: ${responseData.detail}`)
+            setMessage(`Erro ao registrar cliente: ${responseData.detail}`)
           } else {
-            setMessage('Erro ao cadastrar cliente. Detalhes indisponíveis.')
+            setMessage('Erro ao registrar cliente. Detalhes indisponíveis.')
           }
         } else if (axiosError.request) {
           setMessage(
@@ -96,7 +94,7 @@ export function RegisterClient() {
     <>
       <RegisterPageLayout>
         <RegisterPageContainer>
-          <h1>Cadastrar Cliente</h1>
+          <h1>Registrar Cliente</h1>
           <RegisterForm
             id="register_client_form"
             onSubmit={handleSubmit(handleRegisterClient)}
@@ -121,7 +119,7 @@ export function RegisterClient() {
               Telefone
               <InputMask
                 mask="(99) 99999-9999"
-                maskChar="_"
+                maskChar=""
                 type="text"
                 id="celular"
                 {...register('celular')}
@@ -132,7 +130,7 @@ export function RegisterClient() {
             </label>
           </RegisterForm>
           <ConfirmRegisterButton type="submit" form="register_client_form">
-            Cadastrar
+            Registrar
           </ConfirmRegisterButton>
         </RegisterPageContainer>
       </RegisterPageLayout>
@@ -140,7 +138,7 @@ export function RegisterClient() {
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/cadastrar">
+            <NavLink to="/registrar">
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
           </OverlayContent>
