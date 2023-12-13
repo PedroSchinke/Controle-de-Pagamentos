@@ -34,8 +34,8 @@ export const RegisterPageOption = styled.section`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-family: 'Roboto', sans-serif;
     font-size: 1.8rem;
+    font-family: 'Inter', sans-serif;
 
     .icon {
       color: ${(props) => props.theme.blue_dark};

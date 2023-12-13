@@ -22,29 +22,35 @@ export const SearchReceiptPageContainer = styled.section`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  a {
+  #back_button_container {
     width: 85%;
-  }
-
-  #back_button {
-    width: 100%;
-    text-align: left;
     display: flex;
-    align-items: center;
-    border: none;
-    background-color: ${(props) => props.theme.background};
-    color: ${(props) => props.theme.base_label};
 
-    &:hover {
-      text-decoration: underline;
+    a {
+      width: fit-content;
+
+      #back_button {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        border: none;
+        background-color: ${(props) => props.theme.background};
+        color: ${(props) => props.theme.base_label};
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
   h1 {
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
+    color: ${(props) => props.theme.blue_dark};
   }
 `
 

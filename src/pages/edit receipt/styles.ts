@@ -21,10 +21,10 @@ export const EditReceiptContainer = styled.section`
 
   .back_button_container {
     width: 85%;
+    display: flex;
 
     a {
-      width: 18%;
-      color: inherit;
+      width: fit-content;
     }
 
     .back_button {
@@ -42,10 +42,10 @@ export const EditReceiptContainer = styled.section`
   }
 
   h1 {
-    margin-top: -20px;
-    font-family: 'Roboto', sans-serif;
+    margin-top: -10px;
+    font-family: 'Inter', sans-serif;
     font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
+    color: ${(props) => props.theme.blue_dark};
   }
 `
 
@@ -57,7 +57,7 @@ export const EditReceiptForm = styled.form`
 
   .nome_label {
     input {
-      cursor: not-allowed;
+      cursor: pointer;
     }
 
     .alter_client_button_container {
@@ -136,19 +136,6 @@ export const EditReceiptForm = styled.form`
     option {
       font-size: 1.1rem;
     }
-  }
-`
-
-export const AlterClientButton = styled.button`
-  font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-  border: none;
-  background-color: ${(props) => props.theme.background};
-  color: ${(props) => props.theme.blue_dark};
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
   }
 `
 

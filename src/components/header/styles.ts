@@ -3,8 +3,9 @@ import styled from 'styled-components'
 export const HeaderContainer = styled.header`
   width: 100%;
   height: 150px;
-  background-color: ${(props) => props.theme.blue_dark};
   padding: 20px;
+  background-color: ${(props) => props.theme.blue_dark};
+  font-family: 'Inter', sans-serif;
 
   div {
     display: flex;
@@ -17,14 +18,13 @@ export const HeaderContainer = styled.header`
 export const Logo = styled.div`
   width: 30%;
   height: 70px;
-  font-family: 'Roboto', sans-serif;
   font-size: 2.5rem;
   color: ${(props) => props.theme.blue_light};
 `
 
 export const Line = styled.div`
-  width: 80%;
-  height: 1px;
+  width: 85%;
+  height: 1.5px;
   background-color: ${(props) => props.theme.blue_light};
 `
 
@@ -37,16 +37,20 @@ export const Navigation = styled.nav`
     gap: 20px;
 
     li {
-      color: ${(props) => props.theme.blue_light};
-      font-family: 'Roboto', sans-serif;
-      font-size: 1.2rem;
-      list-style: none;
       display: flex;
       align-items: center;
+      list-style: none;
       gap: 3px;
+      font-size: 1.2rem;
+      color: ${(props) => props.theme.blue_light};
+      padding: 3px 0 3px 0;
 
       &:hover {
-        color: ${(props) => props.theme.base_hover};
+        border-bottom: 2px solid ${(props) => props.theme.white};
+      }
+
+      &:focus {
+        border-bottom: 2px solid ${(props) => props.theme.white};
       }
     }
   }

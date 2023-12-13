@@ -44,9 +44,10 @@ export const DetailedReceiptContainer = styled.div`
   }
 
   h1 {
-    margin-top: -20px;
+    margin-top: -10px;
     font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
+    font-family: 'Inter', sans-serif;
+    color: ${(props) => props.theme.blue_dark};
   }
 `
 

@@ -9,6 +9,47 @@ export const FilterContainer = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 1.3rem;
   color: ${(props) => props.theme.base_subtitle};
+
+  .main_label {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+
+    #name {
+      width: 120%;
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      background-color: ${(props) => props.theme.base_input};
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.3rem;
+      color: ${(props) => props.theme.base_label};
+
+      &::placeholder {
+        font-size: 1.1rem;
+        font-style: italic;
+      }
+    }
+
+    .label_and_input_of_filter {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    color: ${(props) => props.theme.base_text};
+  }
 `
 
 export const FilterForm = styled.form`
@@ -16,54 +57,6 @@ export const FilterForm = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
-  label {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-    color: ${(props) => props.theme.base_text};
-
-    #search_client_bar {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      #name {
-        width: 85%;
-        height: 2.5rem;
-        padding: 8px;
-        border: none;
-        border-bottom-left-radius: 8px;
-        border-top-left-radius: 8px;
-        background-color: ${(props) => props.theme.base_input};
-        font-family: 'Roboto', sans-serif;
-        font-size: 1.3rem;
-        color: ${(props) => props.theme.base_label};
-
-        &::placeholder {
-          font-size: 1.1rem;
-          font-style: italic;
-        }
-      }
-    }
-  }
-
-  #show_all_clients_button {
-    margin: 10px 0 -10px 0;
-    display: flex;
-    border: none;
-    background-color: ${(props) => props.theme.background};
-    color: ${(props) => props.theme.blue_dark};
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 `
 
 export const FilterErrorMessage = styled.p`
@@ -74,13 +67,7 @@ export const FilterErrorMessage = styled.p`
 `
 
 export const FilterButton = styled(BaseButton)`
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
+  margin-top: 10px;
 `
 
 export const Overlay = styled.div`

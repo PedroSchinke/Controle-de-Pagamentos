@@ -34,7 +34,7 @@ export const SearchPageOption = styled.section`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 1.8rem;
 
     .icon {

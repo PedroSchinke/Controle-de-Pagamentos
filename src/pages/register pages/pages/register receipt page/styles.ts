@@ -43,11 +43,11 @@ export const RegisterReceiptContainer = styled.section`
   }
 
   h1 {
-    margin-top: -20px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
+    margin-top: -10px;
     text-align: center;
+    font-size: 2rem;
+    font-family: 'Inter', sans-serif;
+    color: ${(props) => props.theme.blue_dark};
   }
 `
 
@@ -59,6 +59,8 @@ export const RegisterReceiptForm = styled.form`
 
   .nome_label {
     #cliente {
+      cursor: pointer;
+
       &::placeholder {
         font-size: 1.1rem;
         font-style: italic;

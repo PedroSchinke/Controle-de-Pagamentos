@@ -21,6 +21,7 @@ export const FilterContainer = styled.div`
     #nome {
       width: 100%;
       border-radius: 8px;
+      cursor: pointer;
 
       &::placeholder {
         font-size: 1.1rem;
