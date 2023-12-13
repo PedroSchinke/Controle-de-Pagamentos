@@ -1,4 +1,4 @@
-import { CaretRight, Receipt, User } from 'phosphor-react'
+import { CaretRight, Handshake, Receipt, UserPlus } from 'phosphor-react'
 import { RegisterPageOption, RegisterPageLayout } from './styles'
 import { NavLink } from 'react-router-dom'
 
@@ -18,7 +18,16 @@ export function RegisterPage() {
         <RegisterPageOption>
           <h1>
             Registrar Cliente
-            <User size={44} weight="fill" className="icon" />
+            <UserPlus size={46} weight="fill" className="icon" />
+          </h1>
+          <CaretRight size={30} />
+        </RegisterPageOption>
+      </NavLink>
+      <NavLink to="/registrar/atividade">
+        <RegisterPageOption>
+          <h1>
+            Registrar Atividade
+            <Handshake size={46} weight="fill" className="icon" />
           </h1>
           <CaretRight size={30} />
         </RegisterPageOption>

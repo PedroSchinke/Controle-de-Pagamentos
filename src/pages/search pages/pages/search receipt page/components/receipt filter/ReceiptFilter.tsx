@@ -42,15 +42,17 @@ interface FormDataProps {
 export function ReceiptFilter() {
   const { register, handleSubmit, setValue } = useForm<FormDataProps>()
 
-  const { setReceipts, setShowNoResultsMessage } = useContext(ClientsContext)
-
   const [message, setMessage] = useState<string | null>(null)
 
   const {
+    setReceipts,
+    setShowNoResultsMessage,
     isClientSelectOverlayActive,
     setIsClientSelectOverlayActive,
     clientName,
     setClientName,
+    clientIdForSearch,
+    setClientIdForSearch,
   } = useContext(ClientsContext)
 
   useEffect(() => {
@@ -64,7 +66,8 @@ export function ReceiptFilter() {
   }, [clientName, setValue])
 
   const handleRemoveClient = () => {
-    setClientName('')
+    setClientIdForSearch(null)
+    setClientName(null)
     setValue('nome', '')
   }
 
@@ -74,22 +77,20 @@ export function ReceiptFilter() {
 
       if (!data.nome && !data.dataFim && !data.dataIni) {
         setMessage('É preciso adicionar ao menos um filtro.')
+        return
       }
     } catch (error) {
       if (error instanceof ZodError) {
         console.log(error)
         setMessage('A data inicial não pode ser maior que a data final.')
-        throw new Error()
       }
     }
 
     try {
-      if (clientName) {
-        const responseGetId = await api.get(`/clientes/nome/${clientName}`)
-
+      if (clientIdForSearch) {
         try {
           const response = await api.get(
-            `/pagamentos/cliente?clienteId=${responseGetId.data[0].id}&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
+            `/pagamentos/cliente?clienteId=${clientIdForSearch}&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
           )
 
           if (response.data.length !== 0) {
@@ -144,7 +145,7 @@ export function ReceiptFilter() {
               <input
                 type="text"
                 id="nome"
-                placeholder="Escolha o cliente..."
+                placeholder="Selecione o cliente..."
                 onClick={() => setIsClientSelectOverlayActive(true)}
                 {...register('nome')}
                 disabled={!!isClientSelectOverlayActive}

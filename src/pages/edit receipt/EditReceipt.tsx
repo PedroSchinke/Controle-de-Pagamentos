@@ -2,9 +2,8 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NavLink, useParams } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {
-  AlterClientButton,
   ConfirmEditReceiptButton,
   InputErrorMessage,
   Message,
@@ -18,6 +17,8 @@ import {
 import { NumericFormat } from 'react-number-format'
 import { CaretLeft } from 'phosphor-react'
 import { api } from '../../services/api'
+import { SelectClientForEditOverlay } from './components/select client for edit overlay/SelectClientForEditOverlay'
+import { ClientsContext } from '../../context/clientsContext'
 
 const editReceiptSchema = z.object({
   cliente: z.object({
@@ -65,6 +66,21 @@ interface PaymentOptionsProps {
 export function EditReceipt() {
   const { id } = useParams()
 
+  const [paymentOptions, setPaymentOptions] = useState<PaymentOptionsProps[]>(
+    [],
+  )
+
+  const [message, setMessage] = useState<string | null>(null)
+
+  const {
+    isClientSelectForEditOverlayActive,
+    setIsClientSelectForEditOverlayActive,
+    clientIdForEdit,
+    clientNameForEdit,
+    setClientIdForEdit,
+    setClientNameForEdit,
+  } = useContext(ClientsContext)
+
   const {
     handleSubmit,
     register,
@@ -77,21 +93,22 @@ export function EditReceipt() {
     resolver: zodResolver(formDataSchema),
   })
 
-  const [paymentOptions, setPaymentOptions] = useState<PaymentOptionsProps[]>(
-    [],
-  )
-
-  const [message, setMessage] = useState<string | null>(null)
+  const isMountedRef = useRef<boolean>(true)
 
   useEffect(() => {
     const getReceiptData = async () => {
       const response = await api.get(`/pagamentos/${id}`)
 
       if (response.status === 200) {
-        setValue('cliente', response.data.cliente.nome)
         setValue('dataPagamento', response.data.dataPagamento)
         setValue('valor', response.data.valor)
         setValue('meioPagamento', response.data.tipoPagamento)
+
+        if (clientNameForEdit) {
+          setValue('cliente', clientNameForEdit)
+        } else {
+          setValue('cliente', response.data.cliente.nome)
+        }
       }
     }
 
@@ -105,7 +122,17 @@ export function EditReceipt() {
 
     getReceiptData()
     getPaymentOptions()
-  }, [id, setValue])
+
+    return () => {
+      isMountedRef.current = false
+
+      if (isMountedRef.current) {
+        setValue('cliente', '')
+        setClientIdForEdit(null)
+        setClientNameForEdit(null)
+      }
+    }
+  })
 
   const handleEditReceipt = async (data: FormDataProps) => {
     try {
@@ -114,14 +141,11 @@ export function EditReceipt() {
       const numberWithDot = data.valor.replace(',', '.')
       const numberValue = parseFloat(numberWithDot)
 
-      const getClientId = await api.get(`/clientes/nome/${data.cliente}`)
-
-      const clientNumberId = parseInt(getClientId.data[0].id!, 10)
       const paymentOptionNumberId = parseInt(data.meioPagamento, 10)
 
       const dataToSend = {
         cliente: {
-          id: clientNumberId,
+          id: clientIdForEdit,
         },
         dataPagamento: data.dataPagamento,
         valor: numberValue,
@@ -136,7 +160,7 @@ export function EditReceipt() {
       const currentData = getDataToCompare.data
 
       if (
-        currentData.cliente.id === clientNumberId &&
+        currentData.cliente.id === clientIdForEdit &&
         currentData.dataPagamento === data.dataPagamento &&
         currentData.valor === numberValue
       ) {
@@ -164,7 +188,7 @@ export function EditReceipt() {
       <EditReceiptLayout>
         <EditReceiptContainer>
           <div className="back_button_container">
-            <NavLink to={`/consultar/recebimento/detalhes/${id}`}>
+            <NavLink to={`/buscar/recebimento/detalhes/${id}`}>
               <button className="back_button">
                 <CaretLeft />
                 Voltar
@@ -177,18 +201,14 @@ export function EditReceipt() {
             onSubmit={handleSubmit(handleEditReceipt)}
           >
             <label className="nome_label">
-              Nome do pagante
+              Nome do cliente
               <input
                 id="cliente"
                 type="text"
+                onClick={() => setIsClientSelectForEditOverlayActive(true)}
                 {...register('cliente')}
-                disabled
+                disabled={!!isClientSelectForEditOverlayActive}
               />
-              <div className="alter_client_button_container">
-                <NavLink to="/registrar/recebimento/selecionar-pagante">
-                  <AlterClientButton>alterar pagante</AlterClientButton>
-                </NavLink>
-              </div>
             </label>
             <label>
               Data do pagamento
@@ -252,6 +272,7 @@ export function EditReceipt() {
           </ConfirmEditReceiptButton>
         </EditReceiptContainer>
       </EditReceiptLayout>
+      {isClientSelectForEditOverlayActive && <SelectClientForEditOverlay />}
       {showOverlay && (
         <Overlay>
           <OverlayContent>
@@ -259,7 +280,7 @@ export function EditReceipt() {
             <NavLink
               to={
                 message === 'Pagamento editado com sucesso!'
-                  ? `/consultar/recebimento/detalhes/${id}`
+                  ? `/buscar/recebimento/detalhes/${id}`
                   : `/editar/pagamento/${id}`
               }
             >

@@ -18,7 +18,7 @@ export function ClientSearchResult({
   email,
 }: ClientSearchResultProps) {
   return (
-    <NavLink to={`/consultar/cliente/detalhes/${id}`}>
+    <NavLink to={`/buscar/cliente/detalhes/${id}`}>
       <ClientSearchResultContainer>
         <DivisionCardLine />
         <ClientSearchResultInfos>

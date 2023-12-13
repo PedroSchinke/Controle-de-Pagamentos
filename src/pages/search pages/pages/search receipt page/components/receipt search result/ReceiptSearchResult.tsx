@@ -30,7 +30,7 @@ export function ReceiptSearchResult({
   const formattedDate = format(originalDate, 'dd/MM/yy')
 
   return (
-    <NavLink to={`/consultar/recebimento/detalhes/${id}`}>
+    <NavLink to={`/buscar/recebimento/detalhes/${id}`}>
       <ReceiptSearchResultContainer>
         <DivisionCardLine />
         <ReceiptSearchResultInfos>

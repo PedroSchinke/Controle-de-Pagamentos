@@ -22,12 +22,12 @@ import { SelectClientForRegister } from './components/select client for rec regi
 
 const registerReceiptSchema = z.object({
   cliente: z.object({
-    id: z.number(),
+    id: z.number().min(1, 'É preciso inserir o cliente.'),
   }),
-  dataPagamento: z.string().min(1, 'É preciso inserir uma data.'),
+  dataPagamento: z.string().min(1, 'É preciso inserir a data.'),
   valor: z
     .number({ invalid_type_error: 'Esse campo aceita apenas números.' })
-    .min(1, 'É preciso inserir um valor.'),
+    .min(1, 'É preciso inserir o valor.'),
   meioPagamento: z.object({
     id: z
       .number({
@@ -38,15 +38,15 @@ const registerReceiptSchema = z.object({
 })
 
 const formDataSchema = z.object({
-  cliente: z.string(),
-  dataPagamento: z.string().min(1, 'É preciso inserir uma data.'),
+  cliente: z.string().trim().min(1, 'É preciso inserir o cliente.'),
+  dataPagamento: z.string().min(1, 'É preciso inserir a data.'),
   meioPagamento: z.number({
     invalid_type_error: 'É preciso selecionar o meio de pagamento.',
   }),
   valor: z
     .string({
-      invalid_type_error: 'É preciso inserir um valor.',
-      required_error: 'É preciso inserir um valor.',
+      invalid_type_error: 'É preciso inserir o valor.',
+      required_error: 'É preciso inserir o valor.',
     })
     .min(3, 'É preciso inserir um valor.'),
 })
@@ -82,6 +82,7 @@ export function RegisterReceipt() {
     clientNameForRegister,
     isClientSelectOverlayActive,
     setIsClientSelectOverlayActive,
+    clientIdForRegister,
   } = useContext(ClientsContext)
 
   const [paymentOptions, setPaymentOptions] = useState<PaymentOptionsProps[]>(
@@ -116,14 +117,11 @@ export function RegisterReceipt() {
 
       formDataSchema.safeParse(data)
 
-      const getIdResponse = await api.get(`/clientes/nome/${data.cliente}`)
-      const clientId = getIdResponse.data[0].id
-
       const paymentOptionNumberId = parseInt(data.meioPagamento, 10)
 
       const dataToSend = {
         cliente: {
-          id: clientId,
+          id: clientIdForRegister,
         },
         dataPagamento: data.dataPagamento,
         valor: numberValue,
@@ -175,6 +173,9 @@ export function RegisterReceipt() {
                 {...register('cliente')}
                 disabled={!!isClientSelectOverlayActive}
               />
+              {errors.cliente && (
+                <InputErrorMessage>{errors.cliente.message}</InputErrorMessage>
+              )}
             </label>
             <label>
               Data do pagamento

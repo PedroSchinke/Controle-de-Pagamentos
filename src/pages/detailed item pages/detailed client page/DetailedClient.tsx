@@ -88,13 +88,13 @@ export function DetailedClient() {
     <>
       <DetailedClientLayout>
         <DetailedClientContainer>
-          <NavLink to="/consultar/cliente">
+          <NavLink to="/buscar/cliente">
             <button className="back_button">
               <CaretLeft />
               Voltar
             </button>
           </NavLink>
-          <h1>Detalhes do cliente</h1>
+          <h1>Detalhes do Cliente</h1>
           <DetailedClientInfos>
             <div>
               <span>Nome</span>
@@ -120,12 +120,12 @@ export function DetailedClient() {
           <ClientOptionButtons>
             <NavLink to={`/editar/cliente/${id}`}>
               <UpdateClientButton>
-                <Pencil />
+                <Pencil size={26} weight="fill" />
                 editar
               </UpdateClientButton>
             </NavLink>
             <DeleteClientButton onClick={handleDeleteClient}>
-              <Trash />
+              <Trash size={26} />
               excluir
             </DeleteClientButton>
           </ClientOptionButtons>
@@ -135,7 +135,7 @@ export function DetailedClient() {
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/consultar/cliente">
+            <NavLink to="/buscar/cliente">
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
           </OverlayContent>

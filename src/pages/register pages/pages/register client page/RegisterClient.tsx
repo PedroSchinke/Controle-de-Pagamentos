@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import InputMask from 'react-input-mask'
+import { CaretLeft } from 'phosphor-react'
 
 const registerClientSchema = z.object({
   nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
@@ -53,7 +54,7 @@ export function RegisterClient() {
       const response = await api.post('/clientes', data)
 
       if (response.status === 201) {
-        setMessage('Cliente cadastrado com sucesso!')
+        setMessage('Cliente registrado com sucesso!')
       } else {
         setMessage('Erro ao registrar cliente. Tente novamente mais tarde.')
       }
@@ -94,6 +95,14 @@ export function RegisterClient() {
     <>
       <RegisterPageLayout>
         <RegisterPageContainer>
+          <div id="back_button_container">
+            <NavLink to="/registrar">
+              <button id="back_button">
+                <CaretLeft />
+                Voltar
+              </button>
+            </NavLink>
+          </div>
           <h1>Registrar Cliente</h1>
           <RegisterForm
             id="register_client_form"

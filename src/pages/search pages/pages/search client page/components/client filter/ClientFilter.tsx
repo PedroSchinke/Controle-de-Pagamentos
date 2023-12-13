@@ -13,8 +13,12 @@ import {
   OverlayBackButton,
   OverlayContent,
 } from './styles'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import {
+  ClientProps,
+  ClientsContext,
+} from '../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
+import { MagnifyingGlass } from 'phosphor-react'
 
 const filterSchema = z.object({
   name: z.string().trim().min(1, 'É preciso preencher este campo'),
@@ -45,8 +49,6 @@ export function ClientFilter() {
 
       const response = await api.get(`/clientes/nome/${data.name}`)
 
-      console.log(response.data)
-
       if (response.data.length !== 0) {
         setClients(response.data)
         setShowNoResultsMessage(false)
@@ -55,9 +57,36 @@ export function ClientFilter() {
         setShowNoResultsMessage(true)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
 
       setErrorMessage('Erro ao conectar com servidor. Tente mais tarde.')
+    }
+  }
+
+  const handleShowAllClients = async () => {
+    try {
+      const response = await api.get('/clientes')
+
+      if (response.status === 200) {
+        const alphabeticalArray = response.data.sort(
+          (a: ClientProps, b: ClientProps) => {
+            const nomeA = a.nome.toUpperCase()
+            const nomeB = b.nome.toUpperCase()
+
+            if (nomeA < nomeB) {
+              return -1
+            }
+            if (nomeA > nomeB) {
+              return 1
+            }
+
+            return 0
+          },
+        )
+        setClients(alphabeticalArray)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -67,27 +96,36 @@ export function ClientFilter() {
     <>
       <FilterContainer>
         <FilterForm id="filter_form" onSubmit={handleSubmit(handleFilter)}>
-          <label className="main_label">
-            Nome
-            <input
-              type="text"
-              id="name"
-              {...register('name', { required: true })}
-            />
+          <label>
+            <div id="search_client_bar">
+              <input
+                type="text"
+                id="name"
+                placeholder="Digite o nome do cliente..."
+                {...register('name', { required: true })}
+              />
+              <FilterButton type="submit" form="filter_form">
+                <MagnifyingGlass size={20} weight="bold" />
+              </FilterButton>
+            </div>
             {errors.name && (
               <FilterErrorMessage>{errors.name.message}</FilterErrorMessage>
             )}
           </label>
-          <FilterButton type="submit" form="filter_form">
-            Buscar
-          </FilterButton>
+          <button
+            type="button"
+            id="show_all_clients_button"
+            onClick={handleShowAllClients}
+          >
+            Mostrar todos os clientes
+          </button>
         </FilterForm>
       </FilterContainer>
       {showOverlay && (
         <Overlay>
           <OverlayContent>
             <Message>{errorMessage}</Message>
-            <NavLink to="/consultar/cliente">
+            <NavLink to="/buscar/cliente">
               <OverlayBackButton onClick={() => setErrorMessage(null)}>
                 Voltar
               </OverlayBackButton>

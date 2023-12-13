@@ -20,12 +20,16 @@ export function SearchReceipt() {
     setShowNoResultsMessage,
     isClientSelectOverlayActive,
     setIsClientSelectOverlayActive,
+    setClientIdForSearch,
+    setClientName,
   } = useContext(ClientsContext)
 
   const showResults = receipts.length !== 0
 
   useEffect(() => {
     return () => {
+      setClientIdForSearch(null)
+      setClientName(null)
       setShowNoResultsMessage(false)
       setReceipts([])
       setIsClientSelectOverlayActive(false)
@@ -35,12 +39,14 @@ export function SearchReceipt() {
   return (
     <SearchReceiptPageLayout>
       <SearchReceiptPageContainer>
-        <NavLink to="/consultar">
-          <button id="back_button">
-            <CaretLeft />
-            Voltar
-          </button>
-        </NavLink>
+        <div id="back_button_container">
+          <NavLink to="/buscar">
+            <button id="back_button">
+              <CaretLeft />
+              Voltar
+            </button>
+          </NavLink>
+        </div>
         <h1>Buscar Pagamento</h1>
         <ReceiptFilter />
       </SearchReceiptPageContainer>

@@ -43,6 +43,7 @@ export function SelectClientForRegister() {
             {clients.map((client) => (
               <ClientSelectionForRegisterResult
                 key={client.id}
+                id={client.id}
                 nome={client.nome}
                 email={client.email}
               />

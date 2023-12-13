@@ -28,12 +28,22 @@ interface ClientsContextType {
   setClientName: (value: string | null) => void
   clientNameForRegister: string | null
   setClientNameForRegister: (value: string | null) => void
+  clientNameForEdit: string | null
+  setClientNameForEdit: (value: string | null) => void
+  clientIdForSearch: number | null
+  setClientIdForSearch: (value: number | null) => void
+  clientIdForRegister: number | null
+  setClientIdForRegister: (value: number | null) => void
+  clientIdForEdit: number | null
+  setClientIdForEdit: (value: number | null) => void
   receipts: ReceiptProps[]
   setReceipts: (value: ReceiptProps[]) => void
   showNoResultsMessage: boolean
   setShowNoResultsMessage: (value: boolean) => void
   showNoResultsMessageInOverlay: boolean
   setShowNoResultsMessageInOverlay: (value: boolean) => void
+  isClientSelectForEditOverlayActive: boolean
+  setIsClientSelectForEditOverlayActive: (value: boolean) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -58,6 +68,20 @@ export function ContextProvider({ children }: ContextProviderProps) {
     string | null
   >(null)
 
+  const [clientNameForEdit, setClientNameForEdit] = useState<string | null>(
+    null,
+  )
+
+  const [clientIdForSearch, setClientIdForSearch] = useState<number | null>(
+    null,
+  )
+
+  const [clientIdForRegister, setClientIdForRegister] = useState<number | null>(
+    null,
+  )
+
+  const [clientIdForEdit, setClientIdForEdit] = useState<number | null>(null)
+
   const [receipts, setReceipts] = useState<ReceiptProps[]>([])
 
   const [showNoResultsMessage, setShowNoResultsMessage] =
@@ -65,6 +89,11 @@ export function ContextProvider({ children }: ContextProviderProps) {
 
   const [showNoResultsMessageInOverlay, setShowNoResultsMessageInOverlay] =
     useState<boolean>(false)
+
+  const [
+    isClientSelectForEditOverlayActive,
+    setIsClientSelectForEditOverlayActive,
+  ] = useState<boolean>(false)
 
   return (
     <ClientsContext.Provider
@@ -79,12 +108,22 @@ export function ContextProvider({ children }: ContextProviderProps) {
         setClientName,
         clientNameForRegister,
         setClientNameForRegister,
+        clientNameForEdit,
+        setClientNameForEdit,
+        clientIdForSearch,
+        setClientIdForSearch,
+        clientIdForRegister,
+        setClientIdForRegister,
+        clientIdForEdit,
+        setClientIdForEdit,
         receipts,
         setReceipts,
         showNoResultsMessage,
         setShowNoResultsMessage,
         showNoResultsMessageInOverlay,
         setShowNoResultsMessageInOverlay,
+        isClientSelectForEditOverlayActive,
+        setIsClientSelectForEditOverlayActive,
       }}
     >
       {children}

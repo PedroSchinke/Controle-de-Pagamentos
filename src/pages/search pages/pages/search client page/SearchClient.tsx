@@ -8,6 +8,8 @@ import {
   SearchClientPageLayout,
 } from './styles'
 import { ClientsContext } from '../../../../context/clientsContext'
+import { CaretLeft } from 'phosphor-react'
+import { NavLink } from 'react-router-dom'
 
 export function SearchClient() {
   const { clients, setClients, showNoResultsMessage, setShowNoResultsMessage } =
@@ -25,6 +27,14 @@ export function SearchClient() {
   return (
     <SearchClientPageLayout>
       <SearchClientPageContainer>
+        <div id="back_button_container">
+          <NavLink to="/buscar">
+            <button id="back_button">
+              <CaretLeft />
+              Voltar
+            </button>
+          </NavLink>
+        </div>
         <h1>Buscar Cliente</h1>
         <ClientFilter />
       </SearchClientPageContainer>

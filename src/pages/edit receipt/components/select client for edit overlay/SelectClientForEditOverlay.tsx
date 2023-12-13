@@ -5,16 +5,16 @@ import {
   OverlayContent,
   ResultsContainer,
 } from './styles'
-import { ClientsContext } from '../../../../../../context/clientsContext'
-import { SelectClientFilterForReceiptSearch } from './components/select client filter for receipt search/SelectClientFilterRecSearch'
-import { ClientSelectionSearchResult } from './components/client selection search result/ClientSelectionSearchResult'
+import { SelectClientForEditFilter } from './components/select client for edit filter/SelectClientForEditFilter'
+import { ClientsContext } from '../../../../context/clientsContext'
+import { ClientSearchForEditResult } from './components/client search for edit result/ClientSearchForEditResult'
 
-export function SelectClientOverlay() {
+export function SelectClientForEditOverlay() {
   const {
     clientsForReceiptSearch,
-    setIsClientSelectOverlayActive,
     showNoResultsMessageInOverlay,
     setClientsForReceiptSearch,
+    setIsClientSelectForEditOverlayActive,
   } = useContext(ClientsContext)
 
   useEffect(() => {
@@ -30,11 +30,11 @@ export function SelectClientOverlay() {
       <OverlayContent>
         <div
           id="close_button"
-          onClick={() => setIsClientSelectOverlayActive(false)}
+          onClick={() => setIsClientSelectForEditOverlayActive(false)}
         >
           <p>FECHAR</p>
         </div>
-        <SelectClientFilterForReceiptSearch />
+        <SelectClientForEditFilter />
         {showNoResultsMessageInOverlay ? (
           <NoResultsMesssage>
             Sua busca não retornou nenhum resultado
@@ -46,7 +46,7 @@ export function SelectClientOverlay() {
               <p>Total de resultados: {clientsForReceiptSearchCount}</p>
             </div>
             {clientsForReceiptSearch.map((client) => (
-              <ClientSelectionSearchResult
+              <ClientSearchForEditResult
                 key={client.id}
                 id={client.id}
                 nome={client.nome}

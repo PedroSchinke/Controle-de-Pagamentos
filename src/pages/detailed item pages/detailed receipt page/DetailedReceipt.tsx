@@ -92,16 +92,16 @@ export function DetailedReceipt() {
     <>
       <DetailedReceiptLayout>
         <DetailedReceiptContainer>
-          <NavLink to="/consultar/recebimento">
+          <NavLink to="/buscar/recebimento">
             <button className="back_button">
               <CaretLeft />
               Voltar
             </button>
           </NavLink>
-          <h1>Detalhes do recebimento</h1>
+          <h1>Detalhes do Pagamento</h1>
           <DetailedReceiptInfos>
             <div>
-              <span>Nome do pagante</span>
+              <span>Cliente</span>
               <h2>{receipt.cliente.nome}</h2>
             </div>
             <div>
@@ -109,7 +109,7 @@ export function DetailedReceipt() {
               <h2>{valueInR$}</h2>
             </div>
             <div>
-              <span>Meio de recebimento</span>
+              <span>Meio de pagamento</span>
               <h2>{receipt.tipoPagamento}</h2>
             </div>
             <div>
@@ -120,12 +120,12 @@ export function DetailedReceipt() {
           <ReceiptOptionButtons>
             <NavLink to={`/editar/pagamento/${id}`}>
               <UpdateReceiptButton>
-                <Pencil />
+                <Pencil size={26} weight="fill" />
                 editar
               </UpdateReceiptButton>
             </NavLink>
             <DeleteReceiptButton onClick={handleDeleteReceipt}>
-              <Trash />
+              <Trash size={26} />
               excluir
             </DeleteReceiptButton>
           </ReceiptOptionButtons>
@@ -135,7 +135,7 @@ export function DetailedReceipt() {
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/consultar/recebimento">
+            <NavLink to="/buscar/recebimento">
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
           </OverlayContent>

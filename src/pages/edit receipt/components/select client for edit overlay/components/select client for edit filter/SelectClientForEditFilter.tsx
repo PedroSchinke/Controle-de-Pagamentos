@@ -13,8 +13,8 @@ import {
   OverlayContent,
 } from './styles'
 import { NavLink } from 'react-router-dom'
-import { ClientsContext } from '../../../../../../../../context/clientsContext'
-import { api } from '../../../../../../../../services/api'
+import { api } from '../../../../../../services/api'
+import { ClientsContext } from '../../../../../../context/clientsContext'
 
 const filterSchema = z.object({
   name: z.string().trim().min(1, 'É preciso preencher este campo'),
@@ -22,7 +22,7 @@ const filterSchema = z.object({
 
 type filterDataProps = z.infer<typeof filterSchema>
 
-export function SelectClientFilterForReceiptSearch() {
+export function SelectClientForEditFilter() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { setClientsForReceiptSearch, setShowNoResultsMessageInOverlay } =

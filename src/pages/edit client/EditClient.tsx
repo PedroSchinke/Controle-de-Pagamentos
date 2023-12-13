@@ -149,7 +149,7 @@ export function EditClient() {
       <EditClientLayout>
         <EditClientContainer>
           <div className="back_button_container">
-            <NavLink to={`/consultar/cliente/detalhes/${id}`}>
+            <NavLink to={`/buscar/cliente/detalhes/${id}`}>
               <button className="back_button">
                 <CaretLeft />
                 Voltar
@@ -205,7 +205,7 @@ export function EditClient() {
             <NavLink
               to={
                 message === 'Cliente editado com sucesso!'
-                  ? `/consultar/cliente/detalhes/${id}`
+                  ? `/buscar/cliente/detalhes/${id}`
                   : `/editar/cliente/${id}`
               }
               onClick={() => setMessage(null)}

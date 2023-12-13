@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { HeaderContainer, Line, Logo, Navigation } from './styles'
-import { HouseLine, Notebook, PlusCircle } from 'phosphor-react'
+import { HouseLine, MagnifyingGlass, PlusCircle } from 'phosphor-react'
 
 export function Header() {
   return (
@@ -12,17 +12,17 @@ export function Header() {
           <ul>
             <NavLink to="/dashboard">
               <li>
-                <HouseLine /> Início
+                <HouseLine weight="fill" /> Início
               </li>
             </NavLink>
             <NavLink to="/registrar">
               <li>
-                <PlusCircle /> Registrar
+                <PlusCircle weight="fill" /> Registrar
               </li>
             </NavLink>
-            <NavLink to="/consultar">
+            <NavLink to="/buscar">
               <li>
-                <Notebook /> Consultar
+                <MagnifyingGlass weight="fill" /> Buscar
               </li>
             </NavLink>
           </ul>

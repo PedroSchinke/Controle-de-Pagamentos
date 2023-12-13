@@ -9,24 +9,30 @@ import { useContext } from 'react'
 import { ClientsContext } from '../../../../../../../../context/clientsContext'
 
 interface ClientSearchResultProps {
+  id: number
   nome: string
   email: string
 }
 
 export function ClientSelectionSearchResult({
+  id,
   nome,
   email,
 }: ClientSearchResultProps) {
-  const { setIsClientSelectOverlayActive, setClientName } =
-    useContext(ClientsContext)
+  const {
+    setIsClientSelectOverlayActive,
+    setClientName,
+    setClientIdForSearch,
+  } = useContext(ClientsContext)
 
   const setNameValue = () => {
+    setClientIdForSearch(id)
     setClientName(nome)
     setIsClientSelectOverlayActive(false)
   }
 
   return (
-    <NavLink to={`/consultar/recebimento`}>
+    <NavLink to={`/buscar/recebimento`}>
       <ClientSearchResultContainer>
         <DivisionCardLine />
         <ClientSearchResultInfos onClick={setNameValue}>
