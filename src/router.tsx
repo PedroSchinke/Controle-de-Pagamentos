@@ -11,6 +11,8 @@ import { SearchClient } from './pages/search pages/pages/search client page/Sear
 import { DetailedClient } from './pages/detailed item pages/detailed client page/DetailedClient'
 import { EditClient } from './pages/edit client/EditClient'
 import { EditReceipt } from './pages/edit receipt/EditReceipt'
+import { RegisterActivity } from './pages/register pages/pages/register activity/RegisterActivity'
+import { MyActivities } from './pages/search pages/pages/my activities page/MyActivities'
 
 export function Router() {
   return (
@@ -20,17 +22,19 @@ export function Router() {
         <Route path="/registrar" element={<RegisterPage />} />
         <Route path="/registrar/recebimento" element={<RegisterReceipt />} />
         <Route path="/registrar/cliente" element={<RegisterClient />} />
-        <Route path="/consultar" element={<SearchPage />} />
-        <Route path="/consultar/recebimento" element={<SearchReceipt />} />
+        <Route path="/registrar/atividade" element={<RegisterActivity />} />
+        <Route path="/buscar" element={<SearchPage />} />
+        <Route path="/buscar/recebimento" element={<SearchReceipt />} />
         <Route
-          path="/consultar/recebimento/detalhes/:id"
+          path="/buscar/recebimento/detalhes/:id"
           element={<DetailedReceipt />}
         />
-        <Route path="/consultar/cliente" element={<SearchClient />} />
+        <Route path="/buscar/cliente" element={<SearchClient />} />
         <Route
-          path="/consultar/cliente/detalhes/:id"
+          path="/buscar/cliente/detalhes/:id"
           element={<DetailedClient />}
         />
+        <Route path="/buscar/atividades" element={<MyActivities />} />
         <Route path="/editar/cliente/:id" element={<EditClient />} />
         <Route path="/editar/pagamento/:id" element={<EditReceipt />} />
       </Route>
