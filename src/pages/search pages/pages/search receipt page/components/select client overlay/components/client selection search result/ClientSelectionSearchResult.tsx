@@ -32,7 +32,7 @@ export function ClientSelectionSearchResult({
   }
 
   return (
-    <NavLink to={`/buscar/recebimento`}>
+    <NavLink to={`/buscar/pagamento`}>
       <ClientSearchResultContainer>
         <DivisionCardLine />
         <ClientSearchResultInfos onClick={setNameValue}>

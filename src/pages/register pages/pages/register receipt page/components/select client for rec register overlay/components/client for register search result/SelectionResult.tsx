@@ -25,17 +25,17 @@ export function ClientSelectionForRegisterResult({
     setClientIdForRegister,
   } = useContext(ClientsContext)
 
-  const setNameValue = () => {
+  const setClient = () => {
     setClientIdForRegister(id)
     setClientNameForRegister(nome)
     setIsClientSelectOverlayActive(false)
   }
 
   return (
-    <NavLink to={`/registrar/recebimento`}>
+    <NavLink to={`/registrar/pagamento`}>
       <ClientSearchResultContainer>
         <DivisionCardLine />
-        <ClientSearchResultInfos onClick={setNameValue}>
+        <ClientSearchResultInfos onClick={setClient}>
           <div className="client_and_email">
             <h2>{nome}</h2>
             <span>{email}</span>

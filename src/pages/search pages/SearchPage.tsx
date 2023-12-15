@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 export function SearchPage() {
   return (
     <SearchPageLayout>
-      <NavLink to="/buscar/recebimento">
+      <NavLink to="/buscar/pagamento">
         <SearchPageOption>
           <h1>
             Buscar Pagamento
