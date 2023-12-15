@@ -21,7 +21,6 @@ export const ActivitiesSearchResultInfos = styled.div`
   align-items: center;
   padding: 20px 10px;
   color: ${(props) => props.theme.base_text};
-  cursor: pointer;
   transition: 0.2s;
 
   #delete_button {
@@ -29,11 +28,10 @@ export const ActivitiesSearchResultInfos = styled.div`
     border: none;
     background-color: ${(props) => props.theme.background};
     color: ${(props) => props.theme.red};
-  }
+    cursor: pointer;
 
-  &:hover {
-    h2 {
-      color: ${(props) => props.theme.blue_dark};
+    &:hover {
+      color: ${(props) => props.theme.red_light};
     }
   }
 `

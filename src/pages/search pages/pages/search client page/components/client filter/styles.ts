@@ -51,18 +51,18 @@ export const FilterForm = styled.form`
       }
     }
   }
+`
 
-  #show_all_clients_button {
-    margin: 10px 0 -10px 0;
-    display: flex;
-    border: none;
-    background-color: ${(props) => props.theme.background};
-    color: ${(props) => props.theme.blue_dark};
-    cursor: pointer;
+export const ShowAllClientsButton = styled.button`
+  margin: 10px 0 -10px 0;
+  display: flex;
+  border: none;
+  background-color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.blue_dark};
+  cursor: pointer;
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
   }
 `
 

@@ -19,29 +19,7 @@ export const EditClientContainer = styled.section`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  .back_button_container {
-    width: 85%;
-
-    a {
-      width: 18%;
-      color: inherit;
-    }
-
-    .back_button {
-      display: flex;
-      align-items: center;
-      background-color: ${(props) => props.theme.background};
-      color: ${(props) => props.theme.base_label};
-      border: none;
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  h1 {
+  #page_title {
     margin-top: -20px;
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
@@ -73,16 +51,6 @@ export const EditClientForm = styled.form`
     background-color: ${(props) => props.theme.base_input};
     font-family: 'Roboto', sans-serif;
     font-size: 1.3rem;
-    color: ${(props) => props.theme.base_label};
-  }
-
-  textarea {
-    resize: none;
-    padding: 3px;
-    border: none;
-    background-color: ${(props) => props.theme.base_input};
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.15rem;
     color: ${(props) => props.theme.base_label};
   }
 `

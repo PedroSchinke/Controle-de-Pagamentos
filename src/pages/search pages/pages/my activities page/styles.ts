@@ -22,29 +22,7 @@ export const MyActivitiesContainer = styled.section`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  #back_button_container {
-    width: 85%;
-    display: flex;
-
-    a {
-      width: fit-content;
-
-      #back_button {
-        display: flex;
-        align-items: center;
-        border: none;
-        background-color: ${(props) => props.theme.background};
-        color: ${(props) => props.theme.base_label};
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
-  h1 {
+  #page_title {
     font-size: 2rem;
     margin-top: -5px;
     font-family: 'Inter', sans-serif;
@@ -58,13 +36,14 @@ export const MyActivitiesFilter = styled.form`
   align-items: center;
   gap: 10px;
 
-  label {
+  #search_bar {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    input {
-      width: 100%;
+    #nome {
+      width: 85%;
       padding: 8px;
       border: none;
       border-bottom-left-radius: 8px;
@@ -97,12 +76,12 @@ export const ActivitiesResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 10px 0 10px;
+  padding: 20px 10px 0 10px;
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  p {
+  #total_results_count {
     width: 90%;
     margin-bottom: 15px;
     font-size: 1.2rem;

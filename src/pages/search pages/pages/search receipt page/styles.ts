@@ -22,31 +22,7 @@ export const SearchReceiptPageContainer = styled.section`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  #back_button_container {
-    width: 85%;
-    display: flex;
-
-    a {
-      width: fit-content;
-
-      #back_button {
-        width: 100%;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        border: none;
-        background-color: ${(props) => props.theme.background};
-        color: ${(props) => props.theme.base_label};
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
-  h1 {
+  #page_title {
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-size: 2rem;
@@ -65,15 +41,14 @@ export const ResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding: 40px 10px 20px 10px;
+  padding: 20px 10px 20px 10px;
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  h1 {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
-    color: ${(props) => props.theme.base_subtitle};
-    margin: 0px 0px 20px 20px;
+  #total_results_count {
+    font-size: 1.3rem;
+    margin: 0px 0px 18px 20px;
+    color: ${(props) => props.theme.base_label};
   }
 `

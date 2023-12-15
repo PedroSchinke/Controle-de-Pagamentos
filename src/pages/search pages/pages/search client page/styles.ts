@@ -21,29 +21,7 @@ export const SearchClientPageContainer = styled.section`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  #back_button_container {
-    width: 85%;
-    display: flex;
-
-    a {
-      width: fit-content;
-
-      #back_button {
-        display: flex;
-        align-items: center;
-        border: none;
-        background-color: ${(props) => props.theme.background};
-        color: ${(props) => props.theme.base_label};
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
-
-  h1 {
+  #page_title {
     font-size: 2rem;
     margin-top: -5px;
     font-family: 'Inter', sans-serif;
@@ -67,14 +45,9 @@ export const ResultsContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  .total_results {
+  #total_results {
     font-size: 1.3rem;
     margin: 0px 0px 18px 20px;
     color: ${(props) => props.theme.base_label};
-  }
-
-  h1 {
-    font-size: 2rem;
-    margin: 0px 0px 20px 20px;
   }
 `
