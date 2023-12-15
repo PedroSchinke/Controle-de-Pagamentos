@@ -11,7 +11,7 @@ interface ReceiptSearchResultProps {
   id: number
   nome: string
   valor: number
-  dataPagamento: string
+  dataPagamento: Date
 }
 
 export function ReceiptSearchResult({
@@ -25,12 +25,12 @@ export function ReceiptSearchResult({
     currency: 'BRL',
   })
 
-  const originalDateString = dataPagamento
-  const originalDate = parseISO(originalDateString)
-  const formattedDate = format(originalDate, 'dd/MM/yy')
+  const dateToString = dataPagamento.toString()
+  const parsedString = parseISO(dateToString)
+  const formattedDate = format(parsedString, 'dd/MM/yy')
 
   return (
-    <NavLink to={`/buscar/recebimento/detalhes/${id}`}>
+    <NavLink to={`/buscar/pagamento/detalhes/${id}`}>
       <ReceiptSearchResultContainer>
         <DivisionCardLine />
         <ReceiptSearchResultInfos>

@@ -12,6 +12,7 @@ import {
   Overlay,
   OverlayBackButton,
   OverlayContent,
+  ShowAllClientsButton,
 } from './styles'
 import {
   ClientProps,
@@ -21,7 +22,7 @@ import { NavLink } from 'react-router-dom'
 import { MagnifyingGlass } from 'phosphor-react'
 
 const filterSchema = z.object({
-  name: z.string().trim().min(1, 'É preciso preencher este campo'),
+  name: z.string().trim().min(1, 'É preciso preencher este campo.'),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>
@@ -104,7 +105,7 @@ export function ClientFilter() {
                 placeholder="Digite o nome do cliente..."
                 {...register('name', { required: true })}
               />
-              <FilterButton type="submit" form="filter_form">
+              <FilterButton type="submit" form="filter_form" title="Buscar">
                 <MagnifyingGlass size={20} weight="bold" />
               </FilterButton>
             </div>
@@ -112,13 +113,13 @@ export function ClientFilter() {
               <FilterErrorMessage>{errors.name.message}</FilterErrorMessage>
             )}
           </label>
-          <button
+          <ShowAllClientsButton
             type="button"
             id="show_all_clients_button"
             onClick={handleShowAllClients}
           >
             Mostrar todos os clientes
-          </button>
+          </ShowAllClientsButton>
         </FilterForm>
       </FilterContainer>
       {showOverlay && (

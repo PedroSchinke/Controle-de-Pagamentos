@@ -14,7 +14,10 @@ import * as z from 'zod'
 import { ZodError } from 'zod'
 import { api } from '../../../../../../services/api'
 import { useContext, useEffect, useState } from 'react'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import {
+  ClientsContext,
+  ReceiptProps,
+} from '../../../../../../context/clientsContext'
 import { XCircle } from 'phosphor-react'
 
 const formDataSchema = z
@@ -28,7 +31,7 @@ const formDataSchema = z
       return data.dataIni <= data.dataFim
     },
     {
-      message: 'A data inicial não pode ser maior que a data final',
+      message: 'A data inicial não pode ser maior que a data final.',
       path: ['confirm'],
     },
   )
@@ -94,7 +97,15 @@ export function ReceiptFilter() {
           )
 
           if (response.data.length !== 0) {
-            setReceipts(response.data)
+            const arrayInOrder = response.data.sort(
+              (a: ReceiptProps, b: ReceiptProps) => {
+                const dateA = new Date(a.dataPagamento)
+                const dateB = new Date(b.dataPagamento)
+                return dateB.getTime() - dateA.getTime()
+              },
+            )
+
+            setReceipts(arrayInOrder)
             setShowNoResultsMessage(false)
           } else {
             setReceipts([])
@@ -112,10 +123,13 @@ export function ReceiptFilter() {
             `/pagamentos/cliente?&dataIni=${data.dataIni}&dataFim=${data.dataFim}`,
           )
 
-          console.log(response)
-
           if (response.data.length !== 0) {
-            setReceipts(response.data)
+            const arrayInOrder = response.data.sort(
+              (a: ReceiptProps, b: ReceiptProps) =>
+                b.dataPagamento.getTime() - a.dataPagamento.getTime(),
+            )
+
+            setReceipts(arrayInOrder)
             setShowNoResultsMessage(false)
           } else {
             setReceipts([])

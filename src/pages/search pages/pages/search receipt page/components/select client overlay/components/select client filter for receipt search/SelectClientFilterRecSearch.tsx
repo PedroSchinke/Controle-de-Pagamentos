@@ -17,7 +17,7 @@ import { ClientsContext } from '../../../../../../../../context/clientsContext'
 import { api } from '../../../../../../../../services/api'
 
 const filterSchema = z.object({
-  name: z.string().trim().min(1, 'É preciso preencher este campo'),
+  name: z.string().trim().min(1, 'É preciso preencher este campo.'),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>

@@ -16,7 +16,7 @@ export function ActivitiesSearchResult() {
           <h2>Atividade</h2>
         </div>
         <button id="delete_button" onClick={handleDeleteActivity}>
-          <Trash size={28} weight="fill" />
+          <Trash size={26} weight="fill" />
         </button>
       </ActivitiesSearchResultInfos>
     </ActivitiesSearchResultContainer>
