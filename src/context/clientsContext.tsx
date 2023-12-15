@@ -12,9 +12,24 @@ export interface ClientProps {
 export interface ReceiptProps {
   id: number
   valor: number
-  tipoPagamento: string
-  dataPagamento: string
+  meioPagamento: {
+    id: number
+    descricao: string
+  }
+  dataPagamento: Date
   cliente: ClientProps
+}
+
+export interface ReceiptFormDataProps {
+  cliente: string
+  dataPagamento: string
+  meioPagamento: number
+  valor: string
+}
+
+export interface PaymentOptionsProps {
+  id: number
+  descricao: string
 }
 
 interface ClientsContextType {
@@ -44,6 +59,10 @@ interface ClientsContextType {
   setShowNoResultsMessageInOverlay: (value: boolean) => void
   isClientSelectForEditOverlayActive: boolean
   setIsClientSelectForEditOverlayActive: (value: boolean) => void
+  registerReceiptMessage: string | null
+  setRegisterReceiptMessage: (value: string | null) => void
+  editReceiptMessage: string | null
+  setEditReceiptMessage: (value: string | null) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -95,6 +114,14 @@ export function ContextProvider({ children }: ContextProviderProps) {
     setIsClientSelectForEditOverlayActive,
   ] = useState<boolean>(false)
 
+  const [registerReceiptMessage, setRegisterReceiptMessage] = useState<
+    string | null
+  >(null)
+
+  const [editReceiptMessage, setEditReceiptMessage] = useState<string | null>(
+    null,
+  )
+
   return (
     <ClientsContext.Provider
       value={{
@@ -124,6 +151,10 @@ export function ContextProvider({ children }: ContextProviderProps) {
         setShowNoResultsMessageInOverlay,
         isClientSelectForEditOverlayActive,
         setIsClientSelectForEditOverlayActive,
+        registerReceiptMessage,
+        setRegisterReceiptMessage,
+        editReceiptMessage,
+        setEditReceiptMessage,
       }}
     >
       {children}
