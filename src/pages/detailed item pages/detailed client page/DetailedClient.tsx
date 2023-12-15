@@ -1,4 +1,4 @@
-import { CaretLeft, Pencil, Trash } from 'phosphor-react'
+import { Pencil, Trash } from 'phosphor-react'
 import {
   DeleteClientButton,
   DetailedClientContainer,
@@ -10,6 +10,7 @@ import {
   Overlay,
   OverlayContent,
   OverlayBackButton,
+  ConfirmDeleteOptionButtons,
 } from './styles'
 import { NavLink, useParams } from 'react-router-dom'
 import { useEffect, useState, useContext } from 'react'
@@ -17,6 +18,7 @@ import { api } from '../../../services/api'
 import { formatDate } from '../../../services/format-date-service'
 import { ClientProps, ClientsContext } from '../../../context/clientsContext'
 import { Loading } from '../../../components/loading/Loading'
+import { BackButton } from '../../../components/back button/BackButton'
 
 export function DetailedClient() {
   const { id } = useParams()
@@ -24,6 +26,11 @@ export function DetailedClient() {
   const [client, setClient] = useState<ClientProps | null>(null)
 
   const [message, setMessage] = useState<string | null>(null)
+
+  const [isConfirmDeleteMessageActive, setIsConfirmDeleteMessageActive] =
+    useState<boolean>(false)
+
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const { clients, setClients } = useContext(ClientsContext)
 
@@ -34,29 +41,26 @@ export function DetailedClient() {
 
         if (response.status === 200) {
           setClient(response.data)
+        } else {
+          setIsLoading(false)
+          setMessage('Erro ao conectar com servidor. Tente mais tarde.')
         }
       } catch (error) {
-        console.error('Error:', error)
-
+        setIsLoading(false)
         setMessage('Erro ao conectar com servidor. Tente mais tarde.')
+        console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
     getData()
   }, [id])
 
-  if (!client) {
-    return <Loading />
-  }
-
-  const originalDates = [client.dataCadastro, client.dataAtualizacao]
-  const formattedDates = formatDate(originalDates)
-
-  const dataCadastro = formattedDates[0]
-  const dataAtualizacao = formattedDates[1]
-
   const handleDeleteClient = async () => {
     try {
+      setIsConfirmDeleteMessageActive(false)
+
       const response = await api.delete(`/clientes/${id}`)
 
       if (response.status === 200) {
@@ -72,29 +76,38 @@ export function DetailedClient() {
         setMessage('Ciente deletado com sucesso!')
       } else {
         console.error('Erro ao deletar cliente. Status:', response.status)
-
         setMessage('Não foi possível deletar cliente')
       }
     } catch (error) {
       console.error(error)
-
       setMessage('Não foi possível deletar o cliente.')
     }
   }
 
   const showOverlay = message !== null
 
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (!client) {
+    return <Loading />
+  }
+
+  const originalDates = [client.dataCadastro, client.dataAtualizacao]
+  const formattedDates = formatDate(originalDates)
+
+  const dataCadastro = formattedDates[0]
+  const dataAtualizacao = formattedDates[1]
+
   return (
     <>
       <DetailedClientLayout>
         <DetailedClientContainer>
-          <NavLink to="/buscar/cliente">
-            <button className="back_button">
-              <CaretLeft />
-              Voltar
-            </button>
-          </NavLink>
-          <h1>Detalhes do Cliente</h1>
+          <BackButton path={'/buscar/cliente'} />
+
+          <h1 id="page_title">Detalhes do Cliente</h1>
+
           <DetailedClientInfos>
             <div>
               <span>Nome</span>
@@ -117,16 +130,19 @@ export function DetailedClient() {
               <h2>{dataAtualizacao}</h2>
             </div>
           </DetailedClientInfos>
+
           <ClientOptionButtons>
             <NavLink to={`/editar/cliente/${id}`}>
               <UpdateClientButton>
                 <Pencil size={26} weight="fill" />
-                editar
+                Editar
               </UpdateClientButton>
             </NavLink>
-            <DeleteClientButton onClick={handleDeleteClient}>
+            <DeleteClientButton
+              onClick={() => setIsConfirmDeleteMessageActive(true)}
+            >
               <Trash size={26} />
-              excluir
+              Excluir
             </DeleteClientButton>
           </ClientOptionButtons>
         </DetailedClientContainer>
@@ -138,6 +154,27 @@ export function DetailedClient() {
             <NavLink to="/buscar/cliente">
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
+          </OverlayContent>
+        </Overlay>
+      )}
+      {isConfirmDeleteMessageActive && (
+        <Overlay>
+          <OverlayContent>
+            <Message>{`Tem certeza que deseja excluir ${client.nome}?`}</Message>
+            <ConfirmDeleteOptionButtons>
+              <button
+                className="option_button no_delete_button"
+                onClick={() => setIsConfirmDeleteMessageActive(false)}
+              >
+                Não
+              </button>
+              <button
+                className="option_button yes_delete_button"
+                onClick={handleDeleteClient}
+              >
+                Sim
+              </button>
+            </ConfirmDeleteOptionButtons>
           </OverlayContent>
         </Overlay>
       )}

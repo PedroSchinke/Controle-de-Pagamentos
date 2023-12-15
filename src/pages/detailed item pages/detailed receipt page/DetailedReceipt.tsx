@@ -1,5 +1,6 @@
-import { CaretLeft, Pencil, Trash } from 'phosphor-react'
+import { Pencil, Trash } from 'phosphor-react'
 import {
+  ConfirmDeleteOptionButtons,
   DeleteReceiptButton,
   DetailedReceiptContainer,
   DetailedReceiptInfos,
@@ -18,6 +19,7 @@ import { ClientsContext, ReceiptProps } from '../../../context/clientsContext'
 import { Loading } from '../../../components/loading/Loading'
 import { formatValue } from '../../../services/format-value-service'
 import { format, parseISO } from 'date-fns'
+import { BackButton } from '../../../components/back button/BackButton'
 
 export function DetailedReceipt() {
   const { id } = useParams()
@@ -28,6 +30,9 @@ export function DetailedReceipt() {
 
   const [message, setMessage] = useState<string | null>(null)
 
+  const [isConfirmDeleteMessageActive, setIsConfirmDeleteMessageActive] =
+    useState<boolean>(false)
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -37,8 +42,7 @@ export function DetailedReceipt() {
           setReceipt(response.data)
         }
       } catch (error) {
-        console.error('Error:', error)
-
+        console.error(error)
         setMessage('Erro ao conectar com servidor. Tente mais tarde.')
       }
     }
@@ -53,17 +57,17 @@ export function DetailedReceipt() {
   const originalValue = receipt.valor
   const valueInR$ = formatValue(originalValue)
 
-  const originalDateString = receipt.dataPagamento
+  const originalDateString = receipt.dataPagamento.toString()
   const originalDate = parseISO(originalDateString)
   const formattedDate = format(originalDate, 'dd/MM/yyyy')
 
   const handleDeleteReceipt = async () => {
     try {
+      setIsConfirmDeleteMessageActive(false)
+
       const response = await api.delete(`/pagamentos/${id}`)
 
       if (response.status === 200) {
-        console.log('Recebimento deletado com sucesso!')
-
         const stringId = id
         const numberId = parseInt(stringId!, 10)
 
@@ -73,16 +77,15 @@ export function DetailedReceipt() {
 
         setReceipts(receiptsWithoutDeletedOne)
 
-        setMessage('Recebimento deletado com sucesso!')
+        setMessage('Pagamento deletado com sucesso!')
       } else {
-        console.error('Erro ao deletar recebimento. Status:', response.status)
-
-        setMessage('Não foi possível deletar recebimento')
+        setMessage('Não foi possível deletar pagamento')
       }
     } catch (error) {
       console.error(error)
-
-      setMessage('Não foi possível deletar o recebimento.')
+      setMessage(
+        'Não foi possível deletar o pagamento. Tente novamente mais tarde.',
+      )
     }
   }
 
@@ -92,13 +95,10 @@ export function DetailedReceipt() {
     <>
       <DetailedReceiptLayout>
         <DetailedReceiptContainer>
-          <NavLink to="/buscar/recebimento">
-            <button className="back_button">
-              <CaretLeft />
-              Voltar
-            </button>
-          </NavLink>
-          <h1>Detalhes do Pagamento</h1>
+          <BackButton path={'/buscar/pagamento'} />
+
+          <h1 id="page_title">Detalhes do Pagamento</h1>
+
           <DetailedReceiptInfos>
             <div>
               <span>Cliente</span>
@@ -110,23 +110,26 @@ export function DetailedReceipt() {
             </div>
             <div>
               <span>Meio de pagamento</span>
-              <h2>{receipt.tipoPagamento}</h2>
+              <h2>{receipt.meioPagamento.descricao}</h2>
             </div>
             <div>
               <span>Data e horário</span>
               <h2>{formattedDate}</h2>
             </div>
           </DetailedReceiptInfos>
+
           <ReceiptOptionButtons>
             <NavLink to={`/editar/pagamento/${id}`}>
               <UpdateReceiptButton>
                 <Pencil size={26} weight="fill" />
-                editar
+                Editar
               </UpdateReceiptButton>
             </NavLink>
-            <DeleteReceiptButton onClick={handleDeleteReceipt}>
+            <DeleteReceiptButton
+              onClick={() => setIsConfirmDeleteMessageActive(true)}
+            >
               <Trash size={26} />
-              excluir
+              Excluir
             </DeleteReceiptButton>
           </ReceiptOptionButtons>
         </DetailedReceiptContainer>
@@ -135,9 +138,30 @@ export function DetailedReceipt() {
         <Overlay>
           <OverlayContent>
             <Message>{message}</Message>
-            <NavLink to="/buscar/recebimento">
+            <NavLink to="/buscar/pagamento">
               <OverlayBackButton>Voltar</OverlayBackButton>
             </NavLink>
+          </OverlayContent>
+        </Overlay>
+      )}
+      {isConfirmDeleteMessageActive && (
+        <Overlay>
+          <OverlayContent>
+            <Message>Tem certeza que deseja excluir esse pagamento?</Message>
+            <ConfirmDeleteOptionButtons>
+              <button
+                className="option_button no_delete_button"
+                onClick={() => setIsConfirmDeleteMessageActive(false)}
+              >
+                Não
+              </button>
+              <button
+                className="option_button yes_delete_button"
+                onClick={handleDeleteReceipt}
+              >
+                Sim
+              </button>
+            </ConfirmDeleteOptionButtons>
           </OverlayContent>
         </Overlay>
       )}

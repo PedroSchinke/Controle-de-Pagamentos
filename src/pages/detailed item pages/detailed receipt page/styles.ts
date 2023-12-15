@@ -25,25 +25,7 @@ export const DetailedReceiptContainer = styled.div`
     justify-content: space-evenly;
   }
 
-  a {
-    width: 18%;
-    color: inherit;
-  }
-
-  .back_button {
-    display: flex;
-    align-items: center;
-    background-color: ${(props) => props.theme.background};
-    color: ${(props) => props.theme.base_label};
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  h1 {
+  #page_title {
     margin-top: -10px;
     font-size: 2rem;
     font-family: 'Inter', sans-serif;
@@ -68,23 +50,28 @@ const BaseOptionButtons = styled.button`
   align-items: center;
   gap: 3px;
   border: none;
+  border-bottom: 3px solid transparent;
   background-color: ${(props) => props.theme.background};
   font-family: 'Roboto', sans-serif;
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `
 
 export const UpdateReceiptButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.blue_dark};
+
+  &:hover {
+    border-bottom: 3px solid ${(props) => props.theme.blue_dark};
+  }
 `
 
 export const DeleteReceiptButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.red};
+
+  &:hover {
+    border-bottom: 3px solid ${(props) => props.theme.red};
+  }
 `
 
 export const Overlay = styled.div`
@@ -99,7 +86,7 @@ export const Overlay = styled.div`
 
 export const OverlayContent = styled.div`
   width: 70%;
-  height: 16%;
+  min-height: 16%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,11 +97,12 @@ export const OverlayContent = styled.div`
   border-radius: 8px;
   transform: translate(-50%, -50%);
   padding: 20px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.background};
   z-index: 1000;
 
   a {
     width: 45%;
+    height: fit-content;
   }
 `
 
@@ -132,4 +120,50 @@ export const Message = styled.div`
 export const OverlayBackButton = styled(BaseButton)`
   width: 100%;
   height: 170%;
+  padding: 5px 0;
+  font-size: 1.1rem;
+`
+
+export const ConfirmDeleteOptionButtons = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: -5px;
+
+  .option_button {
+    width: 3.5rem;
+    height: 2.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  .no_delete_button {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    background-color: ${(props) => props.theme.background};
+    color: ${(props) => props.theme.blue_dark};
+    transition: 0.3s;
+
+    &:hover {
+      color: ${(props) => props.theme.blue};
+    }
+  }
+
+  .yes_delete_button {
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    background-color: ${(props) => props.theme.blue_dark};
+    color: ${(props) => props.theme.blue_light};
+    transition: 0.3s;
+
+    &:hover {
+      background-color: ${(props) => props.theme.blue};
+      color: ${(props) => props.theme.white};
+    }
+  }
 `
