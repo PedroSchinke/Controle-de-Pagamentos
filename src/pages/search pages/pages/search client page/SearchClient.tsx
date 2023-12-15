@@ -8,8 +8,7 @@ import {
   SearchClientPageLayout,
 } from './styles'
 import { ClientsContext } from '../../../../context/clientsContext'
-import { CaretLeft } from 'phosphor-react'
-import { NavLink } from 'react-router-dom'
+import { BackButton } from '../../../../components/back button/BackButton'
 
 export function SearchClient() {
   const { clients, setClients, showNoResultsMessage, setShowNoResultsMessage } =
@@ -27,15 +26,10 @@ export function SearchClient() {
   return (
     <SearchClientPageLayout>
       <SearchClientPageContainer>
-        <div id="back_button_container">
-          <NavLink to="/buscar">
-            <button id="back_button">
-              <CaretLeft />
-              Voltar
-            </button>
-          </NavLink>
-        </div>
-        <h1>Buscar Cliente</h1>
+        <BackButton path={'/buscar'} />
+
+        <h1 id="page_title">Buscar Cliente</h1>
+
         <ClientFilter />
       </SearchClientPageContainer>
       {showNoResultsMessage ? (
@@ -45,9 +39,7 @@ export function SearchClient() {
       ) : null}
       {showResults && (
         <ResultsContainer>
-          <h2 className="total_results">
-            Total de resultados: {clients.length}
-          </h2>
+          <h2 id="total_results">Total de resultados: {clients.length}</h2>
           <div></div>
           {clients.map((client) => {
             return (

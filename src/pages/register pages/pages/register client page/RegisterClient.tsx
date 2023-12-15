@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AxiosError } from 'axios'
 import InputMask from 'react-input-mask'
-import { CaretLeft } from 'phosphor-react'
+import { BackButton } from '../../../../components/back button/BackButton'
 
 const registerClientSchema = z.object({
   nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
@@ -95,15 +95,10 @@ export function RegisterClient() {
     <>
       <RegisterPageLayout>
         <RegisterPageContainer>
-          <div id="back_button_container">
-            <NavLink to="/registrar">
-              <button id="back_button">
-                <CaretLeft />
-                Voltar
-              </button>
-            </NavLink>
-          </div>
+          <BackButton path={'/registrar'} />
+
           <h1>Registrar Cliente</h1>
+
           <RegisterForm
             id="register_client_form"
             onSubmit={handleSubmit(handleRegisterClient)}
@@ -138,6 +133,7 @@ export function RegisterClient() {
               )}
             </label>
           </RegisterForm>
+
           <ConfirmRegisterButton type="submit" form="register_client_form">
             Registrar
           </ConfirmRegisterButton>

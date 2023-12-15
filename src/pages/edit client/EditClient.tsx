@@ -16,8 +16,8 @@ import { useEffect, useState, useContext, ChangeEvent } from 'react'
 import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { NavLink, useParams } from 'react-router-dom'
-import { CaretLeft } from 'phosphor-react'
 import { ClientsContext } from '../../context/clientsContext'
+import { BackButton } from '../../components/back button/BackButton'
 
 const EditClientSchema = z.object({
   nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente'),
@@ -148,15 +148,10 @@ export function EditClient() {
     <>
       <EditClientLayout>
         <EditClientContainer>
-          <div className="back_button_container">
-            <NavLink to={`/buscar/cliente/detalhes/${id}`}>
-              <button className="back_button">
-                <CaretLeft />
-                Voltar
-              </button>
-            </NavLink>
-          </div>
-          <h1>Editar Cliente</h1>
+          <BackButton path={`/buscar/cliente/detalhes/${id}`} />
+
+          <h1 id="page_title">Editar Cliente</h1>
+
           <EditClientForm
             id="register_form"
             onSubmit={handleSubmit(handleEditClient)}
@@ -193,6 +188,7 @@ export function EditClient() {
               )}
             </label>
           </EditClientForm>
+
           <ConfirmEditButton type="submit" form="register_form">
             Editar
           </ConfirmEditButton>

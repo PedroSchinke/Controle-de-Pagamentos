@@ -9,8 +9,7 @@ import {
 import { ClientsContext } from '../../../../context/clientsContext'
 import { useContext, useEffect } from 'react'
 import { SelectClientOverlay } from './components/select client overlay/SelectClientOverlay'
-import { NavLink } from 'react-router-dom'
-import { CaretLeft } from 'phosphor-react'
+import { BackButton } from '../../../../components/back button/BackButton'
 
 export function SearchReceipt() {
   const {
@@ -39,15 +38,10 @@ export function SearchReceipt() {
   return (
     <SearchReceiptPageLayout>
       <SearchReceiptPageContainer>
-        <div id="back_button_container">
-          <NavLink to="/buscar">
-            <button id="back_button">
-              <CaretLeft />
-              Voltar
-            </button>
-          </NavLink>
-        </div>
-        <h1>Buscar Pagamento</h1>
+        <BackButton path={'/buscar'} />
+
+        <h1 id="page_title">Buscar Pagamento</h1>
+
         <ReceiptFilter />
       </SearchReceiptPageContainer>
       {isClientSelectOverlayActive && <SelectClientOverlay />}
@@ -58,7 +52,7 @@ export function SearchReceipt() {
       ) : null}
       {showResults && (
         <ResultsContainer>
-          <h1>Resultados</h1>
+          <h2 id="total_results_count">{`Total de resultados: ${receipts.length}`}</h2>
           {receipts.map((receipt) => {
             return (
               <ReceiptSearchResult

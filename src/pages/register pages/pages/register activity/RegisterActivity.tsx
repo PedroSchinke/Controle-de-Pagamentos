@@ -16,7 +16,7 @@ import { api } from '../../../../services/api'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AxiosError } from 'axios'
-import { CaretLeft } from 'phosphor-react'
+import { BackButton } from '../../../../components/back button/BackButton'
 
 const registerActivitySchema = z.object({
   nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
@@ -94,15 +94,10 @@ export function RegisterActivity() {
     <>
       <RegisterActivityLayout>
         <RegisterActivityContainer>
-          <div id="back_button_container">
-            <NavLink to="/registrar">
-              <button id="back_button">
-                <CaretLeft />
-                Voltar
-              </button>
-            </NavLink>
-          </div>
+          <BackButton path={'/registrar'} />
+
           <h1>Registrar Atividade</h1>
+
           <RegisterForm
             id="register_client_form"
             onSubmit={handleSubmit(handleRegisterActivity)}
@@ -115,6 +110,7 @@ export function RegisterActivity() {
               )}
             </label>
           </RegisterForm>
+
           <ConfirmRegisterButton type="submit" form="register_client_form">
             Registrar
           </ConfirmRegisterButton>
