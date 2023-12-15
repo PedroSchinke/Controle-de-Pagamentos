@@ -20,13 +20,13 @@ export function Router() {
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/registrar" element={<RegisterPage />} />
-        <Route path="/registrar/recebimento" element={<RegisterReceipt />} />
+        <Route path="/registrar/pagamento" element={<RegisterReceipt />} />
         <Route path="/registrar/cliente" element={<RegisterClient />} />
         <Route path="/registrar/atividade" element={<RegisterActivity />} />
         <Route path="/buscar" element={<SearchPage />} />
-        <Route path="/buscar/recebimento" element={<SearchReceipt />} />
+        <Route path="/buscar/pagamento" element={<SearchReceipt />} />
         <Route
-          path="/buscar/recebimento/detalhes/:id"
+          path="/buscar/pagamento/detalhes/:id"
           element={<DetailedReceipt />}
         />
         <Route path="/buscar/cliente" element={<SearchClient />} />
