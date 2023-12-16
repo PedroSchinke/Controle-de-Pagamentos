@@ -55,7 +55,7 @@ export function DetailedReceipt() {
   }
 
   const originalValue = receipt.valor
-  const valueInR$ = formatValue(originalValue)
+  const valueInReais = formatValue(originalValue)
 
   const originalDateString = receipt.dataPagamento.toString()
   const originalDate = parseISO(originalDateString)
@@ -95,26 +95,33 @@ export function DetailedReceipt() {
     <>
       <DetailedReceiptLayout>
         <DetailedReceiptContainer>
-          <BackButton path={'/buscar/pagamento'} />
+          <BackButton />
 
           <h1 id="page_title">Detalhes do Pagamento</h1>
 
           <DetailedReceiptInfos>
             <div>
               <span>Cliente</span>
-              <h2>{receipt.cliente.nome}</h2>
+              <NavLink to={`/buscar/cliente/detalhes/${receipt.cliente.id}`}>
+                <h2 id="name" title="Ver cliente">
+                  {receipt.cliente.nome}
+                </h2>
+              </NavLink>
             </div>
             <div>
               <span>Valor</span>
-              <h2>{valueInR$}</h2>
+              <h2>{valueInReais}</h2>
+            </div>
+            <div>
+              <span>Data e horário</span>
+              <h2>{formattedDate}</h2>
             </div>
             <div>
               <span>Meio de pagamento</span>
               <h2>{receipt.meioPagamento.descricao}</h2>
             </div>
             <div>
-              <span>Data e horário</span>
-              <h2>{formattedDate}</h2>
+              <span>Atividade</span>
             </div>
           </DetailedReceiptInfos>
 

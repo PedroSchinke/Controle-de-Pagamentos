@@ -104,7 +104,7 @@ export function DetailedClient() {
     <>
       <DetailedClientLayout>
         <DetailedClientContainer>
-          <BackButton path={'/buscar/cliente'} />
+          <BackButton />
 
           <h1 id="page_title">Detalhes do Cliente</h1>
 

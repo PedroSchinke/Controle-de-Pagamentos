@@ -26,7 +26,7 @@ export function SearchClient() {
   return (
     <SearchClientPageLayout>
       <SearchClientPageContainer>
-        <BackButton path={'/buscar'} />
+        <BackButton />
 
         <h1 id="page_title">Buscar Cliente</h1>
 

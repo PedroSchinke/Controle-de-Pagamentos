@@ -94,7 +94,7 @@ export function RegisterActivity() {
     <>
       <RegisterActivityLayout>
         <RegisterActivityContainer>
-          <BackButton path={'/registrar'} />
+          <BackButton />
 
           <h1>Registrar Atividade</h1>
 

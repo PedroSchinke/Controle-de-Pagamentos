@@ -49,7 +49,7 @@ export function EditReceipt() {
     <>
       <EditReceiptLayout>
         <EditReceiptContainer>
-          <BackButton path={`/buscar/pagamento/detalhes/${id}`} />
+          <BackButton />
 
           <h1 id="page_title">Editar Pagamento</h1>
 

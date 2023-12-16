@@ -95,7 +95,7 @@ export function RegisterClient() {
     <>
       <RegisterPageLayout>
         <RegisterPageContainer>
-          <BackButton path={'/registrar'} />
+          <BackButton />
 
           <h1>Registrar Cliente</h1>
 

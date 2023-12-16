@@ -38,7 +38,7 @@ export function RegisterReceipt() {
     <>
       <RegisterReceiptLayout>
         <RegisterReceiptContainer>
-          <BackButton path={'/registrar'} />
+          <BackButton />
 
           <h1>Registrar Pagamento</h1>
 

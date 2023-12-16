@@ -148,7 +148,7 @@ export function EditClient() {
     <>
       <EditClientLayout>
         <EditClientContainer>
-          <BackButton path={`/buscar/cliente/detalhes/${id}`} />
+          <BackButton />
 
           <h1 id="page_title">Editar Cliente</h1>
 

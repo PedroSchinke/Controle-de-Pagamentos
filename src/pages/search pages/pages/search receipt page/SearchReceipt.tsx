@@ -38,7 +38,7 @@ export function SearchReceipt() {
   return (
     <SearchReceiptPageLayout>
       <SearchReceiptPageContainer>
-        <BackButton path={'/buscar'} />
+        <BackButton />
 
         <h1 id="page_title">Buscar Pagamento</h1>
 
