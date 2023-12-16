@@ -25,6 +25,10 @@ export const EditReceiptContainer = styled.section`
     font-size: 2rem;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 768px) {
+    width: 55%;
+  }
 `
 
 export const EditReceiptForm = styled.form`
@@ -155,6 +159,10 @@ export const OverlayContent = styled.div`
   a {
     width: 45%;
     height: 2.8rem;
+  }
+
+  @media (min-width: 768px) {
+    width: 35%;
   }
 `
 

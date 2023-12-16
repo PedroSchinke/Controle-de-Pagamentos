@@ -17,7 +17,7 @@ import { ClientsContext } from '../../../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
 
 const filterSchema = z.object({
-  name: z.string().trim().min(1, 'É preciso preencher este campo'),
+  name: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
 })
 
 type filterDataProps = z.infer<typeof filterSchema>

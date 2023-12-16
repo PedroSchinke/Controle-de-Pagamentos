@@ -21,16 +21,20 @@ export const ClientSearchResultInfos = styled.div`
   padding: 20px 10px;
   color: ${(props) => props.theme.base_text};
   cursor: pointer;
-  transition: 0.2s;
-
-  &:hover {
-    h2 {
-      color: ${(props) => props.theme.blue_dark};
-    }
-  }
+  transition: 0.3s;
 
   .client_and_email {
     display: flex;
     flex-direction: column;
+
+    #name {
+      transition: 0.3s;
+    }
+  }
+
+  &:hover {
+    #name {
+      color: ${(props) => props.theme.blue_dark};
+    }
   }
 `

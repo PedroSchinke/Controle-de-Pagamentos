@@ -45,6 +45,10 @@ export const OverlayContent = styled.div`
       text-decoration: underline;
     }
   }
+
+  @media (min-width: 768px) {
+    width: 45%;
+  }
 `
 
 export const NoResultsMesssage = styled.p`

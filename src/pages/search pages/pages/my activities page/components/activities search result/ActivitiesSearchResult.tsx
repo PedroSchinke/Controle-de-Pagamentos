@@ -4,8 +4,9 @@ import {
   ActivitiesSearchResultContainer,
   ActivitiesSearchResultInfos,
 } from './styles'
+import { ActivitiesProps } from '../../../../../../context/clientsContext'
 
-export function ActivitiesSearchResult() {
+export function ActivitiesSearchResult({ descricao }: ActivitiesProps) {
   const handleDeleteActivity = () => {}
 
   return (
@@ -13,7 +14,7 @@ export function ActivitiesSearchResult() {
       <DivisionCardLine />
       <ActivitiesSearchResultInfos>
         <div id="activity">
-          <h2>Atividade</h2>
+          <h2>{descricao}</h2>
         </div>
         <button id="delete_button" onClick={handleDeleteActivity}>
           <Trash size={26} weight="fill" />

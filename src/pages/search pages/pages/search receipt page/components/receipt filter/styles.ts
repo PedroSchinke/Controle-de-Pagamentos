@@ -30,7 +30,7 @@ export const FilterContainer = styled.div`
     }
   }
 
-  #Xbutton {
+  #x_button {
     display: flex;
     align-items: center;
     border-top-right-radius: 8px;
@@ -45,7 +45,7 @@ export const FilterContainer = styled.div`
       cursor: pointer;
 
       &:hover {
-        color: ${(props) => props.theme.red};
+        color: ${(props) => props.theme.blue_dark};
       }
     }
   }

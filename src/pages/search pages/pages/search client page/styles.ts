@@ -27,6 +27,10 @@ export const SearchClientPageContainer = styled.section`
     font-family: 'Inter', sans-serif;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 768px) {
+    width: 55%;
+  }
 `
 
 export const NoResultsMesssage = styled.p`
@@ -49,5 +53,9 @@ export const ResultsContainer = styled.div`
     font-size: 1.3rem;
     margin: 0px 0px 18px 20px;
     color: ${(props) => props.theme.base_label};
+  }
+
+  @media (min-width: 768px) {
+    width: 55%;
   }
 `

@@ -25,6 +25,10 @@ export const RegisterActivityContainer = styled.section`
     font-family: 'Inter', sans-serif;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 768px) {
+    width: 55%;
+  }
 `
 
 export const RegisterForm = styled.form`

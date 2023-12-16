@@ -23,8 +23,8 @@ export function ClientSearchResult({
         <DivisionCardLine />
         <ClientSearchResultInfos>
           <div className="client_and_email">
-            <h2>{nome}</h2>
-            <span>{email}</span>
+            <h2 id="name">{nome}</h2>
+            <span id="email">{email}</span>
           </div>
           <CaretRight size={30} />
         </ClientSearchResultInfos>

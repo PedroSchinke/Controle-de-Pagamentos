@@ -32,6 +32,11 @@ export interface PaymentOptionsProps {
   descricao: string
 }
 
+export interface ActivitiesProps {
+  id: number
+  descricao: string
+}
+
 interface ClientsContextType {
   clients: ClientProps[]
   setClients: (value: ClientProps[]) => void
@@ -63,6 +68,8 @@ interface ClientsContextType {
   setRegisterReceiptMessage: (value: string | null) => void
   editReceiptMessage: string | null
   setEditReceiptMessage: (value: string | null) => void
+  activities: ActivitiesProps[]
+  setActivities: (value: ActivitiesProps[]) => void
 }
 
 export const ClientsContext = createContext({} as ClientsContextType)
@@ -122,6 +129,8 @@ export function ContextProvider({ children }: ContextProviderProps) {
     null,
   )
 
+  const [activities, setActivities] = useState<ActivitiesProps[]>([])
+
   return (
     <ClientsContext.Provider
       value={{
@@ -155,6 +164,8 @@ export function ContextProvider({ children }: ContextProviderProps) {
         setRegisterReceiptMessage,
         editReceiptMessage,
         setEditReceiptMessage,
+        activities,
+        setActivities,
       }}
     >
       {children}

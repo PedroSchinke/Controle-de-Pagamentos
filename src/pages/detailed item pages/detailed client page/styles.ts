@@ -31,12 +31,21 @@ export const DetailedClientContainer = styled.div`
     font-family: 'Inter', sans-serif;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 768px) {
+    width: 50%;
+    padding: 40px;
+  }
 `
 
 export const DetailedClientInfos = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  h2 {
+    font-family: 'Inter', sans-serif;
+  }
 `
 
 export const ClientOptionButtons = styled.div`
@@ -50,7 +59,6 @@ const BaseOptionButtons = styled.button`
   align-items: center;
   gap: 3px;
   border: none;
-  border-bottom: 3px solid transparent;
   background-color: ${(props) => props.theme.background};
   font-family: 'Roboto', sans-serif;
   font-size: 1.3rem;
@@ -60,17 +68,19 @@ const BaseOptionButtons = styled.button`
 
 export const UpdateClientButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.blue_dark};
+  transition: 0.1s;
 
   &:hover {
-    border-bottom: 3px solid ${(props) => props.theme.blue_dark};
+    color: ${(props) => props.theme.blue};
   }
 `
 
 export const DeleteClientButton = styled(BaseOptionButtons)`
   color: ${(props) => props.theme.red};
+  transition: 0.1s;
 
   &:hover {
-    border-bottom: 3px solid ${(props) => props.theme.red};
+    color: ${(props) => props.theme.red_light};
   }
 `
 
@@ -103,6 +113,10 @@ export const OverlayContent = styled.div`
   a {
     width: 45%;
     height: fit-content;
+  }
+
+  @media (min-width: 768px) {
+    width: 35%;
   }
 `
 

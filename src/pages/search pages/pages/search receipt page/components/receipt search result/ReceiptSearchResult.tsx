@@ -34,12 +34,12 @@ export function ReceiptSearchResult({
       <ReceiptSearchResultContainer>
         <DivisionCardLine />
         <ReceiptSearchResultInfos>
-          <div className="donator_and_date">
-            <h2>{nome}</h2>
-            <span>{formattedDate}</span>
+          <div className="client_and_date">
+            <h2 id="name">{nome}</h2>
+            <span id="date">{formattedDate}</span>
           </div>
-          <div className="donation_value_and_arrow">
-            <span className="donation_value">{valueInR$}</span>
+          <div className="receipt_value_and_arrow">
+            <span id="receipt_value">{valueInR$}</span>
             <CaretRight size={30} />
           </div>
         </ReceiptSearchResultInfos>

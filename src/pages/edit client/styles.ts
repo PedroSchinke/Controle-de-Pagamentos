@@ -25,6 +25,10 @@ export const EditClientContainer = styled.section`
     font-size: 2rem;
     color: ${(props) => props.theme.base_subtitle};
   }
+
+  @media (min-width: 768px) {
+    width: 55%;
+  }
 `
 
 export const EditClientForm = styled.form`

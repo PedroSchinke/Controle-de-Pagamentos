@@ -24,6 +24,10 @@ export const RegisterPageContainer = styled.section`
     font-family: 'Inter', sans-serif;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 768px) {
+    width: 55%;
+  }
 `
 
 export const RegisterForm = styled.form`
@@ -109,6 +113,10 @@ export const OverlayContent = styled.div`
   a {
     width: 45%;
     height: 2.8rem;
+  }
+
+  @media (min-width: 768px) {
+    width: 40%;
   }
 `
 

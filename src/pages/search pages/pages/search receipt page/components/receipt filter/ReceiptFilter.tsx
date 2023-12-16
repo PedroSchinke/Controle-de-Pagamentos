@@ -166,7 +166,7 @@ export function ReceiptFilter() {
               />
             </label>
             {clientName && (
-              <div id="Xbutton" title="Remover cliente">
+              <div id="x_button" title="Remover cliente">
                 <p onClick={handleRemoveClient}>
                   <XCircle size={20} />
                 </p>

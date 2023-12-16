@@ -23,24 +23,28 @@ export const ReceiptSearchResultInfos = styled.div`
   cursor: pointer;
   color: ${(props) => props.theme.base_text};
 
+  #name {
+    transition: 0.3s;
+  }
+
   &:hover {
-    h2 {
+    #name {
       color: ${(props) => props.theme.blue_dark};
     }
   }
 
-  .donator_and_date {
+  .client_and_date {
     display: flex;
     flex-direction: column;
     gap: 5px;
   }
 
-  .donation_value_and_arrow {
+  .receipt_value_and_arrow {
     display: flex;
     align-items: center;
     gap: 5px;
 
-    .donation_value {
+    #receipt_value {
       font-size: 1.5rem;
       font-weight: bold;
       color: ${(props) => props.theme.blue_dark};
