@@ -32,8 +32,8 @@ export const DetailedReceiptContainer = styled.div`
     color: ${(props) => props.theme.blue_dark};
   }
 
-  @media (min-width: 768px) {
-    width: 50%;
+  @media (min-width: 481px) {
+    width: 460px;
     padding: 40px;
   }
 `

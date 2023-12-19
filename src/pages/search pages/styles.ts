@@ -5,7 +5,11 @@ export const SearchPageLayout = styled.div`
   justify-content: center;
   font-family: 'Inter', sans-serif;
   color: ${(props) => props.theme.base_text};
-  padding: 25px 15px;
+  padding: 15px;
+
+  @media (min-width: 1200px) {
+    padding: 25px 100px;
+  }
 `
 
 export const SearchPageContent = styled.div`

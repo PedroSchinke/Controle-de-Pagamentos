@@ -32,8 +32,8 @@ export const DetailedClientContainer = styled.div`
     color: ${(props) => props.theme.blue_dark};
   }
 
-  @media (min-width: 768px) {
-    width: 50%;
+  @media (min-width: 481px) {
+    width: 460px;
     padding: 40px;
   }
 `
@@ -115,8 +115,8 @@ export const OverlayContent = styled.div`
     height: fit-content;
   }
 
-  @media (min-width: 768px) {
-    width: 35%;
+  @media (min-width: 481px) {
+    width: 360px;
   }
 `
 

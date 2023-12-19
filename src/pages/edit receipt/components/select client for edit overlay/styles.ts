@@ -23,6 +23,7 @@ export const OverlayContent = styled.div`
   border-radius: 8px;
   transform: translate(-50%, -50%);
   padding: 20px 20px 20px 20px;
+  font-family: 'Roboto', sans-serif;
   background-color: ${(props) => props.theme.background};
   z-index: 1000;
 
@@ -41,24 +42,21 @@ export const OverlayContent = styled.div`
     font-weight: bold;
     cursor: pointer;
 
-    p {
-      font-family: 'Roboto', sans-serif;
-    }
-
     &:hover {
-      text-decoration: underline;
+      color: ${(props) => props.theme.base_text};
     }
   }
 
-  @media (min-width: 768px) {
-    width: 40%;
+  @media (min-width: 481px) {
+    width: 360px;
   }
 `
 
 export const NoResultsMesssage = styled.p`
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
+  color: ${(props) => props.theme.base_text};
 `
 
 export const ResultsContainer = styled.div`
@@ -77,7 +75,6 @@ export const ResultsContainer = styled.div`
     width: 100%;
     display: flex;
     margin: 0px 0px 10px 10px;
-    font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
     font-weight: bold;
     color: ${(props) => props.theme.base_label};
@@ -88,7 +85,6 @@ export const ResultsContainer = styled.div`
   }
 
   h1 {
-    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     color: ${(props) => props.theme.base_subtitle};
     margin-bottom: 20px;

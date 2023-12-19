@@ -5,6 +5,10 @@ export const RegisterPageLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 1200px) {
+    padding: 25px 15px;
+  }
 `
 
 export const RegisterPageContainer = styled.section`
@@ -25,8 +29,16 @@ export const RegisterPageContainer = styled.section`
     color: ${(props) => props.theme.blue_dark};
   }
 
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
   @media (min-width: 768px) {
-    width: 55%;
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 
@@ -115,8 +127,8 @@ export const OverlayContent = styled.div`
     height: 2.8rem;
   }
 
-  @media (min-width: 768px) {
-    width: 40%;
+  @media (min-width: 481px) {
+    width: 360px;
   }
 `
 

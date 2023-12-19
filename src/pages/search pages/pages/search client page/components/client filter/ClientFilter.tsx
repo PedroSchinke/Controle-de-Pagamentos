@@ -59,7 +59,6 @@ export function ClientFilter() {
       }
     } catch (error) {
       console.error(error)
-
       setErrorMessage('Erro ao conectar com servidor. Tente mais tarde.')
     }
   }
@@ -85,6 +84,7 @@ export function ClientFilter() {
           },
         )
         setClients(alphabeticalArray)
+        setShowNoResultsMessage(false)
       }
     } catch (error) {
       console.error(error)

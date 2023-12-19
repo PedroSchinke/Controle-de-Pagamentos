@@ -11,7 +11,7 @@ export const FilterContainer = styled.div`
   color: ${(props) => props.theme.base_subtitle};
 
   .main_label {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +19,7 @@ export const FilterContainer = styled.div`
     gap: 4px;
 
     #name {
-      width: 120%;
+      width: 100%;
       padding: 8px;
       border: none;
       border-radius: 8px;
@@ -60,7 +60,9 @@ export const FilterForm = styled.form`
 `
 
 export const FilterErrorMessage = styled.p`
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
   color: ${(props) => props.theme.red};

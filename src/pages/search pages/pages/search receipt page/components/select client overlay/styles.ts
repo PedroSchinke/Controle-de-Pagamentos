@@ -42,12 +42,12 @@ export const OverlayContent = styled.div`
     cursor: pointer;
 
     &:hover {
-      text-decoration: underline;
+      color: ${(props) => props.theme.base_text};
     }
   }
 
-  @media (min-width: 768px) {
-    width: 45%;
+  @media (min-width: 481px) {
+    width: 360px;
   }
 `
 

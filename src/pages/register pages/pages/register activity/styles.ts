@@ -6,6 +6,10 @@ export const RegisterActivityLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 1200px) {
+    padding: 25px 15px;
+  }
 `
 
 export const RegisterActivityContainer = styled.section`
@@ -21,13 +25,22 @@ export const RegisterActivityContainer = styled.section`
 
   h1 {
     margin-top: -10px;
+    text-align: center;
     font-size: 2rem;
     font-family: 'Inter', sans-serif;
     color: ${(props) => props.theme.blue_dark};
   }
 
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
   @media (min-width: 768px) {
-    width: 55%;
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 

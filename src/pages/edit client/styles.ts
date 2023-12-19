@@ -26,8 +26,16 @@ export const EditClientContainer = styled.section`
     color: ${(props) => props.theme.base_subtitle};
   }
 
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
   @media (min-width: 768px) {
-    width: 55%;
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 
@@ -79,7 +87,7 @@ export const Overlay = styled.div`
 
 export const OverlayContent = styled.div`
   width: 70%;
-  height: 20%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -97,6 +105,10 @@ export const OverlayContent = styled.div`
   a {
     width: 45%;
     height: 2.8rem;
+  }
+
+  @media (min-width: 481px) {
+    width: 360px;
   }
 `
 

@@ -1,13 +1,20 @@
 import styled from 'styled-components'
 
 export const SearchClientPageLayout = styled.div`
-  padding: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  padding: 15px;
   font-family: 'Roboto', sans-serif;
   color: ${(props) => props.theme.base_text};
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 25px 15px;
+  }
 `
 
 export const SearchClientPageContainer = styled.section`
@@ -28,8 +35,16 @@ export const SearchClientPageContainer = styled.section`
     color: ${(props) => props.theme.blue_dark};
   }
 
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
   @media (min-width: 768px) {
-    width: 55%;
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 
@@ -37,6 +52,19 @@ export const NoResultsMesssage = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
   text-align: center;
+
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
+    margin-top: 20px;
+  }
 `
 
 export const ResultsContainer = styled.div`
@@ -55,7 +83,15 @@ export const ResultsContainer = styled.div`
     color: ${(props) => props.theme.base_label};
   }
 
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
   @media (min-width: 768px) {
-    width: 55%;
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `

@@ -4,6 +4,10 @@ export const RegisterPageLayout = styled.div`
   display: flex;
   justify-content: center;
   padding: 15px;
+
+  @media (min-width: 1200px) {
+    padding: 25px 100px;
+  }
 `
 
 export const RegisterPageContent = styled.div`
@@ -50,7 +54,7 @@ export const RegisterPageOption = styled.section`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-family: 'Inter', sans-serif;
 
     .icon {

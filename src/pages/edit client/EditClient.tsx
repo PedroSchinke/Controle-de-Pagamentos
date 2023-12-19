@@ -79,7 +79,7 @@ export function EditClient() {
       currentData.celular === data.celular
     ) {
       setMessage(
-        'É preciso alterar ao menos um dos campos para realizar a edição',
+        'É preciso alterar ao menos um dos campos para realizar a edição.',
       )
       return
     }
@@ -94,7 +94,7 @@ export function EditClient() {
 
         setClients([])
       } else {
-        setMessage('Erro ao editar cliente')
+        setMessage('Erro ao editar cliente. Tente novamente mais tarde.')
       }
     } catch (error) {
       console.error(error)
