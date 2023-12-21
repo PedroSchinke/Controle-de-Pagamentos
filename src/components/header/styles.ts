@@ -41,7 +41,7 @@ export const Navigation = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 
     a {
       width: fit-content;
@@ -72,6 +72,10 @@ export const Navigation = styled.nav`
         width: 150px;
         padding: 7px 20px;
       }
+    }
+
+    @media (min-width: 481px) {
+      gap: 20px;
     }
 
     @media (min-width: 768px) {

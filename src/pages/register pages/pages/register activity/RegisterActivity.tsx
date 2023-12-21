@@ -19,16 +19,10 @@ import { AxiosError } from 'axios'
 import { BackButton } from '../../../../components/back button/BackButton'
 
 const registerActivitySchema = z.object({
-  nome: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
-  email: z
+  descricao: z
     .string()
     .trim()
-    .min(1, 'É preciso preencher o email do cliente.')
-    .email('Formato de email inválido.'),
-  celular: z
-    .string()
-    .trim()
-    .min(14, 'É preciso digitar um número de telefone válido.'),
+    .min(1, 'É preciso preencher a descrição da tarefa.'),
 })
 
 type registerDataProps = z.infer<typeof registerActivitySchema>
@@ -50,7 +44,7 @@ export function RegisterActivity() {
     try {
       registerActivitySchema.parse(data)
 
-      const response = await api.post('/clientes', data)
+      const response = await api.post('/atividades', data)
 
       if (response.status === 201) {
         setMessage('Atividade registrada com sucesso!')
@@ -99,19 +93,21 @@ export function RegisterActivity() {
           <h1>Registrar Atividade</h1>
 
           <RegisterForm
-            id="register_client_form"
+            id="register_activity_form"
             onSubmit={handleSubmit(handleRegisterActivity)}
           >
             <label>
-              Nome
-              <input id="nome" {...register('nome')} />
-              {errors.nome && (
-                <RegisterFormError>{errors.nome.message}</RegisterFormError>
+              Descrição
+              <input id="descrição" {...register('descricao')} />
+              {errors.descricao && (
+                <RegisterFormError>
+                  {errors.descricao.message}
+                </RegisterFormError>
               )}
             </label>
           </RegisterForm>
 
-          <ConfirmRegisterButton type="submit" form="register_client_form">
+          <ConfirmRegisterButton type="submit" form="register_activity_form">
             Registrar
           </ConfirmRegisterButton>
         </RegisterActivityContainer>

@@ -7,6 +7,8 @@ export const DashboardLayout = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  font-family: 'Inter', sans-serif;
+  color: ${(props) => props.theme.base_subtitle};
 `
 
 const BaseCard = styled.div`
@@ -15,8 +17,6 @@ const BaseCard = styled.div`
   flex-direction: column;
   gap: 30px;
   padding: 10px;
-  font-family: 'Roboto', sans-serif;
-  color: ${(props) => props.theme.base_subtitle};
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
@@ -30,21 +30,45 @@ export const TopCard = styled(BaseCard)`
   height: 45%;
   padding: 20px;
 
-  .top_card_infos {
+  .total_revenue {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    font-family: 'Roboto', sans-serif;
+    align-items: center;
 
-    .total_donation_title {
+    .total_revenue_title {
       font-size: 1.3rem;
       font-weight: bold;
     }
 
-    .total_donation_value {
+    .total_revenue_value {
       font-size: 1.6rem;
       font-weight: bold;
       color: ${(props) => props.theme.blue_dark};
+    }
+  }
+
+  .revenue_by_activity_title {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: bold;
+
+    .revenue_by_activity_infos {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 400;
+
+      #activity_title {
+        font-size: 1.1rem;
+      }
+
+      #activity_value {
+        font-size: 1.3rem;
+        color: ${(props) => props.theme.blue_dark};
+      }
     }
   }
 `

@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext, useEffect, useState } from 'react'
 import { EditReceiptFormContainer, InputErrorMessage } from './styles'
 import {
+  ActivitiesProps,
   ClientsContext,
   PaymentOptionsProps,
   ReceiptFormDataProps,
@@ -27,6 +28,13 @@ const editReceiptSchema = z.object({
       })
       .min(1, 'É preciso selecionar o meio de pagamento.'),
   }),
+  atividade: z.object({
+    id: z
+      .number({
+        invalid_type_error: 'É preciso selecionar a atividade.',
+      })
+      .min(1, 'É preciso selecionar a atividade.'),
+  }),
 })
 
 const formDataSchema = z.object({
@@ -41,12 +49,19 @@ const formDataSchema = z.object({
       required_error: 'É preciso inserir um valor.',
     })
     .min(1, 'É preciso inserir um valor.'),
+  atividade: z.number({
+    invalid_type_error: 'É preciso selecionar a atividade.',
+  }),
 })
 
 export function EditReceiptForm() {
   const { id } = useParams()
 
   const [paymentOptions, setPaymentOptions] = useState<PaymentOptionsProps[]>(
+    [],
+  )
+
+  const [activitiesOptions, setActivitiesOptions] = useState<ActivitiesProps[]>(
     [],
   )
 
@@ -78,11 +93,18 @@ export function EditReceiptForm() {
         setPaymentOptions(getPaymentOptionsResponse.data)
       }
 
+      const getActivitiesResponse = await api.get('/atividades')
+
+      if (getActivitiesResponse.status === 200) {
+        setActivitiesOptions(getActivitiesResponse.data)
+      }
+
       const getReceiptDataResponse = await api.get(`/pagamentos/${id}`)
 
       if (getReceiptDataResponse.status === 200) {
-        setValue('meioPagamento', getReceiptDataResponse.data.meioPagamento.id)
         setValue('dataPagamento', getReceiptDataResponse.data.dataPagamento)
+        setValue('meioPagamento', getReceiptDataResponse.data.meioPagamento.id)
+        setValue('atividade', getReceiptDataResponse.data.atividade.id)
 
         const stringValue = getReceiptDataResponse.data.valor.toString()
         setValue('valor', stringValue)
@@ -119,7 +141,8 @@ export function EditReceiptForm() {
         currentData.cliente.id === clientIdForEdit &&
         currentData.dataPagamento === data.dataPagamento &&
         currentData.valor === numberValue &&
-        currentData.meioPagamento.id === data.meioPagamento
+        currentData.meioPagamento.id === data.meioPagamento &&
+        currentData.atividade.id === data.atividade
       ) {
         setEditReceiptMessage(
           'É preciso alterar ao menos um dos campos para realizar a edição.',
@@ -135,6 +158,9 @@ export function EditReceiptForm() {
         valor: numberValue,
         meioPagamento: {
           id: data.meioPagamento,
+        },
+        atividade: {
+          id: data.atividade,
         },
       }
 
@@ -211,10 +237,27 @@ export function EditReceiptForm() {
             </option>
           ))}
         </select>
+        {errors.meioPagamento && (
+          <InputErrorMessage>{errors.meioPagamento.message}</InputErrorMessage>
+        )}
       </label>
-      {errors.meioPagamento && (
-        <InputErrorMessage>{errors.meioPagamento.message}</InputErrorMessage>
-      )}
+      <label>
+        Atividade
+        <select
+          id="atividade"
+          {...register('atividade', { valueAsNumber: true })}
+        >
+          <option value="selecionar">Selecionar</option>
+          {activitiesOptions.map((activity) => (
+            <option key={activity.id} value={activity.id}>
+              {activity.descricao}
+            </option>
+          ))}
+        </select>
+        {errors.atividade && (
+          <InputErrorMessage>{errors.atividade.message}</InputErrorMessage>
+        )}
+      </label>
     </EditReceiptFormContainer>
   )
 }

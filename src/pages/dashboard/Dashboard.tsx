@@ -12,11 +12,27 @@ export function Dashboard() {
   return (
     <DashboardLayout>
       <TopCard>
-        <div className="top_card_infos">
-          <span className="total_donation_title">Total de pagamentos</span>
-          <span className="total_donation_value">R$1.000,00</span>
+        <div className="total_revenue">
+          <span className="total_revenue_title">Faturamento total</span>
+          <span className="total_revenue_value">R$ 1.000,00</span>
+        </div>
+        <div className="revenue_by_activity_title">
+          Por atividade
+          <div className="revenue_by_activity_infos">
+            <span id="activity_title">Limpeza de cumbuca</span>
+            <span id="activity_value">R$ 150,00</span>
+          </div>
+          <div className="revenue_by_activity_infos">
+            <span id="activity_title">Consulta</span>
+            <span id="activity_value">R$ 350,00</span>
+          </div>
+          <div className="revenue_by_activity_infos">
+            <span id="activity_title">Trabalhos</span>
+            <span id="activity_value">R$ 250,00</span>
+          </div>
         </div>
       </TopCard>
+
       <BottomPart>
         <LeftCardOfBottomPart>Pagantes este mês</LeftCardOfBottomPart>
         <RightSideOfBottomPart>

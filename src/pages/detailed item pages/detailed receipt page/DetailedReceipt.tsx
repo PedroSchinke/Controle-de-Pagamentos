@@ -122,6 +122,7 @@ export function DetailedReceipt() {
             </div>
             <div>
               <span>Atividade</span>
+              <h2>{receipt.atividade.descricao}</h2>
             </div>
           </DetailedReceiptInfos>
 

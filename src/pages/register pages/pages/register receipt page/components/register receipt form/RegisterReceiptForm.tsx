@@ -5,6 +5,7 @@ import { InputErrorMessage, RegisterReceiptFormContainer } from './styles'
 import { NumericFormat } from 'react-number-format'
 import { useContext, useEffect, useState } from 'react'
 import {
+  ActivitiesProps,
   ClientsContext,
   PaymentOptionsProps,
   ReceiptFormDataProps,
@@ -26,6 +27,13 @@ const registerReceiptSchema = z.object({
       })
       .min(1, 'É preciso selecionar o meio de pagamento.'),
   }),
+  atividade: z.object({
+    id: z
+      .number({
+        invalid_type_error: 'É preciso selecionar a atividade.',
+      })
+      .min(1, 'É preciso selecionar a atividade.'),
+  }),
 })
 
 const formDataSchema = z.object({
@@ -40,10 +48,17 @@ const formDataSchema = z.object({
       required_error: 'É preciso inserir o valor.',
     })
     .min(3, 'É preciso inserir um valor.'),
+  atividade: z.number({
+    invalid_type_error: 'É preciso selecionar a atividade.',
+  }),
 })
 
 export function RegisterReceiptForm() {
   const [paymentOptions, setPaymentOptions] = useState<PaymentOptionsProps[]>(
+    [],
+  )
+
+  const [activitiesOptions, setActivitiesOptions] = useState<ActivitiesProps[]>(
     [],
   )
 
@@ -82,8 +97,17 @@ export function RegisterReceiptForm() {
       }
     }
 
+    const getActivitiesOptions = async () => {
+      const response = await api.get('/atividades')
+
+      if (response.status === 200) {
+        setActivitiesOptions(response.data)
+      }
+    }
+
     getClientName()
     getPaymentOptions()
+    getActivitiesOptions()
   }, [setValue, clientNameForRegister])
 
   const handleRegisterReceipt = async (data: ReceiptFormDataProps) => {
@@ -101,6 +125,9 @@ export function RegisterReceiptForm() {
         valor: numberValue,
         meioPagamento: {
           id: data.meioPagamento,
+        },
+        atividade: {
+          id: data.atividade,
         },
       }
 
@@ -187,10 +214,29 @@ export function RegisterReceiptForm() {
             </option>
           ))}
         </select>
+        {errors.meioPagamento && (
+          <InputErrorMessage>{errors.meioPagamento.message}</InputErrorMessage>
+        )}
       </label>
-      {errors.meioPagamento && (
-        <InputErrorMessage>{errors.meioPagamento.message}</InputErrorMessage>
-      )}
+      <label>
+        Atividade
+        <select
+          id="atividade"
+          {...register('atividade', { valueAsNumber: true })}
+        >
+          <option id="select_option" value="selecionar">
+            Selecionar
+          </option>
+          {activitiesOptions.map((activity) => (
+            <option key={activity.id} value={activity.id}>
+              {activity.descricao}
+            </option>
+          ))}
+        </select>
+        {errors.atividade && (
+          <InputErrorMessage>{errors.atividade.message}</InputErrorMessage>
+        )}
+      </label>
     </RegisterReceiptFormContainer>
   )
 }

@@ -9,6 +9,11 @@ export interface ClientProps {
   dataAtualizacao?: string
 }
 
+export interface ActivitiesProps {
+  id: number
+  descricao: string
+}
+
 export interface ReceiptProps {
   id: number
   valor: number
@@ -18,21 +23,18 @@ export interface ReceiptProps {
   }
   dataPagamento: Date
   cliente: ClientProps
+  atividade: ActivitiesProps
 }
 
 export interface ReceiptFormDataProps {
   cliente: string
   dataPagamento: string
-  meioPagamento: number
   valor: string
+  meioPagamento: number
+  atividade: number
 }
 
 export interface PaymentOptionsProps {
-  id: number
-  descricao: string
-}
-
-export interface ActivitiesProps {
   id: number
   descricao: string
 }
