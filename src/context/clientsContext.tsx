@@ -7,6 +7,7 @@ export interface ClientProps {
   celular: number
   dataCadastro: string
   dataAtualizacao?: string
+  ativo: boolean
 }
 
 export interface ActivitiesProps {

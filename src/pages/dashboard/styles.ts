@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const DashboardLayout = styled.div`
-  height: 80vh;
+  height: fit-content;
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -26,19 +26,27 @@ const BaseCard = styled.div`
   }
 `
 
-export const TopCard = styled(BaseCard)`
-  height: 45%;
+export const TotalRevenueCard = styled(BaseCard)`
+  height: fit-content;
   padding: 20px;
+  gap: 10px;
 
   .total_revenue {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 30px;
 
     .total_revenue_title {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: bold;
+    }
+
+    #time_tag {
+      margin: 10px 0 10px 0;
+      font-size: 1.15rem;
+      color: ${(props) => props.theme.base_text};
     }
 
     .total_revenue_value {
@@ -48,102 +56,72 @@ export const TopCard = styled(BaseCard)`
     }
   }
 
-  .revenue_by_activity_title {
+  #card_line_container {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+  }
+
+  .evolution_title {
+    font-size: 1.3rem;
     font-weight: bold;
+  }
 
-    .revenue_by_activity_infos {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 400;
+  #evolution_time_tag {
+    margin-bottom: 10px;
+    font-size: 1.15rem;
+    color: ${(props) => props.theme.base_text};
+  }
 
-      #activity_title {
-        font-size: 1.1rem;
-      }
+  #chart_title {
+    margin-top: 5px;
+    font-size: 1.1rem;
+  }
 
-      #activity_value {
-        font-size: 1.3rem;
-        color: ${(props) => props.theme.blue_dark};
-      }
-    }
+  #chart {
+    margin: -10px 0 -20px -10px;
+    height: fit-content;
   }
 `
 
-export const BottomPart = styled.div`
-  height: 55%;
+export const DivisionCardLine = styled.div`
+  margin: 5px 0 5px 0;
+  width: 95%;
+  height: 1px;
+  background-color: ${(props) => props.theme.base_hover};
+`
+
+export const RevenueByClientCard = styled(BaseCard)`
   width: 100%;
-  display: flex;
-  gap: 20px;
-`
+  height: fit-content;
+  padding: 20px;
+  gap: 15px;
 
-export const LeftCardOfBottomPart = styled(BaseCard)`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  font-size: 1.3rem;
-  font-weight: bold;
-`
+  #card_title {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
 
-export const RightSideOfBottomPart = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
-
-export const TopCardOfRightSide = styled(BaseCard)`
-  height: 50%;
-  display: flex;
-
-  .top_card_of_right_side_infos {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .biggest_donation_title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .biggest_donation_value {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: ${(props) => props.theme.blue_dark};
-    }
-
-    .biggest_donation {
-      font-size: 1.3rem;
-    }
+  #time_tag {
+    margin: -5px 0 10px 0;
+    font-size: 1.15rem;
+    color: ${(props) => props.theme.base_text};
   }
 `
 
-export const BottomCardOfRightSide = styled(BaseCard)`
-  height: 50%;
+export const RevenueByActivityCard = styled(BaseCard)`
+  width: 100%;
+  height: fit-content;
+  padding: 20px;
+  gap: 15px;
 
-  .bottom_card_of_right_side_infos {
-    display: flex;
-    flex-direction: column;
+  #card_title {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
 
-    .last_donation_title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .last_donation_value {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: ${(props) => props.theme.blue_dark};
-    }
-
-    .last_donation {
-      font-size: 1.3rem;
-    }
+  #time_tag {
+    margin: -5px 0 10px 0;
+    font-size: 1.15rem;
+    color: ${(props) => props.theme.base_text};
   }
 `
