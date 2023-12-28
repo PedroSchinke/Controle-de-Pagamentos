@@ -15,6 +15,7 @@ import {
 import { NavLink } from 'react-router-dom'
 import { api } from '../../../../../../services/api'
 import { ClientsContext } from '../../../../../../context/clientsContext'
+import { selectActiveClients } from '../../../../../../services/select-active-clients'
 
 const filterSchema = z.object({
   name: z.string().trim().min(1, 'É preciso preencher este campo.'),
@@ -51,7 +52,8 @@ export function SelectClientForEditFilter() {
       const response = await api.get(`/clientes/nome/${data.name}`)
 
       if (response.data.length !== 0) {
-        setClientsForReceiptSearch(response.data)
+        const activeClients = selectActiveClients(response.data)
+        setClientsForReceiptSearch(activeClients)
         setShowNoResultsMessageInOverlay(false)
       } else {
         setClientsForReceiptSearch([])

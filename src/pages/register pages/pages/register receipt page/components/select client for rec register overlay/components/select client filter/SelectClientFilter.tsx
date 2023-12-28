@@ -15,6 +15,7 @@ import {
 } from './styles'
 import { ClientsContext } from '../../../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
+import { selectActiveClients } from '../../../../../../../../services/select-active-clients'
 
 const filterSchema = z.object({
   name: z.string().trim().min(1, 'É preciso preencher o nome do cliente.'),
@@ -53,7 +54,8 @@ export function SelectClientFilter() {
       const response = await api.get(`/clientes/nome/${data.name}`)
 
       if (response.data.length !== 0) {
-        setClients(response.data)
+        const activeClients = selectActiveClients(response.data)
+        setClients(activeClients)
         setShowNoResultsMessageInOverlay(false)
       } else {
         setClients([])

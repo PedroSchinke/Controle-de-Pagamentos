@@ -20,6 +20,7 @@ import {
 } from '../../../../../../context/clientsContext'
 import { NavLink } from 'react-router-dom'
 import { MagnifyingGlass } from 'phosphor-react'
+import { selectActiveClients } from '../../../../../../services/select-active-clients'
 
 const filterSchema = z.object({
   name: z.string().trim().min(1, 'É preciso preencher este campo.'),
@@ -29,6 +30,8 @@ type filterDataProps = z.infer<typeof filterSchema>
 
 export function ClientFilter() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const { setClients, setShowNoResultsMessage } = useContext(ClientsContext)
 
   const {
     register,
@@ -40,10 +43,6 @@ export function ClientFilter() {
     resolver: zodResolver(filterSchema),
   })
 
-  const { setClients } = useContext(ClientsContext)
-
-  const { setShowNoResultsMessage } = useContext(ClientsContext)
-
   const handleFilter = async (data: filterDataProps) => {
     try {
       filterSchema.parse(data)
@@ -51,7 +50,8 @@ export function ClientFilter() {
       const response = await api.get(`/clientes/nome/${data.name}`)
 
       if (response.data.length !== 0) {
-        setClients(response.data)
+        const activeClients = selectActiveClients(response.data)
+        setClients(activeClients)
         setShowNoResultsMessage(false)
       } else {
         setClients([])
@@ -68,7 +68,9 @@ export function ClientFilter() {
       const response = await api.get('/clientes')
 
       if (response.status === 200) {
-        const alphabeticalArray = response.data.sort(
+        const activeClients = selectActiveClients(response.data)
+
+        const alphabeticalArray = activeClients.sort(
           (a: ClientProps, b: ClientProps) => {
             const nomeA = a.nome.toUpperCase()
             const nomeB = b.nome.toUpperCase()
@@ -83,6 +85,7 @@ export function ClientFilter() {
             return 0
           },
         )
+
         setClients(alphabeticalArray)
         setShowNoResultsMessage(false)
       }
