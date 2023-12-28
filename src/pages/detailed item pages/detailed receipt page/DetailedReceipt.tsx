@@ -77,14 +77,14 @@ export function DetailedReceipt() {
 
         setReceipts(receiptsWithoutDeletedOne)
 
-        setMessage('Pagamento deletado com sucesso!')
+        setMessage('Pagamento excluído com sucesso!')
       } else {
-        setMessage('Não foi possível deletar pagamento')
+        setMessage('Não foi possível excluir pagamento')
       }
     } catch (error) {
       console.error(error)
       setMessage(
-        'Não foi possível deletar o pagamento. Tente novamente mais tarde.',
+        'Não foi possível excluir o pagamento. Tente novamente mais tarde.',
       )
     }
   }

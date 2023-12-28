@@ -46,7 +46,7 @@ export function RegisterActivity() {
 
       const response = await api.post('/atividades', data)
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setMessage('Atividade registrada com sucesso!')
       } else {
         setMessage('Erro ao registrar atividade. Tente novamente mais tarde.')

@@ -77,11 +77,34 @@ export const ResultsContainer = styled.div`
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
+  font-family: 'Inter', sans-serif;
 
   #total_results_count {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 5px;
+    padding: 0 20px;
+    color: ${(props) => props.theme.base_text};
     font-size: 1.3rem;
-    margin: 0px 0px 18px 20px;
-    color: ${(props) => props.theme.base_label};
+
+    p {
+      color: ${(props) => props.theme.blue_dark};
+    }
+  }
+
+  #total_revenue {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 15px;
+    padding: 0 20px;
+    color: ${(props) => props.theme.base_text};
+    font-size: 1.3rem;
+
+    p {
+      color: ${(props) => props.theme.blue_dark};
+    }
   }
 
   @media (min-width: 481px) {

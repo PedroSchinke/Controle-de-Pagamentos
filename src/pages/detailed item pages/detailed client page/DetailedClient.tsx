@@ -30,8 +30,6 @@ export function DetailedClient() {
   const [isConfirmDeleteMessageActive, setIsConfirmDeleteMessageActive] =
     useState<boolean>(false)
 
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-
   const { clients, setClients } = useContext(ClientsContext)
 
   useEffect(() => {
@@ -42,15 +40,11 @@ export function DetailedClient() {
         if (response.status === 200) {
           setClient(response.data)
         } else {
-          setIsLoading(false)
           setMessage('Erro ao conectar com servidor. Tente mais tarde.')
         }
       } catch (error) {
-        setIsLoading(false)
         setMessage('Erro ao conectar com servidor. Tente mais tarde.')
         console.error(error)
-      } finally {
-        setIsLoading(false)
       }
     }
 
@@ -61,9 +55,9 @@ export function DetailedClient() {
     try {
       setIsConfirmDeleteMessageActive(false)
 
-      const response = await api.delete(`/clientes/${id}`)
+      const response = await api.delete(`/clientes/${id}/ativo`)
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         const stringId = id
         const numberId = parseInt(stringId!, 10)
 
@@ -73,22 +67,22 @@ export function DetailedClient() {
 
         setClients(clientsWithoutDeletedOne)
 
-        setMessage('Ciente deletado com sucesso!')
+        setMessage(`${client?.nome} foi excluído com sucesso!`)
       } else {
-        console.error('Erro ao deletar cliente. Status:', response.status)
-        setMessage('Não foi possível deletar cliente')
+        console.error('Erro ao excluir cliente. Status:', response.status)
+        setMessage(
+          'Não foi possível excluir cliente. Tente novamente mais tarde.',
+        )
       }
     } catch (error) {
       console.error(error)
-      setMessage('Não foi possível deletar o cliente.')
+      setMessage(
+        'Não foi possível excluir o cliente. Tente novamente mais tarde.',
+      )
     }
   }
 
   const showOverlay = message !== null
-
-  if (isLoading) {
-    return <Loading />
-  }
 
   if (!client) {
     return <Loading />
