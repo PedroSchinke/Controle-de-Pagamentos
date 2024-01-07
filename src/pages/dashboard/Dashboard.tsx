@@ -49,11 +49,19 @@ export function Dashboard() {
 
       if (response.status === 200) {
         setSummary(response.data)
-        console.log(summary)
       }
     }
 
+    const getLastSixMonthsSummary = async () => {
+      const response = await api.get(
+        `/resumo?dataIni=2023-06-01&dataFim=2023-12-31`,
+      )
+
+      console.log(response)
+    }
+
     getSummary()
+    getLastSixMonthsSummary()
   }, [])
 
   const revenue = [
@@ -101,7 +109,7 @@ export function Dashboard() {
         distributed: true,
       },
     },
-    colors: ['#047ECF', '#047ECF', '#047ECF', '#047ECF', '#047ECF', '#034C8C'],
+    colors: ['#047ECF'],
     dataLabels: {
       enabled: false,
     },
