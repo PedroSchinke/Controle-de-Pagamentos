@@ -13,6 +13,7 @@ import { format, startOfMonth } from 'date-fns'
 import { Loading } from '../../components/loading/Loading'
 import { formatValue } from '../../services/format-value-service'
 import { SummaryByClientResult } from './components/summary by client result/SummaryByClientResult'
+import { ptBR } from 'date-fns/locale'
 
 export interface atividadeValorListProps {
   atividade: string
@@ -30,8 +31,20 @@ interface SummaryProps {
   clienteValorList: clienteValorListProps[]
 }
 
+interface EvolutionSummaryProps {
+  ano: number
+  mes: number
+  valor: number
+}
+
 export function Dashboard() {
   const [summary, setSummary] = useState<SummaryProps>()
+
+  const [evolutionSummary, setEvolutionSummary] = useState<
+    EvolutionSummaryProps[]
+  >([])
+
+  const [months, setMonths] = useState<string[]>([])
 
   useEffect(() => {
     const getSummary = async () => {
@@ -53,42 +66,53 @@ export function Dashboard() {
     }
 
     const getLastSixMonthsSummary = async () => {
+      const currentDate = new Date()
+
+      const startDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 5,
+        1,
+      )
+
+      const endDate = currentDate
+
+      const monthsArray = []
+      let currentDatePointer = startDate
+
+      while (currentDatePointer <= endDate) {
+        const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+        monthsArray.push(monthLabel)
+        currentDatePointer = new Date(
+          currentDatePointer.getFullYear(),
+          currentDatePointer.getMonth() + 1,
+          1,
+        )
+      }
+
+      setMonths(monthsArray)
+
       const response = await api.get(
-        `/resumo?dataIni=2023-06-01&dataFim=2023-12-31`,
+        `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+          endDate,
+          'yyyy-MM-dd',
+        )}`,
       )
 
       console.log(response)
+
+      if (response.status === 200) {
+        setEvolutionSummary(response.data.faturamentoMesList)
+      }
     }
 
     getSummary()
     getLastSixMonthsSummary()
   }, [])
 
-  const revenue = [
-    {
-      data: 1150,
-    },
-    {
-      data: 1250,
-    },
-    {
-      data: 1350,
-    },
-    {
-      data: 1450,
-    },
-    {
-      data: 1550,
-    },
-    {
-      data: 1350,
-    },
-  ]
-
   const chartSeries = [
     {
       name: 'Faturamento',
-      data: revenue.map((data) => data.data),
+      data: evolutionSummary.map((data) => data.valor),
     },
   ]
 
@@ -141,7 +165,7 @@ export function Dashboard() {
       show: false,
     },
     xaxis: {
-      categories: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      categories: months,
       labels: {
         style: {
           fontSize: '0.92rem',
@@ -211,15 +235,17 @@ export function Dashboard() {
 
         <p id="time_tag">Este mês</p>
 
-        {sortedClientes.map((client) => {
-          return (
-            <SummaryByClientResult
-              key={client.cliente}
-              cliente={client.cliente}
-              valor={client.valor}
-            />
-          )
-        })}
+        <div id="revenue_by_client_results">
+          {sortedClientes.map((client) => {
+            return (
+              <SummaryByClientResult
+                key={client.cliente}
+                cliente={client.cliente}
+                valor={client.valor}
+              />
+            )
+          })}
+        </div>
       </RevenueByClientCard>
 
       <RevenueByActivityCard>
@@ -227,15 +253,17 @@ export function Dashboard() {
 
         <p id="time_tag">Este mês</p>
 
-        {sortedAtividades.map((atividade) => {
-          return (
-            <SummaryByClientResult
-              key={atividade.atividade}
-              cliente={atividade.atividade}
-              valor={atividade.valor}
-            />
-          )
-        })}
+        <div id="revenue_by_activity_results">
+          {sortedAtividades.map((atividade) => {
+            return (
+              <SummaryByClientResult
+                key={atividade.atividade}
+                cliente={atividade.atividade}
+                valor={atividade.valor}
+              />
+            )
+          })}
+        </div>
       </RevenueByActivityCard>
     </DashboardLayout>
   )

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { BaseCardWithoutHover } from '../../styles/style-bases'
 
 export const DashboardLayout = styled.div`
   height: fit-content;
@@ -11,22 +12,7 @@ export const DashboardLayout = styled.div`
   color: ${(props) => props.theme.base_subtitle};
 `
 
-const BaseCard = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 10px;
-  background-color: ${(props) => props.theme.background};
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
-
-  &:hover {
-    box-shadow: 0px 0px 10px ${(props) => props.theme.base_label};
-  }
-`
-
-export const TotalRevenueCard = styled(BaseCard)`
+export const TotalRevenueCard = styled(BaseCardWithoutHover)`
   height: fit-content;
   padding: 20px;
   gap: 10px;
@@ -44,9 +30,9 @@ export const TotalRevenueCard = styled(BaseCard)`
     }
 
     #time_tag {
-      margin: 10px 0 10px 0;
+      margin: 5px 0 5px 0;
       font-size: 1.15rem;
-      color: ${(props) => props.theme.base_text};
+      color: ${(props) => props.theme.blue_dark};
     }
 
     .total_revenue_value {
@@ -67,9 +53,9 @@ export const TotalRevenueCard = styled(BaseCard)`
   }
 
   #evolution_time_tag {
-    margin-bottom: 10px;
+    margin: -5px 0 10px 0;
     font-size: 1.15rem;
-    color: ${(props) => props.theme.base_text};
+    color: ${(props) => props.theme.blue_dark};
   }
 
   #chart_title {
@@ -90,7 +76,7 @@ export const DivisionCardLine = styled.div`
   background-color: ${(props) => props.theme.base_hover};
 `
 
-export const RevenueByClientCard = styled(BaseCard)`
+export const RevenueByClientCard = styled(BaseCardWithoutHover)`
   width: 100%;
   height: fit-content;
   padding: 20px;
@@ -102,13 +88,22 @@ export const RevenueByClientCard = styled(BaseCard)`
   }
 
   #time_tag {
-    margin: -5px 0 10px 0;
+    margin: -10px 0 10px 0;
     font-size: 1.15rem;
-    color: ${(props) => props.theme.base_text};
+    color: ${(props) => props.theme.blue_dark};
+  }
+
+  #revenue_by_client_results {
+    height: fit-content;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: auto;
   }
 `
 
-export const RevenueByActivityCard = styled(BaseCard)`
+export const RevenueByActivityCard = styled(BaseCardWithoutHover)`
   width: 100%;
   height: fit-content;
   padding: 20px;
@@ -120,8 +115,17 @@ export const RevenueByActivityCard = styled(BaseCard)`
   }
 
   #time_tag {
-    margin: -5px 0 10px 0;
+    margin: -10px 0 10px 0;
     font-size: 1.15rem;
-    color: ${(props) => props.theme.base_text};
+    color: ${(props) => props.theme.blue_dark};
+  }
+
+  #revenue_by_activity_results {
+    height: fit-content;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: auto;
   }
 `
