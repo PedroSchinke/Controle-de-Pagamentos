@@ -125,8 +125,11 @@ export function ReceiptFilter() {
 
           if (response.data.length !== 0) {
             const arrayInOrder = response.data.sort(
-              (a: ReceiptProps, b: ReceiptProps) =>
-                b.dataPagamento.getTime() - a.dataPagamento.getTime(),
+              (a: ReceiptProps, b: ReceiptProps) => {
+                const dateA = new Date(a.dataPagamento)
+                const dateB = new Date(b.dataPagamento)
+                return dateB.getTime() - dateA.getTime()
+              },
             )
 
             setReceipts(arrayInOrder)
