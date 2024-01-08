@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseButton } from '../../../../../register pages/pages/register client page/styles'
+import { BaseButton } from '../../../../../../styles/style-bases'
 
 export const ActivitiesSearchResultContainer = styled.div`
   width: 100%;

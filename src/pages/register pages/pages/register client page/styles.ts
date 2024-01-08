@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { BaseButton } from '../../../../styles/style-bases'
 
 export const RegisterPageLayout = styled.div`
   padding: 15px;
@@ -74,23 +75,6 @@ export const RegisterFormError = styled.p`
   font-family: 'Roboto', sans-serif;
   font-size: 1.1rem;
   color: ${(props) => props.theme.red};
-`
-
-export const BaseButton = styled.button`
-  width: 40%;
-  height: 2.8rem;
-  border: none;
-  border-radius: 8px;
-  background-color: ${(props) => props.theme.blue_dark};
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.4rem;
-  color: ${(props) => props.theme.blue_light};
-  cursor: pointer;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: ${(props) => props.theme.blue};
-  }
 `
 
 export const ConfirmRegisterButton = styled(BaseButton)``

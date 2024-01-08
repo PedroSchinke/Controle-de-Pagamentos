@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseButton } from '../register client page/styles'
+import { BaseButton } from '../../../../styles/style-bases'
 
 export const RegisterReceiptLayout = styled.div`
   padding: 15px;
