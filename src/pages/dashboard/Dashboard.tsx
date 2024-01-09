@@ -6,6 +6,8 @@ import {
   RevenueByClientCard,
   RevenueByActivityCard,
   DivisionCardLine,
+  ChooseTimePeriodBar,
+  TimePeriodButton,
 } from './styles'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
@@ -14,6 +16,7 @@ import { Loading } from '../../components/loading/Loading'
 import { formatValue } from '../../services/format-value-service'
 import { SummaryByClientResult } from './components/summary by client result/SummaryByClientResult'
 import { ptBR } from 'date-fns/locale'
+import { SummaryByActivityResult } from './components/summary by activity result/SummaryByActivityResult'
 
 export interface atividadeValorListProps {
   atividade: string
@@ -46,8 +49,19 @@ export function Dashboard() {
 
   const [months, setMonths] = useState<string[]>([])
 
-  useEffect(() => {
-    const getSummary = async () => {
+  const [isSixMonthsTimePeriodActive, setIsSixMonthsTimePeriodActive] =
+    useState<boolean>(true)
+
+  const [isThreeMonthsTimePeriodActive, setIsThreeMonthsTimePeriodActive] =
+    useState<boolean>(false)
+
+  const [isYearTimePeriodActive, setIsYearTimePeriodActive] =
+    useState<boolean>(false)
+
+  const [timePeriodText, setTimePeriodText] = useState('Últimos seis meses')
+
+  const getSummary = async () => {
+    try {
       const today = new Date()
       const firstDayOfMonth = startOfMonth(today)
 
@@ -63,51 +77,153 @@ export function Dashboard() {
       if (response.status === 200) {
         setSummary(response.data)
       }
+    } catch (error) {
+      console.error(error)
     }
+  }
 
-    const getLastSixMonthsSummary = async () => {
-      const currentDate = new Date()
+  const getLastSixMonthsSummary = async () => {
+    setIsSixMonthsTimePeriodActive(true)
+    setIsThreeMonthsTimePeriodActive(false)
+    setIsYearTimePeriodActive(false)
 
-      const startDate = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() - 5,
+    setTimePeriodText('Últimos seis meses')
+
+    const currentDate = new Date()
+
+    const startDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 5,
+      1,
+    )
+
+    const endDate = currentDate
+
+    const monthsArray = []
+    let currentDatePointer = startDate
+
+    while (currentDatePointer <= endDate) {
+      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+      monthsArray.push(monthLabel)
+      currentDatePointer = new Date(
+        currentDatePointer.getFullYear(),
+        currentDatePointer.getMonth() + 1,
         1,
       )
-
-      const endDate = currentDate
-
-      const monthsArray = []
-      let currentDatePointer = startDate
-
-      while (currentDatePointer <= endDate) {
-        const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
-        monthsArray.push(monthLabel)
-        currentDatePointer = new Date(
-          currentDatePointer.getFullYear(),
-          currentDatePointer.getMonth() + 1,
-          1,
-        )
-      }
-
-      setMonths(monthsArray)
-
-      const response = await api.get(
-        `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
-          endDate,
-          'yyyy-MM-dd',
-        )}`,
-      )
-
-      console.log(response)
-
-      if (response.status === 200) {
-        setEvolutionSummary(response.data.faturamentoMesList)
-      }
     }
 
+    setMonths(monthsArray)
+
+    const response = await api.get(
+      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+        endDate,
+        'yyyy-MM-dd',
+      )}`,
+    )
+
+    console.log(response)
+
+    if (response.status === 200) {
+      setEvolutionSummary(response.data.faturamentoMesList)
+    }
+  }
+
+  useEffect(() => {
     getSummary()
     getLastSixMonthsSummary()
   }, [])
+
+  const getLastYearSummary = async () => {
+    setIsSixMonthsTimePeriodActive(false)
+    setIsThreeMonthsTimePeriodActive(false)
+    setIsYearTimePeriodActive(true)
+
+    setTimePeriodText('Último ano')
+
+    const currentDate = new Date()
+
+    const startDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 11,
+      1,
+    )
+
+    const endDate = currentDate
+
+    const monthsArray = []
+    let currentDatePointer = startDate
+
+    while (currentDatePointer <= endDate) {
+      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+      monthsArray.push(monthLabel)
+      currentDatePointer = new Date(
+        currentDatePointer.getFullYear(),
+        currentDatePointer.getMonth() + 1,
+        1,
+      )
+    }
+
+    setMonths(monthsArray)
+
+    const response = await api.get(
+      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+        endDate,
+        'yyyy-MM-dd',
+      )}`,
+    )
+
+    console.log(response)
+
+    if (response.status === 200) {
+      setEvolutionSummary(response.data.faturamentoMesList)
+    }
+  }
+
+  const getLastThreeMonthsSummary = async () => {
+    setIsSixMonthsTimePeriodActive(false)
+    setIsThreeMonthsTimePeriodActive(true)
+    setIsYearTimePeriodActive(false)
+
+    setTimePeriodText('Últimos três meses')
+
+    const currentDate = new Date()
+
+    const startDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 2,
+      1,
+    )
+
+    const endDate = currentDate
+
+    const monthsArray = []
+    let currentDatePointer = startDate
+
+    while (currentDatePointer <= endDate) {
+      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+      monthsArray.push(monthLabel)
+      currentDatePointer = new Date(
+        currentDatePointer.getFullYear(),
+        currentDatePointer.getMonth() + 1,
+        1,
+      )
+    }
+
+    setMonths(monthsArray)
+
+    const response = await api.get(
+      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+        endDate,
+        'yyyy-MM-dd',
+      )}`,
+    )
+
+    console.log(response)
+
+    if (response.status === 200) {
+      setEvolutionSummary(response.data.faturamentoMesList)
+    }
+  }
 
   const chartSeries = [
     {
@@ -167,12 +283,16 @@ export function Dashboard() {
     xaxis: {
       categories: months,
       labels: {
+        rotate: -45,
+        rotateAlways: true,
         style: {
           fontSize: '0.92rem',
           fontFamily: 'Inter, sans-serif',
           fontWeight: 'bold',
         },
       },
+      offsetX: 5,
+      offsetY: 5,
     },
     yaxis: {
       labels: {
@@ -218,7 +338,7 @@ export function Dashboard() {
         </div>
 
         <h1 className="evolution_title">Evolução</h1>
-        <p id="evolution_time_tag">Últimos seis meses</p>
+        <p id="evolution_time_tag">{timePeriodText}</p>
 
         <ReactApexChart
           id="chart"
@@ -228,6 +348,27 @@ export function Dashboard() {
           height={250}
           width={350}
         />
+
+        <ChooseTimePeriodBar>
+          <TimePeriodButton
+            active={isThreeMonthsTimePeriodActive}
+            onClick={getLastThreeMonthsSummary}
+          >
+            3 meses
+          </TimePeriodButton>
+          <TimePeriodButton
+            active={isSixMonthsTimePeriodActive}
+            onClick={getLastSixMonthsSummary}
+          >
+            6 meses
+          </TimePeriodButton>
+          <TimePeriodButton
+            active={isYearTimePeriodActive}
+            onClick={getLastYearSummary}
+          >
+            1 ano
+          </TimePeriodButton>
+        </ChooseTimePeriodBar>
       </TotalRevenueCard>
 
       <RevenueByClientCard>
@@ -256,9 +397,9 @@ export function Dashboard() {
         <div id="revenue_by_activity_results">
           {sortedAtividades.map((atividade) => {
             return (
-              <SummaryByClientResult
+              <SummaryByActivityResult
                 key={atividade.atividade}
-                cliente={atividade.atividade}
+                atividade={atividade.atividade}
                 valor={atividade.valor}
               />
             )

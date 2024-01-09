@@ -76,6 +76,31 @@ export const DivisionCardLine = styled.div`
   background-color: ${(props) => props.theme.base_hover};
 `
 
+export const ChooseTimePeriodBar = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: -10px;
+`
+
+interface StyledButtonProps {
+  active: boolean
+}
+
+export const TimePeriodButton = styled.button<StyledButtonProps>`
+  border: none;
+  border-radius: 8px;
+  background-color: ${(props) =>
+    props.active
+      ? (props) => props.theme.blue_light
+      : (props) => props.theme.background};
+  color: ${(props) => props.theme.blue_dark};
+  font-family: 'Inter', sans-serif;
+  font-weight: ${(props) => (props.active ? 'bold' : '100')};
+  padding: 5px 7px;
+  cursor: pointer;
+`
+
 export const RevenueByClientCard = styled(BaseCardWithoutHover)`
   width: 100%;
   height: fit-content;
