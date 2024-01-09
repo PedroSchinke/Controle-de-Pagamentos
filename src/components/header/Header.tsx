@@ -15,7 +15,7 @@ export function Header() {
         <Logo>LOGO</Logo>
         <Navigation>
           <ul>
-            <NavLink to="/dashboard">
+            <NavLink to="/início">
               <li>
                 <HouseLine weight="fill" /> Início
               </li>

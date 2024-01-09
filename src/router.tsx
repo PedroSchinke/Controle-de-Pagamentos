@@ -18,7 +18,7 @@ export function Router() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/início" element={<Dashboard />} />
         <Route path="/registrar" element={<RegisterPage />} />
         <Route path="/registrar/pagamento" element={<RegisterReceipt />} />
         <Route path="/registrar/cliente" element={<RegisterClient />} />
