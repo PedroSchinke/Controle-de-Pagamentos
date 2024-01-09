@@ -11,12 +11,14 @@ import {
   OverlayContent,
   OverlayBackButton,
   ConfirmDeleteOptionButtons,
+  ClientIsDeletedMessage,
+  ReRegisterClientButton,
 } from './styles'
 import { NavLink, useParams } from 'react-router-dom'
 import { useEffect, useState, useContext } from 'react'
 import { api } from '../../../services/api'
 import { formatDate } from '../../../services/format-date-service'
-import { ClientProps, ClientsContext } from '../../../context/clientsContext'
+import { ClientProps, Context } from '../../../context/Context'
 import { Loading } from '../../../components/loading/Loading'
 import { BackButton } from '../../../components/back button/BackButton'
 
@@ -30,7 +32,7 @@ export function DetailedClient() {
   const [isConfirmDeleteMessageActive, setIsConfirmDeleteMessageActive] =
     useState<boolean>(false)
 
-  const { clients, setClients } = useContext(ClientsContext)
+  const { clients, setClients } = useContext(Context)
 
   useEffect(() => {
     const getData = async () => {
@@ -82,6 +84,37 @@ export function DetailedClient() {
     }
   }
 
+  const handleReRegisterClient = async () => {
+    try {
+      setIsConfirmDeleteMessageActive(false)
+
+      const response = await api.put(`/clientes/${id}/ativo`)
+
+      if (response.status === 204) {
+        const stringId = id
+        const numberId = parseInt(stringId!, 10)
+
+        const clientsWithoutDeletedOne = clients.filter((client) => {
+          return client.id !== numberId
+        })
+
+        setClients(clientsWithoutDeletedOne)
+
+        setMessage(`${client?.nome} foi recadastrado com sucesso!`)
+      } else {
+        console.error('Erro ao recadastrar cliente. Status:', response.status)
+        setMessage(
+          'Não foi possível recadastrar cliente. Tente novamente mais tarde.',
+        )
+      }
+    } catch (error) {
+      console.error(error)
+      setMessage(
+        'Não foi possível recadastrar o cliente. Tente novamente mais tarde.',
+      )
+    }
+  }
+
   const showOverlay = message !== null
 
   if (!client) {
@@ -125,20 +158,31 @@ export function DetailedClient() {
             </div>
           </DetailedClientInfos>
 
-          <ClientOptionButtons>
-            <NavLink to={`/editar/cliente/${id}`}>
-              <UpdateClientButton>
-                <Pencil size={26} weight="fill" />
-                Editar
-              </UpdateClientButton>
-            </NavLink>
-            <DeleteClientButton
-              onClick={() => setIsConfirmDeleteMessageActive(true)}
-            >
-              <Trash size={26} />
-              Excluir
-            </DeleteClientButton>
-          </ClientOptionButtons>
+          {client.ativo ? (
+            <ClientOptionButtons>
+              <NavLink to={`/editar/cliente/${id}`}>
+                <UpdateClientButton>
+                  <Pencil size={26} weight="fill" />
+                  Editar
+                </UpdateClientButton>
+              </NavLink>
+              <DeleteClientButton
+                onClick={() => setIsConfirmDeleteMessageActive(true)}
+              >
+                <Trash size={26} />
+                Excluir
+              </DeleteClientButton>
+            </ClientOptionButtons>
+          ) : (
+            <ClientIsDeletedMessage>
+              *Este cliente está excluído.
+              <div id="re-register-button-container">
+                <ReRegisterClientButton onClick={handleReRegisterClient}>
+                  Recadastrar
+                </ReRegisterClientButton>
+              </div>
+            </ClientIsDeletedMessage>
+          )}
         </DetailedClientContainer>
       </DetailedClientLayout>
       {showOverlay && (
