@@ -15,7 +15,7 @@ import {
 import { NavLink, useParams } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import { api } from '../../../services/api'
-import { ClientsContext, ReceiptProps } from '../../../context/clientsContext'
+import { Context, ReceiptProps } from '../../../context/Context'
 import { Loading } from '../../../components/loading/Loading'
 import { formatValue } from '../../../services/format-value-service'
 import { format, parseISO } from 'date-fns'
@@ -26,7 +26,7 @@ export function DetailedReceipt() {
 
   const [receipt, setReceipt] = useState<ReceiptProps | null>(null)
 
-  const { receipts, setReceipts } = useContext(ClientsContext)
+  const { receipts, setReceipts } = useContext(Context)
 
   const [message, setMessage] = useState<string | null>(null)
 

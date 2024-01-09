@@ -5,7 +5,7 @@ import {
   OverlayContent,
   ResultsContainer,
 } from './styles'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import { Context } from '../../../../../../context/Context'
 import { SelectClientFilter } from './components/select client filter/SelectClientFilter'
 import { ClientSelectionForRegisterResult } from './components/client for register search result/SelectionResult'
 
@@ -14,7 +14,7 @@ export function SelectClientForRegister() {
     clients,
     setIsClientSelectOverlayActive,
     showNoResultsMessageInOverlay,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const showResults = clients.length !== 0
 

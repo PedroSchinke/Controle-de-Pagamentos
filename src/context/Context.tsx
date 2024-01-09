@@ -40,7 +40,7 @@ export interface PaymentOptionsProps {
   descricao: string
 }
 
-interface ClientsContextType {
+interface ContextType {
   clients: ClientProps[]
   setClients: (value: ClientProps[]) => void
   clientsForReceiptSearch: ClientProps[]
@@ -75,7 +75,7 @@ interface ClientsContextType {
   setActivities: (value: ActivitiesProps[]) => void
 }
 
-export const ClientsContext = createContext({} as ClientsContextType)
+export const Context = createContext({} as ContextType)
 
 interface ContextProviderProps {
   children: ReactNode
@@ -135,7 +135,7 @@ export function ContextProvider({ children }: ContextProviderProps) {
   const [activities, setActivities] = useState<ActivitiesProps[]>([])
 
   return (
-    <ClientsContext.Provider
+    <Context.Provider
       value={{
         clients,
         setClients,
@@ -172,6 +172,6 @@ export function ContextProvider({ children }: ContextProviderProps) {
       }}
     >
       {children}
-    </ClientsContext.Provider>
+    </Context.Provider>
   )
 }

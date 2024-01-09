@@ -14,10 +14,7 @@ import * as z from 'zod'
 import { ZodError } from 'zod'
 import { api } from '../../../../../../services/api'
 import { useContext, useEffect, useState } from 'react'
-import {
-  ClientsContext,
-  ReceiptProps,
-} from '../../../../../../context/clientsContext'
+import { Context, ReceiptProps } from '../../../../../../context/Context'
 import { XCircle } from 'phosphor-react'
 
 const formDataSchema = z
@@ -56,7 +53,7 @@ export function ReceiptFilter() {
     setClientName,
     clientIdForSearch,
     setClientIdForSearch,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   useEffect(() => {
     const getSelectedClientName = () => {

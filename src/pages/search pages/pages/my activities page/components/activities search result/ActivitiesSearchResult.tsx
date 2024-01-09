@@ -9,7 +9,7 @@ import {
   ConfirmDeleteOptionButtons,
   OverlayBackButton,
 } from './styles'
-import { ActivitiesProps } from '../../../../../../context/clientsContext'
+import { ActivitiesProps } from '../../../../../../context/Context'
 import { useState } from 'react'
 import { api } from '../../../../../../services/api'
 import { NavLink } from 'react-router-dom'

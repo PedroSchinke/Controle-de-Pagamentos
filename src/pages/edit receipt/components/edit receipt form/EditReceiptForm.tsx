@@ -4,10 +4,10 @@ import { useContext, useEffect, useState } from 'react'
 import { EditReceiptFormContainer, InputErrorMessage } from './styles'
 import {
   ActivitiesProps,
-  ClientsContext,
+  Context,
   PaymentOptionsProps,
   ReceiptFormDataProps,
-} from '../../../../context/clientsContext'
+} from '../../../../context/Context'
 import { Controller, useForm } from 'react-hook-form'
 import { api } from '../../../../services/api'
 import { useParams } from 'react-router-dom'
@@ -71,7 +71,7 @@ export function EditReceiptForm() {
     clientIdForEdit,
     clientNameForEdit,
     setEditReceiptMessage,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const {
     handleSubmit,

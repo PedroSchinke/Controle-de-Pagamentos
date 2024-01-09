@@ -13,7 +13,7 @@ import {
   OverlayBackButton,
   OverlayContent,
 } from './styles'
-import { ClientsContext } from '../../../../../../../../context/clientsContext'
+import { Context } from '../../../../../../../../context/Context'
 import { NavLink } from 'react-router-dom'
 import { selectActiveClients } from '../../../../../../../../services/select-active-clients'
 
@@ -36,9 +36,7 @@ export function SelectClientFilter() {
     resolver: zodResolver(filterSchema),
   })
 
-  const { setClients } = useContext(ClientsContext)
-
-  const { setShowNoResultsMessageInOverlay } = useContext(ClientsContext)
+  const { setClients, setShowNoResultsMessageInOverlay } = useContext(Context)
 
   useEffect(() => {
     return () => {

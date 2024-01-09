@@ -14,7 +14,7 @@ import {
 } from './styles'
 import { NavLink } from 'react-router-dom'
 import { api } from '../../../../../../services/api'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import { Context } from '../../../../../../context/Context'
 import { selectActiveClients } from '../../../../../../services/select-active-clients'
 
 const filterSchema = z.object({
@@ -27,7 +27,7 @@ export function SelectClientForEditFilter() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { setClientsForReceiptSearch, setShowNoResultsMessageInOverlay } =
-    useContext(ClientsContext)
+    useContext(Context)
 
   const {
     register,

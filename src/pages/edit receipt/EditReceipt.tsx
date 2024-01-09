@@ -11,7 +11,7 @@ import {
 } from './styles'
 import { SelectClientForEditOverlay } from './components/select client for edit overlay/SelectClientForEditOverlay'
 import { EditReceiptForm } from './components/edit receipt form/EditReceiptForm'
-import { ClientsContext } from '../../context/clientsContext'
+import { Context } from '../../context/Context'
 import { api } from '../../services/api'
 import { BackButton } from '../../components/back button/BackButton'
 
@@ -24,7 +24,7 @@ export function EditReceipt() {
     setEditReceiptMessage,
     setClientIdForEdit,
     setClientNameForEdit,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const showOverlay = editReceiptMessage !== null
 

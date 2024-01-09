@@ -10,7 +10,7 @@ import {
   RegisterReceiptLayout,
 } from './styles'
 import { RegisterReceiptForm } from './components/register receipt form/RegisterReceiptForm'
-import { ClientsContext } from '../../../../context/clientsContext'
+import { Context } from '../../../../context/Context'
 import { SelectClientForRegister } from './components/select client for rec register overlay/SelectClient'
 import { BackButton } from '../../../../components/back button/BackButton'
 
@@ -21,7 +21,7 @@ export function RegisterReceipt() {
     isClientSelectOverlayActive,
     registerReceiptMessage,
     setRegisterReceiptMessage,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const showOverlay = registerReceiptMessage !== null
 

@@ -5,7 +5,7 @@ import {
   ClientSearchResultInfos,
 } from './styles'
 import { useContext } from 'react'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import { Context } from '../../../../../../context/Context'
 
 interface ClientSearchResultProps {
   id: number
@@ -22,7 +22,7 @@ export function ClientSearchForEditResult({
     setClientNameForEdit,
     setClientIdForEdit,
     setIsClientSelectForEditOverlayActive,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const setNameValue = () => {
     setClientIdForEdit(id)

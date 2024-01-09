@@ -6,7 +6,7 @@ import {
   SearchReceiptPageContainer,
   SearchReceiptPageLayout,
 } from './styles'
-import { ClientsContext } from '../../../../context/clientsContext'
+import { Context } from '../../../../context/Context'
 import { useContext, useEffect } from 'react'
 import { SelectClientOverlay } from './components/select client overlay/SelectClientOverlay'
 import { BackButton } from '../../../../components/back button/BackButton'
@@ -22,7 +22,7 @@ export function SearchReceipt() {
     setIsClientSelectOverlayActive,
     setClientIdForSearch,
     setClientName,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const showResults = receipts.length !== 0
 

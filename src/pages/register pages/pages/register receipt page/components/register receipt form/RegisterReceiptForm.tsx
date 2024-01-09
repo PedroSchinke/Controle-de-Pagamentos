@@ -6,10 +6,10 @@ import { NumericFormat } from 'react-number-format'
 import { useContext, useEffect, useState } from 'react'
 import {
   ActivitiesProps,
-  ClientsContext,
+  Context,
   PaymentOptionsProps,
   ReceiptFormDataProps,
-} from '../../../../../../context/clientsContext'
+} from '../../../../../../context/Context'
 import { api } from '../../../../../../services/api'
 
 const registerReceiptSchema = z.object({
@@ -80,7 +80,7 @@ export function RegisterReceiptForm() {
     setIsClientSelectOverlayActive,
     clientIdForRegister,
     setRegisterReceiptMessage,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   useEffect(() => {
     const getClientName = async () => {

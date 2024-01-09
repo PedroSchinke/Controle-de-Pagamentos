@@ -8,10 +8,10 @@ import { BackButton } from '../../../../components/back button/BackButton'
 import { ActivitiesFilter } from './components/activities filter/ActivitiesFilter'
 import { useContext, useEffect } from 'react'
 import { api } from '../../../../services/api'
-import { ClientsContext } from '../../../../context/clientsContext'
+import { Context } from '../../../../context/Context'
 
 export function MyActivities() {
-  const { activities, setActivities } = useContext(ClientsContext)
+  const { activities, setActivities } = useContext(Context)
 
   const activitiesCount = activities.length
 

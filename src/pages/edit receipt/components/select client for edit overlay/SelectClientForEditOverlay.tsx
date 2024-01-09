@@ -6,7 +6,7 @@ import {
   ResultsContainer,
 } from './styles'
 import { SelectClientForEditFilter } from './components/select client for edit filter/SelectClientForEditFilter'
-import { ClientsContext } from '../../../../context/clientsContext'
+import { Context } from '../../../../context/Context'
 import { ClientSearchForEditResult } from './components/client search for edit result/ClientSearchForEditResult'
 
 export function SelectClientForEditOverlay() {
@@ -15,7 +15,7 @@ export function SelectClientForEditOverlay() {
     showNoResultsMessageInOverlay,
     setClientsForReceiptSearch,
     setIsClientSelectForEditOverlayActive,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   useEffect(() => {
     setClientsForReceiptSearch([])

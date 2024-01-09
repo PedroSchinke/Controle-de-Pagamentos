@@ -14,10 +14,7 @@ import {
   OverlayContent,
   ShowAllClientsButton,
 } from './styles'
-import {
-  ClientProps,
-  ClientsContext,
-} from '../../../../../../context/clientsContext'
+import { ClientProps, Context } from '../../../../../../context/Context'
 import { NavLink } from 'react-router-dom'
 import { MagnifyingGlass } from 'phosphor-react'
 import { selectActiveClients } from '../../../../../../services/select-active-clients'
@@ -31,7 +28,7 @@ type filterDataProps = z.infer<typeof filterSchema>
 export function ClientFilter() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const { setClients, setShowNoResultsMessage } = useContext(ClientsContext)
+  const { setClients, setShowNoResultsMessage } = useContext(Context)
 
   const {
     register,

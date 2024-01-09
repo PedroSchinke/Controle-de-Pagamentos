@@ -13,7 +13,7 @@ import {
   OverlayContent,
 } from './styles'
 import { NavLink } from 'react-router-dom'
-import { ClientsContext } from '../../../../../../../../context/clientsContext'
+import { Context } from '../../../../../../../../context/Context'
 import { api } from '../../../../../../../../services/api'
 import { selectActiveClients } from '../../../../../../../../services/select-active-clients'
 
@@ -27,7 +27,7 @@ export function SelectClientFilterForReceiptSearch() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const { setClientsForReceiptSearch, setShowNoResultsMessageInOverlay } =
-    useContext(ClientsContext)
+    useContext(Context)
 
   const {
     register,

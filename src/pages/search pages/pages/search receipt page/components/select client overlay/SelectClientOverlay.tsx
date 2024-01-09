@@ -5,7 +5,7 @@ import {
   OverlayContent,
   ResultsContainer,
 } from './styles'
-import { ClientsContext } from '../../../../../../context/clientsContext'
+import { Context } from '../../../../../../context/Context'
 import { SelectClientFilterForReceiptSearch } from './components/select client filter for receipt search/SelectClientFilterRecSearch'
 import { ClientSelectionSearchResult } from './components/client selection search result/ClientSelectionSearchResult'
 
@@ -15,7 +15,7 @@ export function SelectClientOverlay() {
     setIsClientSelectOverlayActive,
     showNoResultsMessageInOverlay,
     setClientsForReceiptSearch,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   useEffect(() => {
     setClientsForReceiptSearch([])

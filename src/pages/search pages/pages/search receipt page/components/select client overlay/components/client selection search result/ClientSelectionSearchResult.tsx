@@ -6,7 +6,7 @@ import {
 } from './styles'
 import { NavLink } from 'react-router-dom'
 import { useContext } from 'react'
-import { ClientsContext } from '../../../../../../../../context/clientsContext'
+import { Context } from '../../../../../../../../context/Context'
 
 interface ClientSearchResultProps {
   id: number
@@ -23,7 +23,7 @@ export function ClientSelectionSearchResult({
     setIsClientSelectOverlayActive,
     setClientName,
     setClientIdForSearch,
-  } = useContext(ClientsContext)
+  } = useContext(Context)
 
   const setNameValue = () => {
     setClientIdForSearch(id)

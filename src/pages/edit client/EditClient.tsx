@@ -16,7 +16,7 @@ import { useEffect, useState, useContext, ChangeEvent } from 'react'
 import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { NavLink, useParams } from 'react-router-dom'
-import { ClientsContext } from '../../context/clientsContext'
+import { Context } from '../../context/Context'
 import { BackButton } from '../../components/back button/BackButton'
 
 const EditClientSchema = z.object({
@@ -49,7 +49,7 @@ export function EditClient() {
     resolver: zodResolver(EditClientSchema),
   })
 
-  const { setClients } = useContext(ClientsContext)
+  const { setClients } = useContext(Context)
 
   const [message, setMessage] = useState<string | null>(null)
 

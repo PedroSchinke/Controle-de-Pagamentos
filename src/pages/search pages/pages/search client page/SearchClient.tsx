@@ -7,12 +7,12 @@ import {
   SearchClientPageContainer,
   SearchClientPageLayout,
 } from './styles'
-import { ClientsContext } from '../../../../context/clientsContext'
+import { Context } from '../../../../context/Context'
 import { BackButton } from '../../../../components/back button/BackButton'
 
 export function SearchClient() {
   const { clients, setClients, showNoResultsMessage, setShowNoResultsMessage } =
-    useContext(ClientsContext)
+    useContext(Context)
 
   const showResults = clients.length !== 0
 
