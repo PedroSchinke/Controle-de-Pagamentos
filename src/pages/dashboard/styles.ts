@@ -99,6 +99,10 @@ export const TimePeriodButton = styled.button<StyledButtonProps>`
   font-weight: ${(props) => (props.active ? 'bold' : '100')};
   padding: 5px 7px;
   cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+  }
 `
 
 export const RevenueByClientCard = styled(BaseCardWithoutHover)`
