@@ -54,6 +54,24 @@ export const ClientOptionButtons = styled.div`
   justify-content: space-evenly;
 `
 
+export const ClientIsDeletedMessage = styled.p`
+  font-size: 1.2rem;
+  color: ${(props) => props.theme.red};
+
+  #re-register-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    #re-register-button {
+      border: none;
+      background-color: ${(props) => props.theme.background};
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+    }
+  }
+`
+
 const BaseOptionButtons = styled.button`
   display: flex;
   align-items: center;
@@ -64,6 +82,16 @@ const BaseOptionButtons = styled.button`
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
+`
+
+export const ReRegisterClientButton = styled(BaseOptionButtons)`
+  margin-top: 15px;
+  color: ${(props) => props.theme.blue_dark};
+  transition: 0.1s;
+
+  &:hover {
+    color: ${(props) => props.theme.blue};
+  }
 `
 
 export const UpdateClientButton = styled(BaseOptionButtons)`
