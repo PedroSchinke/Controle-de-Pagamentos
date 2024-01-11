@@ -8,6 +8,10 @@ import {
   DivisionCardLine,
   ChooseTimePeriodBar,
   TimePeriodButton,
+  Overlay,
+  OverlayContent,
+  Message,
+  OverlayBackButton,
 } from './styles'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
@@ -58,7 +62,10 @@ export function Dashboard() {
   const [isYearTimePeriodActive, setIsYearTimePeriodActive] =
     useState<boolean>(false)
 
-  const [timePeriodText, setTimePeriodText] = useState('Últimos seis meses')
+  const [timePeriodText, setTimePeriodText] =
+    useState<string>('Últimos seis meses')
+
+  const [message, setMessage] = useState<string | null>(null)
 
   const getSummary = async () => {
     try {
@@ -83,48 +90,55 @@ export function Dashboard() {
   }
 
   const getLastSixMonthsSummary = async () => {
-    setIsSixMonthsTimePeriodActive(true)
-    setIsThreeMonthsTimePeriodActive(false)
-    setIsYearTimePeriodActive(false)
+    try {
+      setIsSixMonthsTimePeriodActive(true)
+      setIsThreeMonthsTimePeriodActive(false)
+      setIsYearTimePeriodActive(false)
 
-    setTimePeriodText('Últimos seis meses')
+      setTimePeriodText('Últimos seis meses')
 
-    const currentDate = new Date()
+      const currentDate = new Date()
 
-    const startDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 5,
-      1,
-    )
-
-    const endDate = currentDate
-
-    const monthsArray = []
-    let currentDatePointer = startDate
-
-    while (currentDatePointer <= endDate) {
-      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
-      monthsArray.push(monthLabel)
-      currentDatePointer = new Date(
-        currentDatePointer.getFullYear(),
-        currentDatePointer.getMonth() + 1,
+      const startDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 5,
         1,
       )
-    }
 
-    setMonths(monthsArray)
+      const endDate = currentDate
 
-    const response = await api.get(
-      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
-        endDate,
-        'yyyy-MM-dd',
-      )}`,
-    )
+      const monthsArray = []
+      let currentDatePointer = startDate
 
-    console.log(response)
+      while (currentDatePointer <= endDate) {
+        const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+        monthsArray.push(monthLabel)
+        currentDatePointer = new Date(
+          currentDatePointer.getFullYear(),
+          currentDatePointer.getMonth() + 1,
+          1,
+        )
+      }
 
-    if (response.status === 200) {
-      setEvolutionSummary(response.data.faturamentoMesList)
+      setMonths(monthsArray)
+
+      const response = await api.get(
+        `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+          endDate,
+          'yyyy-MM-dd',
+        )}`,
+      )
+
+      console.log(response)
+
+      if (response.status === 200) {
+        setEvolutionSummary(response.data.faturamentoMesList)
+      }
+    } catch (error) {
+      setMessage(
+        'Não foi possível obter os dados para apresentação. Tente novamente mais tarde.',
+      )
+      console.error(error)
     }
   }
 
@@ -134,94 +148,108 @@ export function Dashboard() {
   }, [])
 
   const getLastYearSummary = async () => {
-    setIsSixMonthsTimePeriodActive(false)
-    setIsThreeMonthsTimePeriodActive(false)
-    setIsYearTimePeriodActive(true)
+    try {
+      setIsSixMonthsTimePeriodActive(false)
+      setIsThreeMonthsTimePeriodActive(false)
+      setIsYearTimePeriodActive(true)
 
-    setTimePeriodText('Último ano')
+      setTimePeriodText('Último ano')
 
-    const currentDate = new Date()
+      const currentDate = new Date()
 
-    const startDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 11,
-      1,
-    )
-
-    const endDate = currentDate
-
-    const monthsArray = []
-    let currentDatePointer = startDate
-
-    while (currentDatePointer <= endDate) {
-      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
-      monthsArray.push(monthLabel)
-      currentDatePointer = new Date(
-        currentDatePointer.getFullYear(),
-        currentDatePointer.getMonth() + 1,
+      const startDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 11,
         1,
       )
-    }
 
-    setMonths(monthsArray)
+      const endDate = currentDate
 
-    const response = await api.get(
-      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
-        endDate,
-        'yyyy-MM-dd',
-      )}`,
-    )
+      const monthsArray = []
+      let currentDatePointer = startDate
 
-    console.log(response)
+      while (currentDatePointer <= endDate) {
+        const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+        monthsArray.push(monthLabel)
+        currentDatePointer = new Date(
+          currentDatePointer.getFullYear(),
+          currentDatePointer.getMonth() + 1,
+          1,
+        )
+      }
 
-    if (response.status === 200) {
-      setEvolutionSummary(response.data.faturamentoMesList)
+      setMonths(monthsArray)
+
+      const response = await api.get(
+        `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+          endDate,
+          'yyyy-MM-dd',
+        )}`,
+      )
+
+      console.log(response)
+
+      if (response.status === 200) {
+        setEvolutionSummary(response.data.faturamentoMesList)
+      }
+    } catch (error) {
+      setMessage(
+        'Não foi possível obter os dados para apresentação. Tente novamente mais tarde.',
+      )
+      console.error(error)
     }
   }
 
   const getLastThreeMonthsSummary = async () => {
-    setIsSixMonthsTimePeriodActive(false)
-    setIsThreeMonthsTimePeriodActive(true)
-    setIsYearTimePeriodActive(false)
+    try {
+      setIsSixMonthsTimePeriodActive(false)
+      setIsThreeMonthsTimePeriodActive(true)
+      setIsYearTimePeriodActive(false)
 
-    setTimePeriodText('Últimos três meses')
+      setTimePeriodText('Últimos três meses')
 
-    const currentDate = new Date()
+      const currentDate = new Date()
 
-    const startDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 2,
-      1,
-    )
-
-    const endDate = currentDate
-
-    const monthsArray = []
-    let currentDatePointer = startDate
-
-    while (currentDatePointer <= endDate) {
-      const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
-      monthsArray.push(monthLabel)
-      currentDatePointer = new Date(
-        currentDatePointer.getFullYear(),
-        currentDatePointer.getMonth() + 1,
+      const startDate = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 2,
         1,
       )
-    }
 
-    setMonths(monthsArray)
+      const endDate = currentDate
 
-    const response = await api.get(
-      `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
-        endDate,
-        'yyyy-MM-dd',
-      )}`,
-    )
+      const monthsArray = []
+      let currentDatePointer = startDate
 
-    console.log(response)
+      while (currentDatePointer <= endDate) {
+        const monthLabel = format(currentDatePointer, 'MMM', { locale: ptBR })
+        monthsArray.push(monthLabel)
+        currentDatePointer = new Date(
+          currentDatePointer.getFullYear(),
+          currentDatePointer.getMonth() + 1,
+          1,
+        )
+      }
 
-    if (response.status === 200) {
-      setEvolutionSummary(response.data.faturamentoMesList)
+      setMonths(monthsArray)
+
+      const response = await api.get(
+        `/resumo?dataIni=${format(startDate, 'yyyy-MM-dd')}&dataFim=${format(
+          endDate,
+          'yyyy-MM-dd',
+        )}`,
+      )
+
+      console.log(response)
+
+      if (response.status === 200) {
+        setEvolutionSummary(response.data.faturamentoMesList)
+      }
+    } catch (error) {
+      setMessage(
+        'Não foi possível obter os dados para apresentação. Tente novamente mais tarde.',
+      )
+      console.error(error)
     }
   }
 
@@ -322,90 +350,104 @@ export function Dashboard() {
 
   const valueInReais = formatValue(summary.valor)
 
+  const showOverlay = message !== null
+
   return (
-    <DashboardLayout>
-      <TotalRevenueCard>
-        <div className="total_revenue">
-          <div>
-            <h1 className="total_revenue_title">Faturamento</h1>
-            <p id="time_tag">Este mês</p>
+    <>
+      <DashboardLayout>
+        <TotalRevenueCard>
+          <div className="total_revenue">
+            <div>
+              <h1 className="total_revenue_title">Faturamento</h1>
+              <p id="time_tag">Este mês</p>
+            </div>
+            <span className="total_revenue_value">{valueInReais}</span>
           </div>
-          <span className="total_revenue_value">{valueInReais}</span>
-        </div>
 
-        <div id="card_line_container">
-          <DivisionCardLine />
-        </div>
+          <div id="card_line_container">
+            <DivisionCardLine />
+          </div>
 
-        <h1 className="evolution_title">Evolução</h1>
-        <p id="evolution_time_tag">{timePeriodText}</p>
+          <h1 className="evolution_title">Evolução</h1>
+          <p id="evolution_time_tag">{timePeriodText}</p>
 
-        <ReactApexChart
-          id="chart"
-          options={chartOptions}
-          series={chartSeries}
-          type="bar"
-          height={250}
-          width={350}
-        />
+          <ReactApexChart
+            id="chart"
+            options={chartOptions}
+            series={chartSeries}
+            type="bar"
+            height={250}
+            width="100%"
+          />
 
-        <ChooseTimePeriodBar>
-          <TimePeriodButton
-            active={isThreeMonthsTimePeriodActive}
-            onClick={getLastThreeMonthsSummary}
-          >
-            3 meses
-          </TimePeriodButton>
-          <TimePeriodButton
-            active={isSixMonthsTimePeriodActive}
-            onClick={getLastSixMonthsSummary}
-          >
-            6 meses
-          </TimePeriodButton>
-          <TimePeriodButton
-            active={isYearTimePeriodActive}
-            onClick={getLastYearSummary}
-          >
-            1 ano
-          </TimePeriodButton>
-        </ChooseTimePeriodBar>
-      </TotalRevenueCard>
+          <ChooseTimePeriodBar>
+            <TimePeriodButton
+              active={isThreeMonthsTimePeriodActive}
+              onClick={getLastThreeMonthsSummary}
+            >
+              3 meses
+            </TimePeriodButton>
+            <TimePeriodButton
+              active={isSixMonthsTimePeriodActive}
+              onClick={getLastSixMonthsSummary}
+            >
+              6 meses
+            </TimePeriodButton>
+            <TimePeriodButton
+              active={isYearTimePeriodActive}
+              onClick={getLastYearSummary}
+            >
+              1 ano
+            </TimePeriodButton>
+          </ChooseTimePeriodBar>
+        </TotalRevenueCard>
 
-      <RevenueByClientCard>
-        <h1 id="card_title">Por cliente</h1>
+        <RevenueByClientCard>
+          <h1 id="card_title">Por cliente</h1>
 
-        <p id="time_tag">Este mês</p>
+          <p id="time_tag">Este mês</p>
 
-        <div id="revenue_by_client_results">
-          {sortedClientes.map((client) => {
-            return (
-              <SummaryByClientResult
-                key={client.cliente}
-                cliente={client.cliente}
-                valor={client.valor}
-              />
-            )
-          })}
-        </div>
-      </RevenueByClientCard>
+          <div id="revenue_by_client_results">
+            {sortedClientes.map((client) => {
+              return (
+                <SummaryByClientResult
+                  key={client.cliente}
+                  cliente={client.cliente}
+                  valor={client.valor}
+                />
+              )
+            })}
+          </div>
+        </RevenueByClientCard>
 
-      <RevenueByActivityCard>
-        <h1 id="card_title">Por atividade</h1>
+        <RevenueByActivityCard>
+          <h1 id="card_title">Por atividade</h1>
 
-        <p id="time_tag">Este mês</p>
+          <p id="time_tag">Este mês</p>
 
-        <div id="revenue_by_activity_results">
-          {sortedAtividades.map((atividade) => {
-            return (
-              <SummaryByActivityResult
-                key={atividade.atividade}
-                atividade={atividade.atividade}
-                valor={atividade.valor}
-              />
-            )
-          })}
-        </div>
-      </RevenueByActivityCard>
-    </DashboardLayout>
+          <div id="revenue_by_activity_results">
+            {sortedAtividades.map((atividade) => {
+              return (
+                <SummaryByActivityResult
+                  key={atividade.atividade}
+                  atividade={atividade.atividade}
+                  valor={atividade.valor}
+                />
+              )
+            })}
+          </div>
+        </RevenueByActivityCard>
+      </DashboardLayout>
+      {showOverlay && (
+        <Overlay>
+          <OverlayContent>
+            <Message>{message}</Message>
+            <OverlayBackButton onClick={() => setMessage(null)}>
+              Voltar
+            </OverlayBackButton>
+          </OverlayContent>
+        </Overlay>
+      )}
+    </>
   )
 }

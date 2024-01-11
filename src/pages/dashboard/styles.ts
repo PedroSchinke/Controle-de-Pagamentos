@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BaseCardWithoutHover } from '../../styles/style-bases'
+import { BaseButton, BaseCardWithoutHover } from '../../styles/style-bases'
 
 export const DashboardLayout = styled.div`
   height: fit-content;
@@ -157,4 +157,56 @@ export const RevenueByActivityCard = styled(BaseCardWithoutHover)`
     gap: 15px;
     overflow: auto;
   }
+`
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`
+
+export const OverlayContent = styled.div`
+  width: 70%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  border-radius: 8px;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: ${(props) => props.theme.background};
+  z-index: 1000;
+
+  a {
+    width: 45%;
+    height: fit-content;
+  }
+
+  @media (min-width: 481px) {
+    width: 360px;
+  }
+`
+
+export const Message = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: ${(props) => props.theme.base_text};
+  text-align: center;
+`
+
+export const OverlayBackButton = styled(BaseButton)`
+  width: 100%;
+  font-size: 1.2rem;
 `
