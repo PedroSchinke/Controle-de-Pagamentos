@@ -14,6 +14,8 @@ export function SearchClient() {
   const { clients, setClients, showNoResultsMessage, setShowNoResultsMessage } =
     useContext(Context)
 
+  const clientsResultCount = clients.length
+
   const showResults = clients.length !== 0
 
   useEffect(() => {
@@ -39,8 +41,10 @@ export function SearchClient() {
       ) : null}
       {showResults && (
         <ResultsContainer>
-          <h2 id="total_results">Total de resultados: {clients.length}</h2>
-          <div></div>
+          <h2 id="total_results_count">
+            <p>{clientsResultCount}</p> clientes
+          </h2>
+
           {clients.map((client) => {
             return (
               <ClientSearchResult

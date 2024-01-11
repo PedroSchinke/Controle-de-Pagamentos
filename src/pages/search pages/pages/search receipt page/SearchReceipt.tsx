@@ -61,10 +61,10 @@ export function SearchReceipt() {
       {showResults && (
         <ResultsContainer>
           <h2 id="total_results_count">
-            Pagamentos <p>{receipts.length}</p>
+            <p>{receipts.length}</p> pagamentos
           </h2>
           <h2 id="total_revenue">
-            Faturamento <p>{formattedReceiptsSum}</p>
+            <p>{formattedReceiptsSum}</p> em faturamento
           </h2>
 
           {receipts.map((receipt) => {

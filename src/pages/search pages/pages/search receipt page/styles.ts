@@ -81,7 +81,7 @@ export const ResultsContainer = styled.div`
 
   #total_results_count {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     gap: 5px;
     margin-bottom: 5px;
     padding: 0 20px;
@@ -95,7 +95,7 @@ export const ResultsContainer = styled.div`
 
   #total_revenue {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     gap: 5px;
     margin-bottom: 15px;
     padding: 0 20px;

@@ -77,10 +77,18 @@ export const ResultsContainer = styled.div`
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
-  #total_results {
-    font-size: 1.3rem;
-    margin: 0px 0px 18px 20px;
-    color: ${(props) => props.theme.base_label};
+  #total_results_count {
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+    margin-bottom: 15px;
+    padding: 0 20px;
+    color: ${(props) => props.theme.base_subtitle};
+    font-size: 1.5rem;
+
+    p {
+      color: ${(props) => props.theme.blue_extra_dark};
+    }
   }
 
   @media (min-width: 481px) {
