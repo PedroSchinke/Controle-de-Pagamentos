@@ -53,7 +53,7 @@ export const TotalRevenueCard = styled(BaseCardWithoutHover)`
   }
 
   #evolution_time_tag {
-    margin: -5px 0 10px 0;
+    margin: 0 0 10px 0;
     font-size: 1.15rem;
     color: ${(props) => props.theme.blue_dark};
   }
@@ -66,6 +66,13 @@ export const TotalRevenueCard = styled(BaseCardWithoutHover)`
   #chart {
     margin: -10px 0 -20px -10px;
     height: fit-content;
+  }
+
+  .revenue_of_period_value {
+    margin-top: -10px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: ${(props) => props.theme.blue_dark};
   }
 `
 

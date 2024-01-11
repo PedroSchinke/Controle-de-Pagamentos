@@ -67,6 +67,10 @@ export function Dashboard() {
 
   const [message, setMessage] = useState<string | null>(null)
 
+  const [totalRevenueOfPeriod, setTotalRevenueOfPeriod] = useState<
+    number | null
+  >(null)
+
   const getSummary = async () => {
     try {
       const today = new Date()
@@ -133,6 +137,7 @@ export function Dashboard() {
 
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
+        setTotalRevenueOfPeriod(response.data.valor)
       }
     } catch (error) {
       setMessage(
@@ -191,6 +196,7 @@ export function Dashboard() {
 
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
+        setTotalRevenueOfPeriod(response.data.valor)
       }
     } catch (error) {
       setMessage(
@@ -244,6 +250,7 @@ export function Dashboard() {
 
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
+        setTotalRevenueOfPeriod(response.data.valor)
       }
     } catch (error) {
       setMessage(
@@ -348,9 +355,15 @@ export function Dashboard() {
     (a, b) => b.valor - a.valor,
   )
 
-  const valueInReais = formatValue(summary.valor)
+  const revenueThisMonthInReais = formatValue(summary.valor)
 
   const showOverlay = message !== null
+
+  if (!totalRevenueOfPeriod) {
+    return <Loading />
+  }
+
+  const revenueOfPeriodInReais = formatValue(totalRevenueOfPeriod)
 
   return (
     <>
@@ -361,15 +374,19 @@ export function Dashboard() {
               <h1 className="total_revenue_title">Faturamento</h1>
               <p id="time_tag">Este mês</p>
             </div>
-            <span className="total_revenue_value">{valueInReais}</span>
+            <span className="total_revenue_value">
+              {revenueThisMonthInReais}
+            </span>
           </div>
 
           <div id="card_line_container">
             <DivisionCardLine />
           </div>
 
-          <h1 className="evolution_title">Evolução</h1>
           <p id="evolution_time_tag">{timePeriodText}</p>
+          <span className="revenue_of_period_value">
+            {revenueOfPeriodInReais}
+          </span>
 
           <ReactApexChart
             id="chart"
