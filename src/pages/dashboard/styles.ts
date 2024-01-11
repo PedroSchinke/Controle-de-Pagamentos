@@ -10,6 +10,13 @@ export const DashboardLayout = styled.div`
   gap: 20px;
   font-family: 'Inter', sans-serif;
   color: ${(props) => props.theme.base_subtitle};
+
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 25px 15px;
+  }
 `
 
 export const TotalRevenueCard = styled(BaseCardWithoutHover)`
@@ -74,6 +81,18 @@ export const TotalRevenueCard = styled(BaseCardWithoutHover)`
     font-weight: bold;
     color: ${(props) => props.theme.blue_dark};
   }
+
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
+  }
 `
 
 export const DivisionCardLine = styled.div`
@@ -136,6 +155,22 @@ export const RevenueByClientCard = styled(BaseCardWithoutHover)`
     flex-direction: column;
     gap: 15px;
     overflow: auto;
+
+    @media (min-width: 1200px) {
+      max-height: 344px;
+    }
+  }
+
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 
@@ -163,6 +198,22 @@ export const RevenueByActivityCard = styled(BaseCardWithoutHover)`
     flex-direction: column;
     gap: 15px;
     overflow: auto;
+
+    @media (min-width: 1200px) {
+      max-height: 344px;
+    }
+  }
+
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
   }
 `
 
