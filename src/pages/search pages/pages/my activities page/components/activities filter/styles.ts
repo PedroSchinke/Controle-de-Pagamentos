@@ -41,3 +41,16 @@ export const FilterButton = styled(BaseButton)`
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 `
+
+export const ShowAllActivitiesButton = styled.button`
+  margin: 10px 0 -10px 0;
+  display: flex;
+  border: none;
+  background-color: ${(props) => props.theme.background};
+  color: ${(props) => props.theme.blue_dark};
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`

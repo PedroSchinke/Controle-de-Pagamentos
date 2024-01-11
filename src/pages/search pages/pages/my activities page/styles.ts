@@ -48,22 +48,47 @@ export const MyActivitiesContainer = styled.section`
   }
 `
 
+export const NoResultsMesssage = styled.p`
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+
+  @media (min-width: 481px) {
+    width: 460px;
+  }
+
+  @media (min-width: 768px) {
+    width: 480px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 480px;
+    margin-top: 20px;
+  }
+`
+
 export const ActivitiesResultsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   padding: 20px 10px 0 10px;
   background-color: ${(props) => props.theme.background};
   border-radius: 8px;
   box-shadow: 0px 0px 10px ${(props) => props.theme.base_hover};
 
   #total_results_count {
-    width: 90%;
+    display: flex;
+    justify-content: left;
+    gap: 5px;
     margin-bottom: 15px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: ${(props) => props.theme.base_label};
+    padding: 0 20px;
+    color: ${(props) => props.theme.base_text};
+    font-size: 1.5rem;
+
+    p {
+      color: ${(props) => props.theme.blue_dark};
+    }
   }
 
   @media (min-width: 481px) {
