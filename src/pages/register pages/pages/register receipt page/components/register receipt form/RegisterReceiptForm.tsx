@@ -112,8 +112,8 @@ export function RegisterReceiptForm() {
 
   const handleRegisterReceipt = async (data: ReceiptFormDataProps) => {
     try {
-      const numberWithDot = data.valor.replace(',', '.')
-      const numberValue = parseFloat(numberWithDot)
+      const rawValue = data.valor.replace(/\./g, '').replace(',', '.')
+      const numberValue = parseFloat(rawValue)
 
       formDataSchema.safeParse(data)
 
