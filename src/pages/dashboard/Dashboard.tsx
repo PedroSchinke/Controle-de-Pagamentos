@@ -32,10 +32,17 @@ export interface clienteValorListProps {
   valor: number
 }
 
+interface faturamentoMesListProps {
+  ano: number
+  mes: number
+  valor: number
+}
+
 interface SummaryProps {
   valor: number
   atividadeValorList: atividadeValorListProps[]
   clienteValorList: clienteValorListProps[]
+  faturamentoMesList: faturamentoMesListProps[]
 }
 
 interface EvolutionSummaryProps {
@@ -45,7 +52,12 @@ interface EvolutionSummaryProps {
 }
 
 export function Dashboard() {
-  const [summary, setSummary] = useState<SummaryProps>()
+  const [summary, setSummary] = useState<SummaryProps>({
+    atividadeValorList: [],
+    clienteValorList: [],
+    faturamentoMesList: [],
+    valor: 0,
+  })
 
   const [evolutionSummary, setEvolutionSummary] = useState<
     EvolutionSummaryProps[]
@@ -67,9 +79,7 @@ export function Dashboard() {
 
   const [message, setMessage] = useState<string | null>(null)
 
-  const [totalRevenueOfPeriod, setTotalRevenueOfPeriod] = useState<
-    number | null
-  >(null)
+  const [totalRevenueOfPeriod, setTotalRevenueOfPeriod] = useState<number>(0)
 
   const getSummary = async () => {
     try {
@@ -83,11 +93,20 @@ export function Dashboard() {
         `/resumo?dataIni=${formattedFirstDay}&dataFim=${formattedToday}`,
       )
 
-      console.log(response)
+      let summaryData = {
+        atividadeValorList: [],
+        clienteValorList: [],
+        faturamentoMesList: [],
+        valor: 0,
+      }
 
       if (response.status === 200) {
-        setSummary(response.data)
+        if (response.data && response.data.valor !== null) {
+          summaryData = { ...response.data }
+        }
       }
+
+      setSummary(summaryData)
     } catch (error) {
       console.error(error)
     }
@@ -133,11 +152,12 @@ export function Dashboard() {
         )}`,
       )
 
-      console.log(response)
-
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
-        setTotalRevenueOfPeriod(response.data.valor)
+
+        const totalRevenue =
+          response.data.valor !== null ? response.data.valor : 0
+        setTotalRevenueOfPeriod(totalRevenue)
       }
     } catch (error) {
       setMessage(
@@ -192,11 +212,12 @@ export function Dashboard() {
         )}`,
       )
 
-      console.log(response)
-
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
-        setTotalRevenueOfPeriod(response.data.valor)
+
+        const totalRevenue =
+          response.data.valor !== null ? response.data.valor : 0
+        setTotalRevenueOfPeriod(totalRevenue)
       }
     } catch (error) {
       setMessage(
@@ -246,11 +267,12 @@ export function Dashboard() {
         )}`,
       )
 
-      console.log(response)
-
       if (response.status === 200) {
         setEvolutionSummary(response.data.faturamentoMesList)
-        setTotalRevenueOfPeriod(response.data.valor)
+
+        const totalRevenue =
+          response.data.valor !== null ? response.data.valor : 0
+        setTotalRevenueOfPeriod(totalRevenue)
       }
     } catch (error) {
       setMessage(
@@ -343,7 +365,7 @@ export function Dashboard() {
     },
   }
 
-  if (!summary) {
+  if (summary.valor === null) {
     return <Loading />
   }
 
@@ -359,7 +381,7 @@ export function Dashboard() {
 
   const showOverlay = message !== null
 
-  if (!totalRevenueOfPeriod) {
+  if (totalRevenueOfPeriod === null) {
     return <Loading />
   }
 
@@ -425,15 +447,19 @@ export function Dashboard() {
           <p id="time_tag">Este mês</p>
 
           <div id="revenue_by_client_results">
-            {sortedClientes.map((client) => {
-              return (
-                <SummaryByClientResult
-                  key={client.cliente}
-                  cliente={client.cliente}
-                  valor={client.valor}
-                />
-              )
-            })}
+            {sortedClientes.length === 0 ? (
+              <p>Não houve faturamento este mês</p>
+            ) : (
+              sortedClientes.map((client) => {
+                return (
+                  <SummaryByClientResult
+                    key={client.cliente}
+                    cliente={client.cliente}
+                    valor={client.valor}
+                  />
+                )
+              })
+            )}
           </div>
         </RevenueByClientCard>
 
@@ -443,15 +469,19 @@ export function Dashboard() {
           <p id="time_tag">Este mês</p>
 
           <div id="revenue_by_activity_results">
-            {sortedAtividades.map((atividade) => {
-              return (
-                <SummaryByActivityResult
-                  key={atividade.atividade}
-                  atividade={atividade.atividade}
-                  valor={atividade.valor}
-                />
-              )
-            })}
+            {sortedClientes.length === 0 ? (
+              <p>Não houve faturamento este mês</p>
+            ) : (
+              sortedAtividades.map((atividade) => {
+                return (
+                  <SummaryByActivityResult
+                    key={atividade.atividade}
+                    atividade={atividade.atividade}
+                    valor={atividade.valor}
+                  />
+                )
+              })
+            )}
           </div>
         </RevenueByActivityCard>
       </DashboardLayout>
