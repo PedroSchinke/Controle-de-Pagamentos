@@ -133,12 +133,9 @@ export function RegisterReceiptForm() {
 
       registerReceiptSchema.safeParse(dataToSend)
 
-      console.log(dataToSend)
-
       const response = await api.post('/pagamentos', dataToSend)
 
       if (response.status === 201) {
-        console.log(response)
         setRegisterReceiptMessage('Pagamento registrado com sucesso!')
       }
     } catch (error) {

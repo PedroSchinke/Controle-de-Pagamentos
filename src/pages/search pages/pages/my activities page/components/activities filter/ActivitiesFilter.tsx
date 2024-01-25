@@ -22,8 +22,6 @@ export function ActivitiesFilter() {
     try {
       const response = await api.get(`/atividades/nome/${data.activity}`)
 
-      console.log(response.data)
-
       if (response.data.length !== 0) {
         setActivities(response.data)
         setShowNoResultsMessage(false)

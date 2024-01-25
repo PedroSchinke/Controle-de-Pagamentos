@@ -81,7 +81,6 @@ export function ReceiptFilter() {
       }
     } catch (error) {
       if (error instanceof ZodError) {
-        console.log(error)
         setMessage('A data inicial não pode ser maior que a data final.')
       }
     }

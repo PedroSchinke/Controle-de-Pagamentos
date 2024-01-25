@@ -165,7 +165,6 @@ export function EditReceiptForm() {
       }
 
       editReceiptSchema.safeParse(dataToSend)
-      console.log(dataToSend)
 
       const response = await api.put(`/pagamentos/${id}`, dataToSend)
 
