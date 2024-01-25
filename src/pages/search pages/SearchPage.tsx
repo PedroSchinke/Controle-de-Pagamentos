@@ -1,20 +1,11 @@
 import { CaretRight, Receipt, UserList, Wrench } from 'phosphor-react'
-import {
-  SearchPageOption,
-  SearchPageLayout,
-  SearchPageContent,
-  PageTitleContainer,
-} from './styles'
+import { SearchPageOption, SearchPageLayout, SearchPageContent } from './styles'
 import { NavLink } from 'react-router-dom'
 
 export function SearchPage() {
   return (
     <SearchPageLayout>
       <SearchPageContent>
-        <PageTitleContainer>
-          <h1 id="page_title">Buscar</h1>
-          <div id="line" />
-        </PageTitleContainer>
         <NavLink to="/buscar/pagamento">
           <SearchPageOption>
             <h1>

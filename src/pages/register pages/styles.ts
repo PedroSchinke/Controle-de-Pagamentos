@@ -33,6 +33,7 @@ export const RegisterPageContent = styled.div`
 
 export const RegisterPageOption = styled.section`
   width: 100%;
+  height: 170px;
   display: flex;
   align-items: center;
   justify-content: space-between;

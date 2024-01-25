@@ -3,8 +3,6 @@ import styled from 'styled-components'
 export const SearchPageLayout = styled.div`
   display: flex;
   justify-content: center;
-  font-family: 'Inter', sans-serif;
-  color: ${(props) => props.theme.base_text};
   padding: 15px;
 
   @media (min-width: 1200px) {
@@ -33,26 +31,9 @@ export const SearchPageContent = styled.div`
   }
 `
 
-export const PageTitleContainer = styled.div`
-  width: 100%;
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-
-  #page_title {
-    font-size: 1.8rem;
-  }
-
-  #line {
-    width: 100%;
-    height: 1.5px;
-    background-color: ${(props) => props.theme.base_text};
-  }
-`
-
 export const SearchPageOption = styled.section`
   width: 100%;
+  height: 170px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,6 +56,7 @@ export const SearchPageOption = styled.section`
     flex-direction: column;
     gap: 10px;
     font-size: 2rem;
+    font-family: 'Inter', sans-serif;
 
     .icon {
       color: ${(props) => props.theme.blue_dark};
